@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6f61d9d9-1b27-4b52-b90a-ce5578c80f95" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="JUnit5 Test Class" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2QcJyd5MUc4GI3Ou9x7lUI1GV5X" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="odogwuHotels.dto.requests" />
+      <recent name="odogwuHotels.dto.responses" />
+      <recent name="odogwuHotels.models" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="odogwuHotels.services" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="odogwuHotels.data.repositories" />
+      <recent name="odogwuHotels.services" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.OHFeedBackRepositoryTest">
+    <configuration name="OHFeedBackRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="OdogwuHotels" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="odogwuHotels.data.repositories.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="odogwuHotels.data.repositories" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.data.repositories.OHFeedBackRepositoryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OHFeedBackRepositoryTest.saveFeedBack" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="OdogwuHotels" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="odogwuHotels.data.repositories.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="odogwuHotels.data.repositories" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.data.repositories.OHFeedBackRepositoryTest" />
+      <option name="METHOD_NAME" value="saveFeedBack" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OHRoomRepositoryTest.findRoomById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="OdogwuHotels" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="odogwuHotels.data.repositories.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="odogwuHotels.data.repositories" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.data.repositories.OHRoomRepositoryTest" />
+      <option name="METHOD_NAME" value="findRoomById" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OHRoomServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="OdogwuHotels" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="odogwuHotels.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="odogwuHotels.services" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHRoomServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OHRoomServiceTest.findRoomById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="OdogwuHotels" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="odogwuHotels.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="odogwuHotels.services" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHRoomServiceTest" />
+      <option name="METHOD_NAME" value="findRoomById" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.OHFeedBackRepositoryTest" />
+        <item itemvalue="JUnit.OHFeedBackRepositoryTest.saveFeedBack" />
+        <item itemvalue="JUnit.OHRoomServiceTest" />
+        <item itemvalue="JUnit.OHRoomServiceTest.findRoomById" />
+        <item itemvalue="JUnit.OHRoomRepositoryTest.findRoomById" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6f61d9d9-1b27-4b52-b90a-ce5578c80f95" name="Changes" comment="" />
+      <created>1685647199605</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1685647199605</updated>
+      <workItem from="1685647202898" duration="31554000" />
+      <workItem from="1685773031686" duration="105349000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+</project>
