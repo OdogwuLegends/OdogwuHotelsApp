@@ -3,19 +3,13 @@ package odogwuHotels.data.repositories;
 import odogwuHotels.Utils;
 import odogwuHotels.data.models.FindRoomByChoice;
 import odogwuHotels.data.models.Room;
-import odogwuHotels.dto.requests.RequestToUpdateRoom;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
+import java.util.*;
 import static odogwuHotels.data.models.FindRoomByChoice.*;
 import static odogwuHotels.data.models.RoomType.DOUBLE;
 import static odogwuHotels.data.models.RoomType.SINGLE;
 
 public class OHRoomRepository implements RoomRepository{
-    List<Room> roomList = new ArrayList<>();
+    static List<Room> roomList = new ArrayList<>();
 
     public Room saveRoom(Room room){
         room.setId(Utils.generateId());
@@ -24,16 +18,26 @@ public class OHRoomRepository implements RoomRepository{
     }
 
     @Override
-    public Room updateRoom(RequestToUpdateRoom updateRoom) {
-        Room foundRoom = findRoomByRoomNumber(updateRoom.getRoomNumber());
-
-        if(foundRoom != null){
-            if(updateRoom.getRoomType() != null) foundRoom.setRoomType(updateRoom.getRoomType());
-            if(updateRoom.getNewRoomNumber() > 0) foundRoom.setRoomNumber(updateRoom.getNewRoomNumber());
-            if(updateRoom.getPrice()!= null && updateRoom.getPrice().compareTo(BigDecimal.ZERO) > 0) foundRoom.setPrice(updateRoom.getPrice());
-            if(updateRoom.isAvailable() != foundRoom.isAvailable()) foundRoom.setAvailable(updateRoom.isAvailable());
+    public Room updateRoom (int index, Room roomToUpdate) {
+        roomList.set(index,roomToUpdate);
+        return roomToUpdate;
+    }
+    @Override
+    public int getIndex (Room roomToCheck){
+        int index = 0;
+        for (Room room : roomList){
+            if(Objects.equals(room,roomToCheck))
+                index = roomList.indexOf(room);
         }
-        return foundRoom;
+        return index;
+    }
+    @Override
+    public Map<Integer, Integer> getIdsOfAllRooms(){
+        Map<Integer, Integer> idsOfAllRooms = new TreeMap<>();
+        for (Room room : roomList){
+            idsOfAllRooms.put(room.getId(), room.getRoomNumber());
+        }
+        return idsOfAllRooms;
     }
 
     @Override

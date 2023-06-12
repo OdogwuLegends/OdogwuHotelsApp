@@ -9,8 +9,6 @@ import java.time.format.DateTimeFormatter;
 public class Utils {
     private static  int currentId;
 
-
-
     public static int generateId(){
         currentId += 1;
         return currentId;

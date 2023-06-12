@@ -3,6 +3,7 @@ package odogwuHotels.data.repositories;
 import odogwuHotels.Utils;
 import odogwuHotels.data.models.Customer;
 import odogwuHotels.dto.requests.RequestToUpdateUserDetails;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,12 +33,18 @@ class OHCustomerRepositoryTest {
     void updateCustomerDetails(){
         assertEquals("John",firstCustomerSaved.getFirstName());
 
+        int index = customerRepository.getIndex(firstCustomerSaved);
+
         RequestToUpdateUserDetails request = new RequestToUpdateUserDetails();
         request.setFirstName("Mike");
         request.setLastName("Boyo");
         request.setEmail("doe@gmail.com");
         request.setNewEmail("odogwu@gmail.com");
-        Customer foundCustomer = customerRepository.updateDetails(request);
+
+        firstCustomerSaved.setFirstName(request.getFirstName());
+        firstCustomerSaved.setLastName(request.getLastName());
+        firstCustomerSaved.setEmail(request.getNewEmail());
+        Customer foundCustomer = customerRepository.updateDetails(index,firstCustomerSaved);
 
         assertEquals("Mike",firstCustomerSaved.getFirstName());
         assertEquals("Boyo",firstCustomerSaved.getLastName());
@@ -63,8 +70,15 @@ class OHCustomerRepositoryTest {
 
 
         List<Customer> allCustomers = customerRepository.findAllCustomers();
-//        assertFalse(allCustomers.contains(firstCustomerSaved));
+//        assertFalse(customerRepository.findAllCustomers().contains(firstCustomerSaved));
+        //assertFalse(!allCustomers.contains(firstCustomerSaved));
 
+        assertEquals(1,allCustomers.size());
+    }
+    @Test
+    void deleteCustomerById(){
+       customerRepository.deleteCustomerById(secondCustomerSaved.getId());
+        List<Customer> allCustomers = customerRepository.findAllCustomers();
         assertEquals(1,allCustomers.size());
     }
 
@@ -89,6 +103,12 @@ class OHCustomerRepositoryTest {
         newCustomer.setId(Utils.generateId());
 
         return newCustomer;
+    }
+
+    @AfterEach
+    void cleanUp(){
+        customerRepository.deleteCustomerById(firstCustomerSaved.getId());
+        customerRepository.deleteCustomerById(secondCustomerSaved.getId());
     }
 
 }

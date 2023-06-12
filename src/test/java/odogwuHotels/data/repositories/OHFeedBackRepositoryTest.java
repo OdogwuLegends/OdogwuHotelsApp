@@ -1,6 +1,7 @@
 package odogwuHotels.data.repositories;
 
 import odogwuHotels.data.models.FeedBack;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OHFeedBackRepositoryTest {
     private final FeedBackRepository feedBackRepository = new OHFeedBackRepository();
-
     private FeedBack firstFeedBackSaved;
     private FeedBack secondFeedBackSaved;
 
@@ -44,15 +44,13 @@ class OHFeedBackRepositoryTest {
         assertFalse(allFeedBacks.contains(thirdFeedBack));
     }
     @Test
-    void deleteFeedBack(){
+    void deleteFeedBackById(){
         feedBackRepository.deleteFeedBackById(secondFeedBackSaved.getId());
         List<FeedBack> allFeedBacks = feedBackRepository.findAllFeedBacks();
         assertEquals(1,allFeedBacks.size());
 
         feedBackRepository.deleteFeedBackById(firstFeedBackSaved.getId());
         assertEquals(0,allFeedBacks.size());
-
-
     }
 
     private FeedBack firstFeedBack(){
@@ -64,6 +62,12 @@ class OHFeedBackRepositoryTest {
         FeedBack feedBack = new FeedBack();
         feedBack.setMessage("Hi People");
         return feedBack;
+    }
+
+    @AfterEach
+    void cleanUp(){
+        feedBackRepository.deleteFeedBackById(firstFeedBackSaved.getId());
+        feedBackRepository.deleteFeedBackById(secondFeedBackSaved.getId());
     }
 
 }

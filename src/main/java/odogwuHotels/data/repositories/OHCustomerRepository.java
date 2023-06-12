@@ -2,15 +2,12 @@ package odogwuHotels.data.repositories;
 
 import odogwuHotels.Utils;
 import odogwuHotels.data.models.Customer;
-import odogwuHotels.dto.requests.RequestToUpdateUserDetails;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class OHCustomerRepository implements CustomerRepository{
 
-    List<Customer> customerRepository = new ArrayList<>();
+    static List<Customer> customerRepository = new ArrayList<>();
 
     @Override
     public Customer saveCustomer(Customer newCustomer) {
@@ -20,17 +17,9 @@ public class OHCustomerRepository implements CustomerRepository{
     }
 
     @Override
-    public Customer updateDetails(RequestToUpdateUserDetails request) {
-        for(Customer foundCustomer : customerRepository){
-            if(Objects.equals(foundCustomer.getEmail(),request.getEmail())){
-                if(request.getFirstName() != null) foundCustomer.setFirstName(request.getFirstName());
-                if(request.getLastName() != null) foundCustomer.setLastName(request.getLastName());
-                if(request.getNewEmail() != null) foundCustomer.setEmail(request.getNewEmail());
-                if(request.getPassword() != null) foundCustomer.setPassword(request.getPassword());
-            }
-            return foundCustomer;
-        }
-        return null;
+    public Customer updateDetails(int index, Customer customerToUpdate) {
+        customerRepository.set(index,customerToUpdate);
+        return customerToUpdate;
     }
 
     @Override
@@ -42,6 +31,32 @@ public class OHCustomerRepository implements CustomerRepository{
     }
 
     @Override
+    public Customer findCustomerById(int id) {
+        for (Customer foundCustomer : customerRepository){
+            if(Objects.equals(foundCustomer.getId(),id)) return foundCustomer;
+        }
+        return null;
+    }
+
+    @Override
+    public int getIndex(Customer customerToCheck){
+        int index = 0;
+        for (Customer customer : customerRepository){
+            if(Objects.equals(customer,customerToCheck))
+               index  = customerRepository.indexOf(customer);
+        }
+        return index;
+    }
+    @Override
+    public Map<Integer,Customer> getIdsOfAllCustomers(){
+        Map<Integer,Customer> customersId = new TreeMap<>();
+        for (Customer customer : customerRepository) {
+            customersId.put(customer.getId(), customer);
+        }
+        return customersId;
+    }
+
+    @Override
     public List<Customer> findAllCustomers() {
         return customerRepository;
     }
@@ -49,6 +64,12 @@ public class OHCustomerRepository implements CustomerRepository{
     @Override
     public void deleteCustomerByEmail(String email) {
         Customer foundCustomer = findCustomerByEmail(email);
+        if(foundCustomer != null) customerRepository.remove(foundCustomer);
+    }
+
+    @Override
+    public void deleteCustomerById(int id) {
+        Customer foundCustomer = findCustomerById(id);
         if(foundCustomer != null) customerRepository.remove(foundCustomer);
     }
 }

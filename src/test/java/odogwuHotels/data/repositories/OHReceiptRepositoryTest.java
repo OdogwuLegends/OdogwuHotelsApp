@@ -3,6 +3,7 @@ package odogwuHotels.data.repositories;
 import odogwuHotels.Utils;
 import odogwuHotels.data.models.Admin;
 import odogwuHotels.data.models.Receipt;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OHReceiptRepositoryTest {
     private final ReceiptRepository receiptRepository = new OHReceiptRepository();
-
     private Receipt firstReceiptSaved;
     private Receipt secondReceiptSaved;
 
@@ -54,7 +54,7 @@ class OHReceiptRepositoryTest {
         long duration = ChronoUnit.DAYS.between(checkOut,newCheckIn);
         foundReceipt.setDurationOfStay(Utils.durationOfStay(duration));
 
-        receiptRepository.editReceipt(foundReceipt);
+        receiptRepository.updateReceipt(foundReceipt);
 
         assertSame(firstReceiptSaved,foundReceipt);
         assertEquals(firstReceiptSaved.getDurationOfStay(),foundReceipt.getDurationOfStay());
@@ -65,6 +65,12 @@ class OHReceiptRepositoryTest {
         Receipt foundReceipt = receiptRepository.findById(firstReceiptSaved.getId());
         assertSame(firstReceiptSaved,foundReceipt);
         assertEquals(firstReceiptSaved.getCheckInDate(),foundReceipt.getCheckInDate());
+    }
+    @Test
+    void findReceiptByEmail(){
+        Receipt foundReceipt = receiptRepository.findByEmail(secondReceiptSaved.getEmail());
+        assertSame(secondReceiptSaved,foundReceipt);
+        assertEquals(secondReceiptSaved.getCheckOutDate(),foundReceipt.getCheckOutDate());
     }
 
     @Test
@@ -99,6 +105,7 @@ class OHReceiptRepositoryTest {
 
         receipt.setFirstName("Eden");
         receipt.setLastName("Hazard");
+        receipt.setEmail("hazard@gmail.com");
         receipt.setId(Utils.generateId());
         receipt.setRoomType(DOUBLE);
         receipt.setRoomPrice(BigDecimal.valueOf(100));
@@ -125,6 +132,7 @@ class OHReceiptRepositoryTest {
 
         receipt.setFirstName("Michael");
         receipt.setLastName("Hemming");
+        receipt.setEmail("hems@gmail.com");
         receipt.setId(Utils.generateId());
         receipt.setRoomType(SINGLE);
         receipt.setRoomPrice(BigDecimal.valueOf(50));
@@ -146,5 +154,9 @@ class OHReceiptRepositoryTest {
         return receipt;
     }
 
-
+    @AfterEach
+    void cleanUp(){
+        receiptRepository.deleteReceiptById(firstReceiptSaved.getId());
+        receiptRepository.deleteReceiptById(secondReceiptSaved.getId());
+    }
 }

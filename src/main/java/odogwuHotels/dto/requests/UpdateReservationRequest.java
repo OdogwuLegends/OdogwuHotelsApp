@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class UpdateReservationRequest extends ReservationRequest{
     private int newRoomNumberChosen;
-    private boolean isBooked;
+    private boolean isAvailable;
 }

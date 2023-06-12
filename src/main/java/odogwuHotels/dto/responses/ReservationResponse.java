@@ -14,6 +14,8 @@ public class ReservationResponse {
     private int roomNumber;
     private BigDecimal roomPrice;
     private RoomType roomType;
+    private boolean isAvailable;
+    private int id;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private String message;

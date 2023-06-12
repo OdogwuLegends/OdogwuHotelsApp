@@ -3,7 +3,7 @@ package odogwuHotels.dto.requests;
 import lombok.Data;
 
 @Data
-public class RegisterCustomerRequest {
+public class RegisterUserRequest {
     private String firstName;
     private String lastName;
     private String email;

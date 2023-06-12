@@ -2,6 +2,7 @@ package odogwuHotels.data.repositories;
 
 import odogwuHotels.data.models.Room;
 import odogwuHotels.dto.requests.RequestToUpdateRoom;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,35 +37,54 @@ class OHRoomRepositoryTest {
     @Test
     void updateSingleRoom(){
         assertEquals(1,firstRoomSaved.getRoomNumber());
+        assertEquals(SINGLE,firstRoomSaved.getRoomType());
+
+        int index = roomRepository.getIndex(firstRoomSaved);
 
         RequestToUpdateRoom request = new RequestToUpdateRoom();
         request.setRoomId(firstRoomSaved.getId());
         request.setRoomNumber(1);
-        request.setNewRoomNumber(3);
+        request.setNewRoomNumber(5);
         request.setPrice(BigDecimal.valueOf(100));
         request.setRoomType(DOUBLE);
+        request.setAvailable(true);
 
-        Room updatedRoom = roomRepository.updateRoom(request);
+        firstRoomSaved.setRoomNumber(request.getNewRoomNumber());
+        firstRoomSaved.setPrice(request.getPrice());
+        firstRoomSaved.setRoomType(request.getRoomType());
+        firstRoomSaved.setAvailable(request.isAvailable());
+
+        Room updatedRoom = roomRepository.updateRoom(index,firstRoomSaved);
+
         assertSame(firstRoomSaved,updatedRoom);
         assertEquals(BigDecimal.valueOf(100),firstRoomSaved.getPrice());
-        assertEquals(3,firstRoomSaved.getRoomNumber());
+        assertEquals(5,firstRoomSaved.getRoomNumber());
         assertEquals(DOUBLE,firstRoomSaved.getRoomType());
+        assertTrue(firstRoomSaved.isAvailable());
     }
     @Test
     void updateDoubleRoom(){
         assertEquals(2,secondRoomSaved.getRoomNumber());
+        assertEquals(DOUBLE,secondRoomSaved.getRoomType());
+
+        int index = roomRepository.getIndex(secondRoomSaved);
 
         RequestToUpdateRoom request = new RequestToUpdateRoom();
         request.setRoomId(secondRoomSaved.getId());
         request.setRoomNumber(2);
-        request.setNewRoomNumber(5);
+        request.setNewRoomNumber(10);
         request.setPrice(BigDecimal.valueOf(200));
         request.setRoomType(SINGLE);
 
-        Room updatedRoom = roomRepository.updateRoom(request);
+        secondRoomSaved.setRoomNumber(request.getNewRoomNumber());
+        secondRoomSaved.setPrice(request.getPrice());
+        secondRoomSaved.setRoomType(request.getRoomType());
+
+        Room updatedRoom = roomRepository.updateRoom(index,secondRoomSaved);
+
         assertSame(secondRoomSaved,updatedRoom);
         assertEquals(BigDecimal.valueOf(200),secondRoomSaved.getPrice());
-        assertEquals(5,secondRoomSaved.getRoomNumber());
+        assertEquals(10,secondRoomSaved.getRoomNumber());
         assertEquals(SINGLE,secondRoomSaved.getRoomType());
     }
     @Test
@@ -96,13 +116,23 @@ class OHRoomRepositoryTest {
         assertEquals(availableRooms,roomRepository.findAllAvailableRooms());
 
         RequestToUpdateRoom request = new RequestToUpdateRoom();
-        request.setRoomNumber(1);
+        request.setRoomNumber(firstRoomSaved.getRoomNumber());
         request.setAvailable(true);
-        roomRepository.updateRoom(request);
 
-        request.setRoomNumber(2);
+        firstRoomSaved.setRoomNumber(request.getRoomNumber());
+        firstRoomSaved.setAvailable(request.isAvailable());
+
+        int index = roomRepository.getIndex(firstRoomSaved);
+        roomRepository.updateRoom(index,firstRoomSaved);
+
+        request.setRoomNumber(secondRoomSaved.getRoomNumber());
         request.setAvailable(true);
-        roomRepository.updateRoom(request);
+
+        secondRoomSaved.setRoomNumber(request.getRoomNumber());
+        secondRoomSaved.setAvailable(request.isAvailable());
+
+        index = roomRepository.getIndex(secondRoomSaved);
+        roomRepository.updateRoom(index,secondRoomSaved);
 
         availableRooms.add(1);
         availableRooms.add(2);
@@ -116,7 +146,10 @@ class OHRoomRepositoryTest {
         RequestToUpdateRoom request = new RequestToUpdateRoom();
         request.setRoomNumber(1);
         request.setAvailable(true);
-        roomRepository.updateRoom(request);
+
+        firstRoomSaved.setAvailable(request.isAvailable());
+        int index = roomRepository.getIndex(firstRoomSaved);
+        roomRepository.updateRoom(index,firstRoomSaved);
 
         availableSingleRooms.add(1);
         assertEquals(availableSingleRooms,roomRepository.findAvailableSingleRooms());
@@ -130,7 +163,10 @@ class OHRoomRepositoryTest {
         RequestToUpdateRoom request = new RequestToUpdateRoom();
         request.setRoomNumber(2);
         request.setAvailable(true);
-        roomRepository.updateRoom(request);
+
+        secondRoomSaved.setAvailable(request.isAvailable());
+        int index = roomRepository.getIndex(secondRoomSaved);
+        roomRepository.updateRoom(index,secondRoomSaved);
 
         availableDoubleRooms.add(2);
         assertEquals(availableDoubleRooms,roomRepository.findAvailableDoubleRooms());
@@ -159,7 +195,11 @@ class OHRoomRepositoryTest {
         RequestToUpdateRoom request = new RequestToUpdateRoom();
         request.setRoomNumber(1);
         request.setAvailable(true);
-        roomRepository.updateRoom(request);
+
+        firstRoomSaved.setAvailable(request.isAvailable());
+        int index = roomRepository.getIndex(firstRoomSaved);
+        roomRepository.updateRoom(index,firstRoomSaved);
+
         availableSingleRooms.add(1);
         assertEquals(availableSingleRooms,roomRepository.findAvailableRooms(SINGLE_ROOMS));
 
@@ -167,7 +207,11 @@ class OHRoomRepositoryTest {
         RequestToUpdateRoom request2 = new RequestToUpdateRoom();
         request2.setRoomNumber(2);
         request2.setAvailable(true);
-        roomRepository.updateRoom(request2);
+
+        secondRoomSaved.setAvailable(request.isAvailable());
+        index = roomRepository.getIndex(secondRoomSaved);
+        roomRepository.updateRoom(index,secondRoomSaved);
+
         availableDoubleRooms.add(2);
         assertEquals(availableDoubleRooms,roomRepository.findAvailableRooms(DOUBLE_ROOMS));
 
@@ -217,6 +261,12 @@ class OHRoomRepositoryTest {
         room.setPrice(BigDecimal.valueOf(100));
 
         return room;
+    }
+
+    @AfterEach
+    void cleanUp(){
+        roomRepository.removeRoomById(firstRoomSaved.getId());
+        roomRepository.removeRoomById(secondRoomSaved.getId());
     }
 
 }

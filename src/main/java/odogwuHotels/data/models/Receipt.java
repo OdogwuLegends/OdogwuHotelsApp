@@ -9,6 +9,8 @@ import java.time.LocalDate;
 public class Receipt {
     private String firstName;
     private String lastName;
+    private String email;
+    private int roomNumber;
     private RoomType roomType;
     private BigDecimal roomPrice;
     private LocalDate checkInDate;
@@ -17,6 +19,12 @@ public class Receipt {
     private BigDecimal amountPaid;
     private BigDecimal balance;
     private boolean isFullyPaidFor;
+    private boolean isApproved;
     private String approvedBy;
     private int id;
+
+    //RESERVATION
+    //PAYMENT METHOD
+    //ADMIN TO APPROVE
+    //Remember iSFullyPaidFor in receipt service
 }

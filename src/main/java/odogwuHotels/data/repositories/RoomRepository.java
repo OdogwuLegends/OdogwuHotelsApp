@@ -5,10 +5,13 @@ import odogwuHotels.data.models.Room;
 import odogwuHotels.dto.requests.RequestToUpdateRoom;
 
 import java.util.List;
+import java.util.Map;
 
 public interface RoomRepository {
     Room saveRoom(Room room);
-    Room updateRoom(RequestToUpdateRoom updateRoom);
+    Room updateRoom(int index, Room roomToUpdate);
+    int getIndex (Room roomToCheck);
+    Map<Integer, Integer> getIdsOfAllRooms();
     Room findRoomByRoomNumber(int roomNumber);
     Room findRoomById(int id);
     List<Integer> findAvailableRooms(FindRoomByChoice findRoomByChoice);

@@ -6,7 +6,7 @@ import odogwuHotels.data.models.RoomType;
 import java.math.BigDecimal;
 
 @Data
-public class RoomSearchResponse {
+public class SearchResponse {
     private RoomType roomType;
     private int roomNumber;
     private int roomId;

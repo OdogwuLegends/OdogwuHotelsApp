@@ -6,8 +6,9 @@ import odogwuHotels.dto.requests.RequestToUpdateRoom;
 import odogwuHotels.dto.requests.RoomSearchRequest;
 import odogwuHotels.dto.responses.DeleteResponse;
 import odogwuHotels.dto.responses.RoomCreationResponse;
-import odogwuHotels.dto.responses.RoomSearchResponse;
-import odogwuHotels.dto.responses.RoomUpdateResponse;
+import odogwuHotels.dto.responses.SearchResponse;
+import odogwuHotels.dto.responses.UpdateResponse;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -45,7 +46,7 @@ class OHRoomServiceTest {
         RequestToUpdateRoom request = new RequestToUpdateRoom();
         request.setRoomNumber(1);
         request.setRoomType(DOUBLE);
-        RoomUpdateResponse updateRoom = roomService.editRoomDetails(request);
+        UpdateResponse updateRoom = roomService.editRoomDetails(request);
         assertEquals("Update Successful",updateRoom.getMessage());
     }
     @Test
@@ -53,7 +54,7 @@ class OHRoomServiceTest {
         RequestToUpdateRoom request = new RequestToUpdateRoom();
         request.setRoomNumber(1);
         request.setNewRoomNumber(5);
-        RoomUpdateResponse updateRoom = roomService.editRoomDetails(request);
+        UpdateResponse updateRoom = roomService.editRoomDetails(request);
         assertEquals("Update Successful",updateRoom.getMessage());
     }
     @Test
@@ -61,13 +62,13 @@ class OHRoomServiceTest {
         RequestToUpdateRoom updateRoom = new RequestToUpdateRoom();
         updateRoom.setRoomNumber(1);
         updateRoom.setAvailable(true);
-        RoomUpdateResponse availableRoom = roomService.editRoomDetails(updateRoom);
+        UpdateResponse availableRoom = roomService.editRoomDetails(updateRoom);
         assertEquals("Update Successful",availableRoom.getMessage());
 
         RoomSearchRequest request = new RoomSearchRequest();
         request.setFindRoomByChoice(SINGLE_ROOMS);
 
-        RoomSearchResponse foundRoom = roomService.findAvailableRooms(request);
+        SearchResponse foundRoom = roomService.findAvailableRooms(request);
         assertEquals("Available Single Rooms are Room(s) 1  ",foundRoom.getMessage());
     }
     @Test
@@ -75,13 +76,13 @@ class OHRoomServiceTest {
         RequestToUpdateRoom updateRoom = new RequestToUpdateRoom();
         updateRoom.setRoomNumber(2);
         updateRoom.setAvailable(true);
-        RoomUpdateResponse availableRoom = roomService.editRoomDetails(updateRoom);
+        UpdateResponse availableRoom = roomService.editRoomDetails(updateRoom);
         assertEquals("Update Successful",availableRoom.getMessage());
 
         RoomSearchRequest request = new RoomSearchRequest();
         request.setFindRoomByChoice(DOUBLE_ROOMS);
 
-        RoomSearchResponse foundRoom = roomService.findAvailableRooms(request);
+        SearchResponse foundRoom = roomService.findAvailableRooms(request);
         assertEquals("Available Double Rooms are Room(s) 2  ",foundRoom.getMessage());
     }
     @Test
@@ -89,7 +90,7 @@ class OHRoomServiceTest {
         RequestToUpdateRoom updateRoom = new RequestToUpdateRoom();
         updateRoom.setRoomNumber(1);
         updateRoom.setAvailable(true);
-        RoomUpdateResponse availableRoom = roomService.editRoomDetails(updateRoom);
+        UpdateResponse availableRoom = roomService.editRoomDetails(updateRoom);
         assertEquals("Update Successful",availableRoom.getMessage());
 
 
@@ -101,7 +102,7 @@ class OHRoomServiceTest {
         RoomSearchRequest request = new RoomSearchRequest();
         request.setFindRoomByChoice(ALL_ROOMS);
 
-        RoomSearchResponse foundRoom = roomService.findAvailableRooms(request);
+        SearchResponse foundRoom = roomService.findAvailableRooms(request);
         assertEquals("All Available Rooms are Room(s) 1, 2  ",foundRoom.getMessage());
     }
     @Test
@@ -109,7 +110,7 @@ class OHRoomServiceTest {
         RoomSearchRequest request = new RoomSearchRequest();
         request.setFindRoomByChoice(SINGLE_ROOMS);
 
-        RoomSearchResponse foundRoom = roomService.findBookedRooms(request);
+        SearchResponse foundRoom = roomService.findBookedRooms(request);
         assertEquals("Booked Single Rooms are Room(s) 1  ",foundRoom.getMessage());
     }
     @Test
@@ -117,7 +118,7 @@ class OHRoomServiceTest {
         RoomSearchRequest request = new RoomSearchRequest();
         request.setFindRoomByChoice(DOUBLE_ROOMS);
 
-        RoomSearchResponse foundRoom = roomService.findBookedRooms(request);
+        SearchResponse foundRoom = roomService.findBookedRooms(request);
         assertEquals("Booked Double Rooms are Room(s) 2  ",foundRoom.getMessage());
     }
     @Test
@@ -125,7 +126,7 @@ class OHRoomServiceTest {
         RoomSearchRequest request = new RoomSearchRequest();
         request.setFindRoomByChoice(ALL_ROOMS);
 
-        RoomSearchResponse foundRoom = roomService.findBookedRooms(request);
+        SearchResponse foundRoom = roomService.findBookedRooms(request);
         assertEquals("All Booked Rooms are Room(s) 1, 2  ",foundRoom.getMessage());
     }
 
@@ -134,31 +135,26 @@ class OHRoomServiceTest {
         RoomSearchRequest request = new RoomSearchRequest();
         request.setRoomNumberChosen(1);
 
-        RoomSearchResponse foundRoom = roomService.findRoomByIdOrRoomNumber(request);
+        SearchResponse foundRoom = roomService.findRoomByIdOrRoomNumber(request);
         assertEquals("Room "+foundRoom.getRoomNumber()+" found.",foundRoom.getMessage());
     }
     @Test
     void findRoomById(){
         RoomSearchRequest request = new RoomSearchRequest();
-        //request.setRoomNumberChosen(1);
-        //RoomSearchResponse room = roomService.findRoomByIdOrRoomNumber(request);
+        request.setRoomId(doubleRoom.getRoomId());
+        System.out.println("Room ID "+doubleRoom.getRoomId());
+        System.out.println("Room Number "+doubleRoom.getRoomNumber());
 
-        //request.setRoomId(room.getRoomId());
-        request.setRoomId(1);
-
-        RoomSearchResponse foundRoom = roomService.findRoomByIdOrRoomNumber(request);
-        assertEquals("Room "+foundRoom.getRoomId()+" found.",foundRoom.getMessage());
+        SearchResponse foundRoom = roomService.findRoomByIdOrRoomNumber(request);
+        System.out.println("ERROR LINE "+foundRoom.getRoomNumber());
+        assertEquals("Room "+foundRoom.getRoomNumber()+" found.",foundRoom.getMessage());
     }
     @Test
     void deleteRoomById(){
-        RoomSearchRequest request = new RoomSearchRequest();
-        request.setRoomNumberChosen(1);
-        RoomSearchResponse foundRoom = roomService.findRoomByIdOrRoomNumber(request);
+        RequestToUpdateRoom request = new RequestToUpdateRoom();
+        request.setRoomId(singleRoom.getRoomId());
 
-        RequestToUpdateRoom updateRoom = new RequestToUpdateRoom();
-        updateRoom.setRoomId(foundRoom.getRoomId());
-
-        DeleteResponse deletedRoom = roomService.deleteRoomByRoomById(updateRoom);
+        DeleteResponse deletedRoom = roomService.deleteRoomByRoomById(request);
         assertEquals("Room "+deletedRoom.getRoomNumber()+" Deleted Successfully",deletedRoom.getMessage());
     }
     @Test
@@ -167,6 +163,7 @@ class OHRoomServiceTest {
         assertEquals(2,allRooms.size());
 
     }
+
     private RequestToCreateRoom firstSingleRoomCreated(){
         RequestToCreateRoom request = new RequestToCreateRoom();
 
@@ -186,6 +183,18 @@ class OHRoomServiceTest {
         request.setAvailable(false);
 
         return request;
+    }
+
+    @AfterEach
+    void cleanUp(){
+        RequestToUpdateRoom request = new RequestToUpdateRoom();
+//        request.setRoomNumber(1);
+        request.setRoomId(singleRoom.getRoomId());
+        roomService.deleteRoomByRoomById(request);
+
+//        request.setRoomNumber(2);
+        request.setRoomId(doubleRoom.getRoomId());
+        roomService.deleteRoomByRoomById(request);
     }
 
 }

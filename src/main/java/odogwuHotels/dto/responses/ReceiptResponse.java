@@ -10,6 +10,7 @@ import java.time.LocalDate;
 public class ReceiptResponse {
     private String firstName;
     private String lastName;
+    private String email;
     private int roomNumber;
     private RoomType roomType;
     private BigDecimal roomPrice;
@@ -19,7 +20,9 @@ public class ReceiptResponse {
     private BigDecimal amountPaid;
     private BigDecimal balance;
     private String approvedBy;
-    private int id;
+    private boolean isFullyPaidFor;
+    private boolean isApproved;
+    private String message;
 
     @Override
     public String toString(){
@@ -32,7 +35,7 @@ public class ReceiptResponse {
         sb.append("\nBALANCE - ").append(balance);
         sb.append("\nCHECK IN DATE - ").append(checkInDate);
         sb.append("\nCHECK OUT DATE - ").append(checkOutDate);
-        sb.append("\nDURATION OF STAY - ").append(durationOfStay);
+        sb.append("\nDURATION OF STAY - ").append(durationOfStay).append(" days");
         sb.append("\nAUTHORIZED BY - ").append(approvedBy);
 
         return sb.toString();

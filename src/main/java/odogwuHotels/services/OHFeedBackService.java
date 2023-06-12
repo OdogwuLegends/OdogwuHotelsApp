@@ -15,11 +15,13 @@ public class OHFeedBackService implements FeedBackService{
         FeedBack customerFeedBack = new FeedBack();
         customerFeedBack.setMessage(feedBack);
         feedBackRepository.saveFeedBack(customerFeedBack);
-        return "Feed back received. Thank You";
+        return "Your feed back has been received. Thank You";
     }
 
     @Override
     public String findFeedBackById(int id) {
+        //CREATE A METHOD IN THE REPOSITORY THAT HAS A LIST[MAP] INSIDE OF IT AND CALLS
+        // THE MAIN LIST, GETS ALL THE OBJECT'S IDs AND RETURNS ALL THE IDs.
         return null;
     }
 
@@ -30,6 +32,8 @@ public class OHFeedBackService implements FeedBackService{
 
     @Override
     public DeleteResponse deleteFeedBackById(int id) {
+        //CREATE A METHOD IN THE REPOSITORY THAT HAS A LIST[MAP] INSIDE OF IT AND CALLS
+        // THE MAIN LIST, GETS ALL THE OBJECT'S IDs AND RETURNS ALL THE IDs.
         return null;
     }
 }

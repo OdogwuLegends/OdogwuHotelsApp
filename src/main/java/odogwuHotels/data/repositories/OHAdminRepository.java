@@ -2,15 +2,10 @@ package odogwuHotels.data.repositories;
 
 import odogwuHotels.Utils;
 import odogwuHotels.data.models.Admin;
-import odogwuHotels.dto.requests.RequestToUpdateUserDetails;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class OHAdminRepository implements AdminRepository {
-    List<Admin> adminRepository = new ArrayList<>();
+    static List<Admin> adminRepository = new ArrayList<>();
 
     @Override
     public Admin saveAdmin(Admin newAdmin) {
@@ -21,17 +16,26 @@ public class OHAdminRepository implements AdminRepository {
     }
 
     @Override
-    public Admin updateDetails(RequestToUpdateUserDetails request) {
-        Admin foundAdmin = findAdminByEmail(request.getEmail());
-        if(foundAdmin != null){
-            if(request.getFirstName() != null) foundAdmin.setFirstName(request.getFirstName());
-            if(request.getLastName() != null) foundAdmin.setLastName(request.getLastName());
-            if(request.getNewEmail() != null) foundAdmin.setEmail(request.getNewEmail());
-            if(request.getPassword() != null) foundAdmin.setPassword(request.getPassword());
-            if(request.isSuperAdmin() != foundAdmin.isSuperAdmin()) foundAdmin.setSuperAdmin(request.isSuperAdmin());
-            return foundAdmin;
+    public Admin updateDetails(int index, Admin adminToUpdate) {
+        adminRepository.set(index, adminToUpdate);
+        return adminToUpdate;
+    }
+    @Override
+    public int getIndex(Admin adminToUpdate){
+        int index = 0;
+        for (Admin admin : adminRepository){
+            if(Objects.equals(admin,adminToUpdate))
+                index = adminRepository.indexOf(admin);
         }
-        return null;
+        return index;
+    }
+    @Override
+    public Map<Integer, Admin> getIdsOfAllAdmins(){
+        Map<Integer,Admin> adminsId = new TreeMap<>();
+        for (Admin admin : adminRepository){
+            adminsId.put(admin.getId(),admin);
+        }
+        return adminsId;
     }
 
     @Override

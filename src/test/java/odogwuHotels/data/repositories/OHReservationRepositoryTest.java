@@ -6,11 +6,14 @@ import odogwuHotels.data.models.Receipt;
 import odogwuHotels.data.models.Reservation;
 import odogwuHotels.data.models.Room;
 import odogwuHotels.dto.requests.UpdateReservationRequest;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import static odogwuHotels.data.models.RoomType.DOUBLE;
 import static odogwuHotels.data.models.RoomType.SINGLE;
@@ -18,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OHReservationRepositoryTest {
     private final ReservationRepository reservationRepository = new OHReservationRepository();
-
     private Reservation firstReservationSaved;
     private Reservation secondReservationSaved;
 
@@ -27,6 +29,7 @@ class OHReservationRepositoryTest {
         firstReservationSaved = reservationRepository.saveReservation(firstReservation());
         secondReservationSaved = reservationRepository.saveReservation(secondReservation());
     }
+
 
     @Test
     void SaveReservation(){
@@ -42,34 +45,55 @@ class OHReservationRepositoryTest {
         assertEquals(4,firstReservationSaved.getRoom().getRoomNumber());
         assertEquals(SINGLE,firstReservationSaved.getRoom().getRoomType());
 
+        int index = reservationRepository.getIndex(firstReservationSaved);
+
         UpdateReservationRequest request = new UpdateReservationRequest();
         request.setRoomNumberChosen(4);
-        request.setNewRoomNumberChosen(10);
-        request.setRoomType(DOUBLE);
+//        request.setNewRoomNumberChosen(10);
         request.setCheckInDate("25/06/2023");
         request.setCheckOutDate("30/06/2023");
+        request.setLastName("Odogwu");
 
-        Reservation updatedReservation = reservationRepository.updateReservation(request);
+        firstReservationSaved.setCheckInDate(Utils.stringToLocalDate(request.getCheckInDate()));
+        firstReservationSaved.setCheckOutDate(Utils.stringToLocalDate(request.getCheckOutDate()));
+        firstReservationSaved.getCustomer().setLastName(request.getLastName());
 
-        assertEquals(10,firstReservationSaved.getRoom().getRoomNumber());
-        assertEquals(DOUBLE,firstReservationSaved.getRoom().getRoomType());
+        Reservation updatedReservation = reservationRepository.updateReservation(index,firstReservationSaved);
+
+        assertEquals(firstReservationSaved.getCustomer().getLastName(),updatedReservation.getCustomer().getLastName());
+        assertEquals(firstReservationSaved.getCheckInDate(),updatedReservation.getCheckInDate());
         assertSame(firstReservationSaved,updatedReservation);
         assertEquals(firstReservationSaved.getCheckOutDate(),updatedReservation.getCheckOutDate());
-        assertEquals(firstReservationSaved.isBooked(),updatedReservation.isBooked());
     }
+//    @Test
+//    @DisplayName("Test that room features change when room number is updated in reservation.")
+//    void testToChangeTheRoomFeatures(){
+//        assertEquals(4,firstReservationSaved.getRoom().getRoomNumber());
+//        assertEquals(SINGLE,firstReservationSaved.getRoom().getRoomType());
+//
+//        int index = reservationRepository.getIndex(firstReservationSaved);
+//
+//        UpdateReservationRequest request = new UpdateReservationRequest();
+//        request.setRoomNumberChosen(4);
+//        request.setNewRoomNumberChosen(5);
+//
+//        firstReservationSaved.getRoom().setRoomNumber(request.getNewRoomNumberChosen());
+//        Reservation updatedReservation = reservationRepository.updateReservation(index,firstReservationSaved);
+//
+////        assertEquals(DOUBLE,firstReservationSaved.getRoom().getRoomType());
+//        assertEquals(DOUBLE,updatedReservation.getRoom().getRoomType());
+//
+//    }
     @Test
     void findReservationByRoomNumber(){
         Reservation foundReservation = reservationRepository.findReservationByRoomNumber(firstReservationSaved.getRoom().getRoomNumber());
         assertSame(firstReservationSaved,foundReservation);
         assertEquals(4,foundReservation.getRoom().getRoomNumber());
-        System.out.println(firstReservationSaved.getId());
-        System.out.println(foundReservation.getId());
     }
     @Test
     void findReservationById(){
         Reservation foundReservation = reservationRepository.findReservationById(secondReservationSaved.getId());
         assertSame(secondReservationSaved,foundReservation);
-        assertTrue(foundReservation.isBooked());
     }
     @Test
     void findAllReservations(){
@@ -104,11 +128,11 @@ class OHReservationRepositoryTest {
 
     private Reservation firstReservation(){
         Reservation reservation = new Reservation();
-        reservation.setId(Utils.generateId());
 
         Customer customer = new Customer();
         customer.setFirstName("Legend");
         customer.setLastName("Boss");
+        customer.setEmail("Odogwu@gmail.com");
         reservation.setCustomer(customer);
 
         Room room = new Room();
@@ -116,28 +140,23 @@ class OHReservationRepositoryTest {
         room.setRoomNumber(4);
         room.setPrice(BigDecimal.valueOf(50));
         room.setAvailable(false);
-        room.setId(Utils.generateId());
         reservation.setRoom(room);
 
         reservation.setCheckInDate(Utils.stringToLocalDate("06/06/2023"));
         reservation.setCheckOutDate(Utils.stringToLocalDate("11/06/2023"));
 
-        reservation.setBooked(true);
 
-        Receipt receipt = new Receipt();
-        receipt.setAmountPaid(BigDecimal.valueOf(50));
-        reservation.setPaymentReceipt(receipt);
 
         return reservation;
     }
 
     private Reservation secondReservation(){
         Reservation reservation = new Reservation();
-        reservation.setId(Utils.generateId());
 
         Customer customer = new Customer();
         customer.setFirstName("Ned");
         customer.setLastName("Stark");
+        customer.setEmail("stark@gmail.com");
         reservation.setCustomer(customer);
 
         Room room = new Room();
@@ -145,20 +164,19 @@ class OHReservationRepositoryTest {
         room.setRoomNumber(5);
         room.setPrice(BigDecimal.valueOf(100));
         room.setAvailable(false);
-        room.setId(Utils.generateId());
         reservation.setRoom(room);
 
         reservation.setCheckInDate(Utils.stringToLocalDate("16/06/2023"));
         reservation.setCheckOutDate(Utils.stringToLocalDate("19/06/2023"));
 
-        reservation.setBooked(true);
-
-        Receipt receipt = new Receipt();
-        receipt.setAmountPaid(BigDecimal.valueOf(50));
-        reservation.setPaymentReceipt(receipt);
 
         return reservation;
     }
 
+    @AfterEach
+    void cleanUp(){
+        reservationRepository.deleteReservationByRoomNumber(4);
+        reservationRepository.deleteReservationByRoomNumber(5);
+    }
 
 }

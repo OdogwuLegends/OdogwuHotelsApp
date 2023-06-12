@@ -3,56 +3,67 @@ package odogwuHotels.data.repositories;
 import odogwuHotels.Utils;
 import odogwuHotels.data.models.Receipt;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class OHReceiptRepository implements ReceiptRepository{
-    List<Receipt> receipts = new ArrayList<>();
+    static List<Receipt> receiptList = new ArrayList<>();
 
     @Override
     public Receipt saveReceipt(Receipt receipt) {
         receipt.setId(Utils.generateId());
-        receipts.add(receipt);
+        receiptList.add(receipt);
         return null;
     }
 
     @Override
-    public Receipt editReceipt(Receipt receipt) {
-        Receipt foundReceipt = findById(receipt.getId());
+    public Receipt updateReceipt(Receipt receipt) {
+//        Receipt foundReceipt = findById(receipt.getId());
 
-        if(foundReceipt != null){
-            if(receipt.getFirstName() != null) foundReceipt.setFirstName(receipt.getFirstName());
-            if(receipt.getLastName() != null) foundReceipt.setLastName(receipt.getLastName());
-            if(receipt.getBalance() != null) foundReceipt.setBalance(receipt.getBalance());
-            if(receipt.getApprovedBy() != null) foundReceipt.setApprovedBy(receipt.getApprovedBy());
-            if(receipt.getAmountPaid() != null) foundReceipt.setAmountPaid(receipt.getAmountPaid());
-            if(receipt.getRoomType() != null) foundReceipt.setRoomType(receipt.getRoomType());
-            if(receipt.getRoomPrice() != null) foundReceipt.setRoomPrice(receipt.getRoomPrice());
-            if(receipt.getDurationOfStay() != null) foundReceipt.setDurationOfStay(receipt.getDurationOfStay());
-            if(receipt.getCheckInDate() != null) foundReceipt.setCheckInDate(receipt.getCheckInDate());
-            if(receipt.getCheckOutDate() != null) foundReceipt.setCheckOutDate(receipt.getCheckOutDate());
-            if(receipt.isFullyPaidFor() != foundReceipt.isFullyPaidFor()) foundReceipt.setFullyPaidFor(receipt.isFullyPaidFor());
+
+        return null;
+    }
+    @Override
+    public int getIndex(Receipt receiptToCheck){
+        int index = 0;
+        for (Receipt receipt : receiptList){
+            if(Objects.equals(receipt,receiptToCheck))
+                index = receiptList.indexOf(receipt);
         }
-        return foundReceipt;
+        return index;
+    }
+    @Override
+    public Map<Integer, Receipt> getIdsOfAllCustomers(){
+        Map<Integer, Receipt> idOfReceipts = new TreeMap<>();
+        for(Receipt receipt : receiptList){
+            idOfReceipts.put(receipt.getId(),receipt);
+        }
+        return idOfReceipts;
     }
 
     @Override
     public Receipt findById(int id) {
-        for(Receipt foundReceipt : receipts){
+        for(Receipt foundReceipt : receiptList){
             if(Objects.equals(foundReceipt.getId(),id)) return foundReceipt;
         }
         return null;
     }
 
     @Override
+    public Receipt findByEmail(String email) {
+        for(Receipt foundReceipt : receiptList){
+            if(Objects.equals(foundReceipt.getEmail(),email)) return foundReceipt;
+        }
+        return null;
+    }
+
+    @Override
     public List<Receipt> findAllReceipts() {
-        return receipts;
+        return receiptList;
     }
 
     @Override
     public void deleteReceiptById(int id) {
         Receipt foundReceipt = findById(id);
-        if(foundReceipt != null) receipts.remove(foundReceipt);
+        if(foundReceipt != null) receiptList.remove(foundReceipt);
     }
 }

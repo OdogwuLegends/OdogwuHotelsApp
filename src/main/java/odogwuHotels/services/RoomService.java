@@ -6,17 +6,17 @@ import odogwuHotels.dto.requests.RequestToUpdateRoom;
 import odogwuHotels.dto.requests.RoomSearchRequest;
 import odogwuHotels.dto.responses.DeleteResponse;
 import odogwuHotels.dto.responses.RoomCreationResponse;
-import odogwuHotels.dto.responses.RoomSearchResponse;
-import odogwuHotels.dto.responses.RoomUpdateResponse;
+import odogwuHotels.dto.responses.SearchResponse;
+import odogwuHotels.dto.responses.UpdateResponse;
 
 import java.util.List;
 
 public interface RoomService {
     RoomCreationResponse createRoom(RequestToCreateRoom createRoom);
-    RoomUpdateResponse editRoomDetails(RequestToUpdateRoom updateRoom);
-    RoomSearchResponse findAvailableRooms(RoomSearchRequest request);
-    RoomSearchResponse findBookedRooms(RoomSearchRequest request);
-    RoomSearchResponse findRoomByIdOrRoomNumber(RoomSearchRequest request);
+    UpdateResponse editRoomDetails(RequestToUpdateRoom updateRoom);
+    SearchResponse findAvailableRooms(RoomSearchRequest request);
+    SearchResponse findBookedRooms(RoomSearchRequest request);
+    SearchResponse findRoomByIdOrRoomNumber(RoomSearchRequest request);
     List<Room> findAllRooms();
     DeleteResponse deleteRoomByRoomById(RequestToUpdateRoom updateRoom);
 

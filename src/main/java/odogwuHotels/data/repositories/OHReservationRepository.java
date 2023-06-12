@@ -1,15 +1,13 @@
 package odogwuHotels.data.repositories;
 
 import odogwuHotels.Utils;
+import odogwuHotels.data.models.Customer;
 import odogwuHotels.data.models.Reservation;
-import odogwuHotels.dto.requests.UpdateReservationRequest;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class OHReservationRepository implements ReservationRepository{
-    List<Reservation> reservationList = new ArrayList<>();
+    static List<Reservation> reservationList = new ArrayList<>();
 
     @Override
     public Reservation saveReservation(Reservation reservation) {
@@ -19,18 +17,9 @@ public class OHReservationRepository implements ReservationRepository{
     }
 
     @Override
-    public Reservation updateReservation(UpdateReservationRequest request) {
-        Reservation foundReservation = findReservationByRoomNumber(request.getRoomNumberChosen());
-
-        if(foundReservation != null){
-            if(request.getNewRoomNumberChosen() > 0) foundReservation.getRoom().setRoomNumber(request.getNewRoomNumberChosen());
-            if(request.getCheckInDate() != null) foundReservation.setCheckInDate(Utils.stringToLocalDate(request.getCheckInDate()));
-            if(request.getCheckOutDate() != null) foundReservation.setCheckOutDate(Utils.stringToLocalDate(request.getCheckOutDate()));
-            if(request.getRoomType() != null) foundReservation.getRoom().setRoomType(request.getRoomType());
-            if(request.isBooked() != foundReservation.isBooked()) foundReservation.setBooked(request.isBooked());
-            return foundReservation;
-        }
-        return null;
+    public Reservation updateReservation(int index, Reservation reservationToUpdate) {
+        reservationList.set(index,reservationToUpdate);
+        return reservationToUpdate;
     }
 
     public Reservation findReservationByRoomNumber(int roomNumber) {
@@ -39,6 +28,23 @@ public class OHReservationRepository implements ReservationRepository{
                 return foundReservation;
         }
         return null;
+    }
+    @Override
+    public int getIndex(Reservation reservationToCheck){
+        int index = 0;
+        for (Reservation reservation : reservationList){
+            if(Objects.equals(reservation,reservationToCheck))
+                index = reservationList.indexOf(reservation);
+        }
+        return index;
+    }
+    @Override
+    public Map<Integer, Reservation> getIdsOfAllReservations(){
+        Map<Integer, Reservation> reservationsId = new TreeMap<>();
+        for(Reservation reservation : reservationList){
+            reservationsId.put(reservation.getId(), reservation);
+        }
+        return reservationsId;
     }
 
     @Override
