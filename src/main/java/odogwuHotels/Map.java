@@ -176,6 +176,7 @@ public class Map {
         response.setApprovedBy(receipt.getApprovedBy());
         response.setApproved(receipt.isApproved());
         response.setFullyPaidFor(receipt.isFullyPaidFor());
+        response.setId(receipt.getId());
 
         return response;
     }
@@ -269,6 +270,7 @@ public class Map {
         response.setRoomPrice(reservation.getRoom().getPrice());
         response.setRoomNumber(reservation.getRoom().getRoomNumber());
         response.setAvailable(reservation.getRoom().isAvailable());
+        response.setId(reservation.getId());
 
         return response;
     }
@@ -318,6 +320,11 @@ public class Map {
         roomSearchRequest.setRoomNumberChosen(request.getRoomNumberChosen());
 
         return roomSearchRequest;
+    }
+    public static RoomSearchRequest updateReservationRequestToRoomSearchResponse(UpdateReservationRequest request){
+        RoomSearchRequest response = new RoomSearchRequest();
+        response.setRoomNumberChosen(request.getNewRoomNumberChosen());
+        return response;
     }
     public static Room roomSearchResponseToRoom(SearchResponse response){
         Room room = new Room();

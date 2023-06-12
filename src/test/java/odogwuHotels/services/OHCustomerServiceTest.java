@@ -5,6 +5,7 @@ import odogwuHotels.Utils;
 import odogwuHotels.data.models.*;
 import odogwuHotels.dto.requests.*;
 import odogwuHotels.dto.responses.*;
+import odogwuHotels.exceptions.AdminException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,8 +28,8 @@ class OHCustomerServiceTest {
         firstCustomer = customerService.registerCustomer(first());
         secondCustomer = customerService.registerCustomer(second());
 
-        roomService.createRoom(firstSingleRoomCreated());
-        roomService.createRoom(secondSingleRoomCreated());
+        roomService.createRoom(firstRoomCreated());
+        roomService.createRoom(secondRoomCreated());
     }
 
     @Test
@@ -140,8 +141,8 @@ class OHCustomerServiceTest {
     @Test
     void customerCanFindAvailableRooms(){
         RoomService roomService = new OHRoomService();
-        roomService.createRoom(firstSingleRoomCreated());
-        roomService.createRoom(secondSingleRoomCreated());
+        roomService.createRoom(firstRoomCreated());
+        roomService.createRoom(secondRoomCreated());
 
         RoomSearchRequest request = new RoomSearchRequest();
         request.setFindRoomByChoice(FindRoomByChoice.ALL_ROOMS);
@@ -204,7 +205,11 @@ class OHCustomerServiceTest {
         Admin admin = Map.adminResponseToAdmin(superAdmin());
 
         ReceiptService receiptService = new OHReceiptService();
-        receiptService.createReceipt(makeReservation(),admin);
+        try {
+            receiptService.createReceipt(makeReservation(),admin);
+        } catch (AdminException ex){
+            System.err.println(ex.getMessage());
+        }
 
         ReceiptRequest request = new ReceiptRequest();
         request.setEmail("legend@gmail.com");
@@ -228,7 +233,11 @@ class OHCustomerServiceTest {
 
         Admin admin = Map.adminResponseToAdmin(superAdmin());
         ReceiptService receiptService = new OHReceiptService();
-        receiptService.createReceipt(makeReservation(),admin);
+        try {
+            receiptService.createReceipt(makeReservation(),admin);
+        } catch (AdminException ex){
+            System.err.println(ex.getMessage());
+        }
 
         ReceiptRequest request = new ReceiptRequest();
         request.setEmail("legend@gmail.com");
@@ -248,7 +257,11 @@ class OHCustomerServiceTest {
 
         Admin admin = Map.adminResponseToAdmin(superAdmin());
         ReceiptService receiptService = new OHReceiptService();
-        receiptService.createReceipt(makeReservation(),admin);
+        try {
+            receiptService.createReceipt(makeReservation(),admin);
+        } catch (AdminException ex){
+            System.err.println(ex.getMessage());
+        }
 
         ReceiptRequest request = new ReceiptRequest();
         request.setEmail("legend@gmail.com");
@@ -299,7 +312,7 @@ class OHCustomerServiceTest {
 
         return request;
     }
-    private RequestToCreateRoom secondSingleRoomCreated(){
+    private RequestToCreateRoom secondRoomCreated(){
         RequestToCreateRoom request = new RequestToCreateRoom();
 
         request.setRoomNumber(2);
@@ -309,7 +322,7 @@ class OHCustomerServiceTest {
 
         return request;
     }
-    private RequestToCreateRoom firstSingleRoomCreated(){
+    private RequestToCreateRoom firstRoomCreated(){
         RequestToCreateRoom request = new RequestToCreateRoom();
 
         request.setRoomNumber(1);

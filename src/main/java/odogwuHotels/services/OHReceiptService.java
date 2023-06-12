@@ -11,6 +11,7 @@ import odogwuHotels.dto.responses.DeleteResponse;
 import odogwuHotels.dto.responses.ReceiptResponse;
 import odogwuHotels.dto.responses.ReservationResponse;
 import odogwuHotels.dto.responses.UpdateResponse;
+import odogwuHotels.exceptions.AdminException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,25 +22,36 @@ public class OHReceiptService implements ReceiptService{
     AdminService adminService;
 
     @Override
-    public String createReceipt(ReservationRequest request, Admin admin) {
+    public ReceiptResponse createReceipt(ReservationRequest request, Admin admin) throws AdminException {
         reservationService = new OHReservationService();
         adminService = new OHAdminService();
+
+        if(!admin.isSuperAdmin()){
+            throw new AdminException("Not authorized. Submit to Super Admin to complete task.");
+        }
 
         ReservationResponse response = reservationService.findReservationByRoomNumber(request);
         Reservation reservation = Map.reservationResToReservation(response);
         Receipt receiptToCreate = Map.createReceipt(reservation,admin);
 
         receiptToCreate.setAmountPaid(request.getMakePayment());
+        receiptToCreate.setApproved(true);
 
-        if(admin.isSuperAdmin()){
-            receiptToCreate.setApproved(true);
-            //MORE DETAILS NEEDED ON ADMIN TO APPROVE RECEIPT
-            adminService.approvePayment(receiptToCreate);
+        //MORE DETAILS NEEDED ON ADMIN TO APPROVE RECEIPT
+        adminService.approvePayment(receiptToCreate);
+
+        BigDecimal balance = BigDecimal.ZERO;
+        if (reservation.getRoom() != null && reservation.getRoom().getPrice() != null && request.getMakePayment() != null) {
+            balance = reservation.getRoom().getPrice().subtract(request.getMakePayment());
         }
-        receiptToCreate.setBalance(reservation.getRoom().getPrice().subtract(request.getMakePayment()));
-       if(receiptToCreate.getBalance().compareTo(BigDecimal.ZERO) <= 0) receiptToCreate.setFullyPaidFor(true);
-       receiptRepository.saveReceipt(receiptToCreate);
-        return "Receipt created.";
+        receiptToCreate.setBalance(balance);
+
+        if(receiptToCreate.getBalance().compareTo(BigDecimal.ZERO) <= 0) receiptToCreate.setFullyPaidFor(true);
+
+       Receipt savedReceipt = receiptRepository.saveReceipt(receiptToCreate);
+       ReceiptResponse receiptResponse = Map.receiptToResponse(savedReceipt);
+       receiptResponse.setMessage("Receipt Created");
+       return receiptResponse;
     }
 
     @Override

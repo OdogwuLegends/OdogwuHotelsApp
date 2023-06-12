@@ -12,7 +12,7 @@ public class OHReceiptRepository implements ReceiptRepository{
     public Receipt saveReceipt(Receipt receipt) {
         receipt.setId(Utils.generateId());
         receiptList.add(receipt);
-        return null;
+        return receipt;
     }
 
     @Override

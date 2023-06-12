@@ -63,8 +63,8 @@ public class OHReservationService implements ReservationService{
             if(request.getFirstName() != null) reservationToUpdate.getCustomer().setFirstName(request.getFirstName());
             if(request.getLastName() != null) reservationToUpdate.getCustomer().setLastName(request.getLastName());
             if(request.getEmail() != null) reservationToUpdate.getCustomer().setEmail(request.getEmail());
-            if(request.getNewRoomNumberChosen() > 0) {
-                SearchResponse room = roomService.findRoomByIdOrRoomNumber(Map.reservationReqToRoomSearchResponse(request));
+            if(request.getNewRoomNumberChosen() != request.getRoomNumberChosen()) {
+                SearchResponse room = roomService.findRoomByIdOrRoomNumber(Map.updateReservationRequestToRoomSearchResponse(request));
                 Room newRoom = Map.roomSearchResponseToRoom(room);
                 reservationToUpdate.getRoom().setRoomNumber(newRoom.getRoomNumber());
                 reservationToUpdate.getRoom().setRoomType(newRoom.getRoomType());

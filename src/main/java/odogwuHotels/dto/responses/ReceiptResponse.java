@@ -22,6 +22,7 @@ public class ReceiptResponse {
     private String approvedBy;
     private boolean isFullyPaidFor;
     private boolean isApproved;
+    private int id;
     private String message;
 
     @Override
