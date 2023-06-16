@@ -29,7 +29,6 @@ public class OHReceiptService implements ReceiptService{
         if(!admin.isSuperAdmin()){
             throw new AdminException("Not authorized. Submit to Super Admin to complete task.");
         }
-
         ReservationResponse response = reservationService.findReservationByRoomNumber(request);
         Reservation reservation = Map.reservationResToReservation(response);
         Receipt receiptToCreate = Map.createReceipt(reservation,admin);

@@ -7,12 +7,14 @@
     <list default="true" id="6f61d9d9-1b27-4b52-b90a-ce5578c80f95" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/OHReceiptRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/OHReceiptRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/ReceiptResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/ReceiptResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/OHAdminRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/OHAdminRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/UpdateResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/UpdateResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/AdminService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/FeedBackService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/FeedBackService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHAdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHAdminService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHFeedBackService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHFeedBackService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHReceiptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHReceiptService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHReservationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/ReceiptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/ReceiptService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHCustomerServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHCustomerServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHReceiptServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHReceiptServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,8 +78,8 @@
       <recent name="odogwuHotels.data.repositories" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.OHReservationServiceTest.findAllReservations">
-    <configuration name="OHReservationServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.OHAdminServiceTest.nullAdminCannotBeDeleted">
+    <configuration name="OHAdminServiceTest.deleteAdminById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="OdogwuHotels" />
       <extension name="coverage">
         <pattern>
@@ -86,29 +88,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="odogwuHotels.services" />
-      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHReservationServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="OHReservationServiceTest.checkIn" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="OdogwuHotels" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="odogwuHotels.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="odogwuHotels.services" />
-      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHReservationServiceTest" />
-      <option name="METHOD_NAME" value="checkIn" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHAdminServiceTest" />
+      <option name="METHOD_NAME" value="deleteAdminById" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OHReservationServiceTest.deleteReservationById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="OHAdminServiceTest.errorIfFoundAdminIsNull" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="OdogwuHotels" />
       <extension name="coverage">
         <pattern>
@@ -117,14 +104,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="odogwuHotels.services" />
-      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHReservationServiceTest" />
-      <option name="METHOD_NAME" value="deleteReservationById" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHAdminServiceTest" />
+      <option name="METHOD_NAME" value="errorIfFoundAdminIsNull" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OHReservationServiceTest.findAllReservations" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="OHAdminServiceTest.findAdminById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="OdogwuHotels" />
       <extension name="coverage">
         <pattern>
@@ -133,14 +120,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="odogwuHotels.services" />
-      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHReservationServiceTest" />
-      <option name="METHOD_NAME" value="findAllReservations" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHAdminServiceTest" />
+      <option name="METHOD_NAME" value="findAdminById" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OHReservationServiceTest.updateReservation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="OHAdminServiceTest.nullAdminCannotBeDeleted" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="OdogwuHotels" />
       <extension name="coverage">
         <pattern>
@@ -149,8 +136,24 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="odogwuHotels.services" />
-      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHReservationServiceTest" />
-      <option name="METHOD_NAME" value="updateReservation" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHAdminServiceTest" />
+      <option name="METHOD_NAME" value="nullAdminCannotBeDeleted" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OHAdminServiceTest.trial" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="OdogwuHotels" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="odogwuHotels.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="odogwuHotels.services" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHAdminServiceTest" />
+      <option name="METHOD_NAME" value="trial" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -158,11 +161,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.OHReservationServiceTest.findAllReservations" />
-        <item itemvalue="JUnit.OHReservationServiceTest.checkIn" />
-        <item itemvalue="JUnit.OHReservationServiceTest.updateReservation" />
-        <item itemvalue="JUnit.OHReservationServiceTest" />
-        <item itemvalue="JUnit.OHReservationServiceTest.deleteReservationById" />
+        <item itemvalue="JUnit.OHAdminServiceTest.nullAdminCannotBeDeleted" />
+        <item itemvalue="JUnit.OHAdminServiceTest.deleteAdminById" />
+        <item itemvalue="JUnit.OHAdminServiceTest.errorIfFoundAdminIsNull" />
+        <item itemvalue="JUnit.OHAdminServiceTest.findAdminById" />
+        <item itemvalue="JUnit.OHAdminServiceTest.trial" />
       </list>
     </recent_temporary>
   </component>
@@ -175,7 +178,8 @@
       <option name="presentableId" value="Default" />
       <updated>1685647199605</updated>
       <workItem from="1685647202898" duration="31554000" />
-      <workItem from="1685773031686" duration="223239000" />
+      <workItem from="1685773031686" duration="235850000" />
+      <workItem from="1686948557205" duration="866000" />
     </task>
     <servers />
   </component>

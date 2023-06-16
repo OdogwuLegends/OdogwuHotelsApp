@@ -77,6 +77,7 @@ public class OHAdminRepository implements AdminRepository {
         while(code < 1000){
             code = random.nextInt(9999);
         }
+
         return code;
     }
 }

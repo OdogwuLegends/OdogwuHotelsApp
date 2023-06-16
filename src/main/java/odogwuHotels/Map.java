@@ -375,6 +375,31 @@ public class Map {
 
         return admin;
     }
+    public static UpdateResponse adminToUpdateResponse(Admin admin){
+        UpdateResponse response = new UpdateResponse();
+
+        response.setFirstName(admin.getFirstName());
+        response.setLastName(admin.getLastName());
+        response.setEmail(admin.getEmail());
+        response.setPassword(admin.getPassword());
+        response.setSuperAdmin(admin.isSuperAdmin());
+        response.setId(admin.getId());
+        response.setAdminCode(admin.getAdminCode());
+
+        return response;
+    }
+
+    public static DeleteResponse adminToDeleteResponse(Admin admin){
+        DeleteResponse response = new DeleteResponse();
+
+        response.setId(admin.getId());
+        response.setFirstName(admin.getFirstName());
+        response.setLastName(admin.getLastName());
+        response.setEmail(admin.getEmail());
+        response.setPassword(admin.getPassword());
+
+        return response;
+    }
     public static Customer customerResponseToCustomer(UserResponse response){
         Customer customer = new Customer();
         customer.setFirstName(response.getFirstName());
@@ -384,6 +409,14 @@ public class Map {
         customer.setId(response.getId());
 
         return customer;
+    }
+    public static FeedBackResponse feedBackToResponse(FeedBack feedBack){
+        FeedBackResponse response = new FeedBackResponse();
+
+        response.setMessage(feedBack.getMessage());
+        response.setId(feedBack.getId());
+
+        return response;
     }
 
 }

@@ -19,4 +19,6 @@ public class UpdateResponse {
     private String checkOutDate;
     private int id;
     private String message;
+    private boolean isSuperAdmin;
+    private int adminCode;
 }

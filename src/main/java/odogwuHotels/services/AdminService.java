@@ -3,6 +3,7 @@ package odogwuHotels.services;
 import odogwuHotels.data.models.*;
 import odogwuHotels.dto.requests.*;
 import odogwuHotels.dto.responses.*;
+import odogwuHotels.exceptions.AdminException;
 import odogwuHotels.exceptions.UserNotFoundException;
 
 import java.util.List;
@@ -11,9 +12,9 @@ public interface AdminService {
     AdminResponse registerSuperAdmin(RegisterAdminRequest request);
     AdminResponse registerAuxiliaryAdmins(RegisterAdminRequest request, Admin adminToApprove);
     UpdateResponse editAdminDetails(RequestToUpdateUserDetails request);
-    AdminResponse findAdminById(int id);
+    AdminResponse findAdminById(int id) throws AdminException;
     List<Admin> findAllAdmins();
-    DeleteResponse deleteAdminById(int id);
+    DeleteResponse deleteAdminById(int id) throws AdminException;
     ReservationResponse makeReservation(ReservationRequest request);
     ReservationResponse findReservationById(int id);
     ReservationResponse findReservationByRoomNumber(ReservationRequest request);

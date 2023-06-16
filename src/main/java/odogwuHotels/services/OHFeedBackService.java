@@ -1,9 +1,11 @@
 package odogwuHotels.services;
 
+import odogwuHotels.Map;
 import odogwuHotels.data.models.FeedBack;
 import odogwuHotels.data.repositories.FeedBackRepository;
 import odogwuHotels.data.repositories.OHFeedBackRepository;
 import odogwuHotels.dto.responses.DeleteResponse;
+import odogwuHotels.dto.responses.FeedBackResponse;
 
 import java.util.List;
 
@@ -11,18 +13,22 @@ public class OHFeedBackService implements FeedBackService{
     private final FeedBackRepository feedBackRepository = new OHFeedBackRepository();
 
     @Override
-    public String giveAFeedBack(String feedBack) {
+    public FeedBackResponse giveAFeedBack(String feedBack) {
         FeedBack customerFeedBack = new FeedBack();
         customerFeedBack.setMessage(feedBack);
-        feedBackRepository.saveFeedBack(customerFeedBack);
-        return "Your feed back has been received. Thank You";
+        FeedBack savedFeedBack = feedBackRepository.saveFeedBack(customerFeedBack);
+        FeedBackResponse response = Map.feedBackToResponse(savedFeedBack);
+        response.setResponse( "Your feed back has been received. Thank You");
+        return response;
     }
 
     @Override
-    public String findFeedBackById(int id) {
-        //CREATE A METHOD IN THE REPOSITORY THAT HAS A LIST[MAP] INSIDE OF IT AND CALLS
-        // THE MAIN LIST, GETS ALL THE OBJECT'S IDs AND RETURNS ALL THE IDs.
-        return null;
+    public FeedBackResponse findFeedBackById(int id) {
+        FeedBack foundFeedBack = feedBackRepository.findFeedBackById(id);
+        if(foundFeedBack == null){
+            throw new IllegalArgumentException("Feedback not found");
+        }
+        return Map.feedBackToResponse(foundFeedBack);
     }
 
     @Override
@@ -32,8 +38,13 @@ public class OHFeedBackService implements FeedBackService{
 
     @Override
     public DeleteResponse deleteFeedBackById(int id) {
-        //CREATE A METHOD IN THE REPOSITORY THAT HAS A LIST[MAP] INSIDE OF IT AND CALLS
-        // THE MAIN LIST, GETS ALL THE OBJECT'S IDs AND RETURNS ALL THE IDs.
-        return null;
+        FeedBack toBeDeleted = feedBackRepository.findFeedBackById(id);
+        if(toBeDeleted == null){
+            throw new IllegalArgumentException("Feedback not found");
+        }
+        feedBackRepository.deleteFeedBackById(toBeDeleted.getId());
+        DeleteResponse response = new DeleteResponse();
+        response.setMessage("Feedback Deleted");
+        return response;
     }
 }

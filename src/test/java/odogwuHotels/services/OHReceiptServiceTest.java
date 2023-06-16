@@ -71,21 +71,13 @@ class OHReceiptServiceTest {
         assertEquals("Receipt Created",secondReceipt.getMessage());
     }
     @Test
-    void auxiliaryAdminCannotCreateReceipt(){
+    void methodThrowsExceptionOnCreateReceipt(){
         Admin admin = Map.adminResponseToAdmin(auxAdmin);
         ReservationRequest request = new ReservationRequest();
         request.setRoomNumberChosen(1);
         request.setEmail("curry@gmail.com");
 
-        ReceiptResponse firstReceipt = new ReceiptResponse();
-        try {
-            firstReceipt = receiptService.createReceipt(request,admin);
-        } catch (AdminException ex){
-            System.err.println(ex.getMessage());
-            System.exit(1);
-        }
-
-        assertEquals("Receipt Created",firstReceipt.getMessage());
+      assertThrows(AdminException.class, ()-> receiptService.createReceipt(request,admin));
     }
     @Test
     void findReceiptById(){

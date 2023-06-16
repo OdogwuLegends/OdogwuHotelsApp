@@ -6,6 +6,7 @@ import odogwuHotels.data.repositories.AdminRepository;
 import odogwuHotels.data.repositories.OHAdminRepository;
 import odogwuHotels.dto.requests.*;
 import odogwuHotels.dto.responses.*;
+import odogwuHotels.exceptions.AdminException;
 import odogwuHotels.exceptions.UserNotFoundException;
 
 import java.util.List;
@@ -31,11 +32,12 @@ public class OHAdminService implements AdminService {
     @Override
     public AdminResponse registerAuxiliaryAdmins(RegisterAdminRequest request, Admin adminToApprove) {
         Admin newAdmin = Map.adminRequestToAdmin(request);
-        AdminResponse response = Map.adminToAdminResponse(newAdmin);
+        AdminResponse response = new AdminResponse();
         if (adminToApprove.isSuperAdmin()) {
             newAdmin.setApproveNewAdmin(true);
             newAdmin.setSuperAdmin(false);
-            adminRepository.saveAdmin(newAdmin);
+            Admin savedAdmin = adminRepository.saveAdmin(newAdmin);
+            response = Map.adminToAdminResponse(savedAdmin);
             response.setMessage("Auxiliary Admin Registered Successfully");
         } else {
             response.setMessage("Registration Not Successful");
@@ -57,15 +59,18 @@ public class OHAdminService implements AdminService {
                 adminToUpdate.setSuperAdmin(request.isSuperAdmin());
         }
 
-        adminRepository.updateDetails(index, adminToUpdate);
-        UpdateResponse response = new UpdateResponse();
+        Admin updatedAdmin = adminRepository.updateDetails(index, adminToUpdate);
+        UpdateResponse response = Map.adminToUpdateResponse(updatedAdmin);
         response.setMessage("Update Successful");
         return response;
     }
 
     @Override
-    public AdminResponse findAdminById(int id) {
+    public AdminResponse findAdminById(int id) throws AdminException {
         Admin foundAdmin = adminRepository.findAdminById(id);
+        if(foundAdmin == null){
+            throw new AdminException("Admin not found");
+        }
         return Map.adminToAdminResponse(foundAdmin);
     }
 
@@ -75,8 +80,12 @@ public class OHAdminService implements AdminService {
     }
 
     @Override
-    public DeleteResponse deleteAdminById(int id) {
-        adminRepository.deleteAdminById(id);
+    public DeleteResponse deleteAdminById(int id) throws AdminException {
+        Admin foundAdmin = adminRepository.findAdminById(id);
+        if(foundAdmin == null){
+            throw new AdminException("Admin not found");
+        }
+        adminRepository.deleteAdminById(foundAdmin.getId());
         DeleteResponse response = new DeleteResponse();
         response.setMessage("Admin Deleted Successfully");
         return response;
