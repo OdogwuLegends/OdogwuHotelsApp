@@ -1,6 +1,6 @@
 package odogwuHotels.data.repositories;
 
-import odogwuHotels.Utils;
+import odogwuHotels.myUtils.Utils;
 import odogwuHotels.data.models.Admin;
 import odogwuHotels.dto.requests.RequestToUpdateUserDetails;
 import org.junit.jupiter.api.AfterEach;
@@ -12,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OHAdminRepositoryTest {
-    private final AdminRepository adminRepository = new OHAdminRepository();
+    private final AdminRepository adminRepository = OHAdminRepository.createObject();
     private Admin superAdmin;
     private Admin regularAdmin;
 

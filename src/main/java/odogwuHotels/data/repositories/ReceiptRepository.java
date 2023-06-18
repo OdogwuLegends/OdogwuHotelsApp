@@ -7,7 +7,6 @@ import java.util.Map;
 
 public interface ReceiptRepository {
     Receipt saveReceipt(Receipt receipt);
-    Receipt updateReceipt (Receipt receipt);
     int getIndex(Receipt receiptToCheck);
     Map<Integer, Receipt> getIdsOfAllCustomers();
     Receipt findById(int id);

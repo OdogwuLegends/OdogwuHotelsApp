@@ -1,12 +1,24 @@
 package odogwuHotels.data.repositories;
 
-import odogwuHotels.Utils;
+import odogwuHotels.myUtils.Utils;
 import odogwuHotels.data.models.Receipt;
 
 import java.util.*;
 
 public class OHReceiptRepository implements ReceiptRepository{
     static List<Receipt> receiptList = new ArrayList<>();
+
+    private static OHReceiptRepository singleObject;
+
+    private OHReceiptRepository(){
+
+    }
+    public static OHReceiptRepository createObject(){
+        if(singleObject == null){
+            singleObject = new OHReceiptRepository();
+        }
+        return singleObject;
+    }
 
     @Override
     public Receipt saveReceipt(Receipt receipt) {
@@ -15,13 +27,6 @@ public class OHReceiptRepository implements ReceiptRepository{
         return receipt;
     }
 
-    @Override
-    public Receipt updateReceipt(Receipt receipt) {
-//        Receipt foundReceipt = findById(receipt.getId());
-
-
-        return null;
-    }
     @Override
     public int getIndex(Receipt receiptToCheck){
         int index = 0;

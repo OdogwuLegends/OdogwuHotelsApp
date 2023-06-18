@@ -1,6 +1,6 @@
 package odogwuHotels.services;
 
-import odogwuHotels.Map;
+import odogwuHotels.myUtils.Map;
 import odogwuHotels.data.models.FeedBack;
 import odogwuHotels.data.repositories.FeedBackRepository;
 import odogwuHotels.data.repositories.OHFeedBackRepository;
@@ -10,7 +10,7 @@ import odogwuHotels.dto.responses.FeedBackResponse;
 import java.util.List;
 
 public class OHFeedBackService implements FeedBackService{
-    private final FeedBackRepository feedBackRepository = new OHFeedBackRepository();
+    private final FeedBackRepository feedBackRepository = OHFeedBackRepository.createObject();
 
     @Override
     public FeedBackResponse giveAFeedBack(String feedBack) {

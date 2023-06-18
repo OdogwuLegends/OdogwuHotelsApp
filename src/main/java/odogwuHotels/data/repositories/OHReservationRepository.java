@@ -1,13 +1,24 @@
 package odogwuHotels.data.repositories;
 
-import odogwuHotels.Utils;
-import odogwuHotels.data.models.Customer;
+import odogwuHotels.myUtils.Utils;
 import odogwuHotels.data.models.Reservation;
 
 import java.util.*;
 
 public class OHReservationRepository implements ReservationRepository{
     static List<Reservation> reservationList = new ArrayList<>();
+
+    private static OHReservationRepository singleObject;
+
+    private OHReservationRepository(){
+
+    }
+    public static OHReservationRepository createObject(){
+        if(singleObject == null){
+            singleObject = new OHReservationRepository();
+        }
+        return singleObject;
+    }
 
     @Override
     public Reservation saveReservation(Reservation reservation) {

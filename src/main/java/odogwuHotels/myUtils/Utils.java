@@ -1,9 +1,11 @@
-package odogwuHotels;
+package odogwuHotels.myUtils;
 
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Data
 public class Utils {
@@ -29,6 +31,12 @@ public class Utils {
             if(convertedValue.charAt(i) != '-') newValue.append(convertedValue.charAt(i));
         }
         return newValue.toString();
+    }
+    public static boolean emailIsCorrect(String email){
+        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 //    public List<Integer> findAvailableRooms(FindRoomByChoice choice) {
 //        List<Integer> roomNumber = new ArrayList<>();

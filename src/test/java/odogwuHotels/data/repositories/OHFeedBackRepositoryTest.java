@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OHFeedBackRepositoryTest {
-    private final FeedBackRepository feedBackRepository = new OHFeedBackRepository();
+    private final FeedBackRepository feedBackRepository = OHFeedBackRepository.createObject();
     private FeedBack firstFeedBackSaved;
     private FeedBack secondFeedBackSaved;
 

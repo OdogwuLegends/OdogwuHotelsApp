@@ -16,7 +16,7 @@ import static odogwuHotels.data.models.RoomType.SINGLE;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OHRoomRepositoryTest {
-    private final RoomRepository roomRepository = new OHRoomRepository();
+    private final RoomRepository roomRepository = OHRoomRepository.createObject();
     private Room firstRoomSaved;
     private Room secondRoomSaved;
 

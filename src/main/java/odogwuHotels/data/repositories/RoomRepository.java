@@ -24,5 +24,6 @@ public interface RoomRepository {
     List<Integer> findBookedDoubleRooms();
     List<Room> findAllRooms();
     void removeRoomById(int id);
+    void removeRoomByRoomNumber(int roomNumber);
 
 }

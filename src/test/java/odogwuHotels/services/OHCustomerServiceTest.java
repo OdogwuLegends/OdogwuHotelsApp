@@ -1,11 +1,13 @@
 package odogwuHotels.services;
 
-import odogwuHotels.Map;
-import odogwuHotels.Utils;
+import odogwuHotels.myUtils.Map;
+import odogwuHotels.myUtils.Utils;
 import odogwuHotels.data.models.*;
 import odogwuHotels.dto.requests.*;
 import odogwuHotels.dto.responses.*;
 import odogwuHotels.exceptions.AdminException;
+import odogwuHotels.exceptions.EmailNotCorrectException;
+import odogwuHotels.exceptions.EntityNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,14 +24,25 @@ class OHCustomerServiceTest {
     private final RoomService roomService = new OHRoomService();
     private RegisterUserResponse firstCustomer;
     private RegisterUserResponse secondCustomer;
-
+    private static int counter;
     @BeforeEach
     void setUp(){
-        firstCustomer = customerService.registerCustomer(first());
+        try {
+            firstCustomer = customerService.registerCustomer(first());
+        } catch (EmailNotCorrectException ex){
+            System.out.println(ex.getMessage());
+        }
+        try {
         secondCustomer = customerService.registerCustomer(second());
+        }catch (EmailNotCorrectException ex){
+            System.out.println(ex.getMessage());
+        }
 
-        roomService.createRoom(firstRoomCreated());
-        roomService.createRoom(secondRoomCreated());
+        if (counter == 0) {
+            roomService.createRoom(firstRoomCreated());
+            roomService.createRoom(secondRoomCreated());
+            counter++;
+        }
     }
 
     @Test
@@ -38,6 +51,17 @@ class OHCustomerServiceTest {
         assertNotNull(secondCustomer);
         assertEquals("Registration Successful",firstCustomer.getMessage());
         assertEquals("Registration Successful",secondCustomer.getMessage());
+    }
+    @Test
+    void customerCannotRegisterWithWrongEmail(){
+        RegisterUserRequest request = new RegisterUserRequest();
+
+        request.setFirstName("Bobby");
+        request.setLastName("Lashley");
+        request.setEmail("lashleygmail.com");
+        request.setPassword("7890");
+
+        assertThrows(EmailNotCorrectException.class,()-> customerService.registerCustomer(request));
     }
     @Test
     void loginWorks(){
@@ -130,20 +154,28 @@ class OHCustomerServiceTest {
     }
     @Test
     void deleteCustomerByEmail(){
-        DeleteResponse customerToDelete = customerService.deleteCustomerByEmail("legend@gmail.com");
+        DeleteResponse customerToDelete = new DeleteResponse();
+        try {
+            customerToDelete = customerService.deleteCustomerByEmail("legend@gmail.com");
+        } catch (EntityNotFoundException ex){
+            System.err.println(ex.getMessage());
+        }
+
         assertEquals("Customer Deleted Successfully",customerToDelete.getMessage());
     }
     @Test
     void deleteCustomerById(){
-        DeleteResponse customerToDelete = customerService.deleteCustomerById(secondCustomer.getId());
+        DeleteResponse customerToDelete = new DeleteResponse();
+        try {
+            customerToDelete = customerService.deleteCustomerById(secondCustomer.getId());
+        } catch (EntityNotFoundException ex){
+            System.err.println(ex.getMessage());
+        }
+
         assertEquals("Customer Deleted Successfully",customerToDelete.getMessage());
     }
     @Test
     void customerCanFindAvailableRooms(){
-        RoomService roomService = new OHRoomService();
-        roomService.createRoom(firstRoomCreated());
-        roomService.createRoom(secondRoomCreated());
-
         RoomSearchRequest request = new RoomSearchRequest();
         request.setFindRoomByChoice(FindRoomByChoice.ALL_ROOMS);
         SearchResponse rooms = customerService.findAvailableRooms(request);
@@ -158,17 +190,33 @@ class OHCustomerServiceTest {
     }
     @Test
     void customerCanFindReservation(){
-        customerService.makeReservation(makeReservation());
-
         ReservationRequest request = new ReservationRequest();
-        request.setRoomNumberChosen(1);
 
-        ReservationResponse foundReservation = customerService.findReservationByRoomNumber(request);
-        System.out.println(foundReservation);
+        request.setFirstName("Legend");
+        request.setLastName("Odogwu");
+        request.setEmail("legend@gmail.com");
+        request.setRoomNumberChosen(2);
+        request.setRoomType(SINGLE);
+        request.setCheckInDate("12/06/2023");
+        request.setCheckOutDate("18/06/2023");
+        request.setMakePayment(BigDecimal.valueOf(50));
+
+        customerService.makeReservation(request);
+
+        ReservationRequest request1 = new ReservationRequest();
+        request1.setRoomNumberChosen(2);
+
+        ReservationResponse foundReservation = new ReservationResponse();
+        try {
+            foundReservation = customerService.findReservationByRoomNumber(request1);
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
+
         assertEquals("""
                 \nNAME - Legend Odogwu
-                ROOM NUMBER - 1
-                ROOM TYPE - SINGLE
+                ROOM NUMBER - 2
+                ROOM TYPE - DOUBLE
                 CHECK IN DATE - 2023-06-12
                 CHECK OUT DATE - 2023-06-18""",foundReservation.toString());
     }
@@ -178,7 +226,12 @@ class OHCustomerServiceTest {
 
         ReservationRequest reservationRequest = new ReservationRequest();
         reservationRequest.setRoomNumberChosen(1);
-        ReservationResponse foundReservation = customerService.findReservationByRoomNumber(reservationRequest);
+        ReservationResponse foundReservation = new ReservationResponse();
+        try {
+            foundReservation = customerService.findReservationByRoomNumber(reservationRequest);
+        }catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("12/06/2023", Utils.localDateToString(foundReservation.getCheckInDate()));
 
 
@@ -188,15 +241,22 @@ class OHCustomerServiceTest {
 
         UpdateResponse updatedReservation = customerService.updateReservation(updateRequest);
         assertEquals("25/06/2023", updatedReservation.getCheckInDate());
+
         assertEquals(foundReservation.getRoomNumber(),updatedReservation.getRoomNumberChosen());
     }
     @Test
     void customerCanDeleteReservationByRoomNumber(){
+
         customerService.makeReservation(makeReservation());
 
         ReservationRequest request = new ReservationRequest();
         request.setRoomNumberChosen(1);
-        DeleteResponse deletedReservation = customerService.deleteReservationByRoomNumber(request);
+        DeleteResponse deletedReservation = new DeleteResponse();
+        try {
+            deletedReservation = customerService.deleteReservationByRoomNumber(request);
+        }catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Reservation deleted successfully.",deletedReservation.getMessage());
     }
     @Test
@@ -213,7 +273,12 @@ class OHCustomerServiceTest {
 
         ReceiptRequest request = new ReceiptRequest();
         request.setEmail("legend@gmail.com");
-        ReceiptResponse foundReceipt = customerService.requestReceipt(request);
+        ReceiptResponse foundReceipt = new ReceiptResponse();
+        try {
+            foundReceipt = customerService.requestReceipt(request);
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("""
                 \nNAME - Legend Odogwu
                 ROOM NUMBER - 1
@@ -243,7 +308,12 @@ class OHCustomerServiceTest {
         request.setEmail("legend@gmail.com");
         request.setRoomNumber(1);
 
-        ReservationResponse afterCheckIn = customerService.checkIn(request);
+        ReservationResponse afterCheckIn = new ReservationResponse();
+        try {
+            afterCheckIn = customerService.checkIn(request);
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Check In Successful",afterCheckIn.getMessage());
         reservation = Map.reservationResponseToReservation(afterCheckIn);
         assertFalse(reservation.getRoom().isAvailable());
@@ -267,7 +337,12 @@ class OHCustomerServiceTest {
         request.setEmail("legend@gmail.com");
         request.setRoomNumber(1);
 
-        ReservationResponse afterCheckIn = customerService.checkIn(request);
+        ReservationResponse afterCheckIn = new ReservationResponse();
+        try {
+            afterCheckIn = customerService.checkIn(request);
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Check In Successful",afterCheckIn.getMessage());
         reservation = Map.reservationResponseToReservation(afterCheckIn);
         assertFalse(reservation.getRoom().isAvailable());
@@ -312,21 +387,21 @@ class OHCustomerServiceTest {
 
         return request;
     }
-    private RequestToCreateRoom secondRoomCreated(){
-        RequestToCreateRoom request = new RequestToCreateRoom();
-
-        request.setRoomNumber(2);
-        request.setRoomType(DOUBLE);
-        request.setPrice(BigDecimal.valueOf(50));
-        request.setAvailable(true);
-
-        return request;
-    }
     private RequestToCreateRoom firstRoomCreated(){
         RequestToCreateRoom request = new RequestToCreateRoom();
 
         request.setRoomNumber(1);
         request.setRoomType(SINGLE);
+        request.setPrice(BigDecimal.valueOf(50));
+        request.setAvailable(true);
+
+        return request;
+    }
+    private RequestToCreateRoom secondRoomCreated(){
+        RequestToCreateRoom request = new RequestToCreateRoom();
+
+        request.setRoomNumber(2);
+        request.setRoomType(DOUBLE);
         request.setPrice(BigDecimal.valueOf(50));
         request.setAvailable(true);
 
@@ -354,14 +429,47 @@ class OHCustomerServiceTest {
         request.setPassword("3333");
         request.setEmail("ename@gmail.com");
 
-        return adminService.registerSuperAdmin(request);
+        AdminResponse registeredAdmin = new AdminResponse();
+        try {
+            registeredAdmin = adminService.registerSuperAdmin(request);
+        } catch (EmailNotCorrectException ex){
+            System.err.println(ex.getMessage());
+        }
+        return registeredAdmin;
     }
 
 
     @AfterEach
-          void cleanUp(){
-        //customerService.deleteCustomerById(firstCustomer.getId());
-        //customerService.deleteCustomerById(secondCustomer.getId());
+        void cleanUp(){
+        try {
+        customerService.deleteCustomerById(firstCustomer.getId());
+        }catch (EntityNotFoundException ex){
+            System.err.println(ex.getMessage());
+        }
+        try {
+            customerService.deleteCustomerById(secondCustomer.getId());
+        }catch (EntityNotFoundException ex){
+            System.err.println(ex.getMessage());
+        }
+
+//        ReservationService reservationService = new OHReservationService();
+//        reservationService.deleteReservationByRoomNumber(makeReservation());
+//
+//        RequestToUpdateRoom request = new RequestToUpdateRoom();
+//        request.setRoomNumber(1);
+//
+//        try {
+//            roomService.deleteRoomByRoomByRoomNumber(request);
+//        } catch (EntityNotFoundException ex){
+//            System.err.println(ex.getMessage());
+//        }
+//        request.setRoomNumber(2);
+//        try {
+//            roomService.deleteRoomByRoomByRoomNumber(request);
+//        } catch (EntityNotFoundException ex){
+//            System.err.println(ex.getMessage());
+//        }
+
         //customerService.deleteCustomerByEmail(firstCustomer.getEmail());
         //customerService.deleteCustomerByEmail(secondCustomer.getEmail());
     }

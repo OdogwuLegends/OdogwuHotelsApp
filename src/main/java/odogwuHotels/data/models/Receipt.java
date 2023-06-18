@@ -23,8 +23,4 @@ public class Receipt {
     private String approvedBy;
     private int id;
 
-    //RESERVATION
-    //PAYMENT METHOD
-    //ADMIN TO APPROVE
-    //Remember iSFullyPaidFor in receipt service
 }

@@ -1,6 +1,6 @@
 package odogwuHotels.data.repositories;
 
-import odogwuHotels.Utils;
+import odogwuHotels.myUtils.Utils;
 import odogwuHotels.data.models.FindRoomByChoice;
 import odogwuHotels.data.models.Room;
 import java.util.*;
@@ -10,7 +10,17 @@ import static odogwuHotels.data.models.RoomType.SINGLE;
 
 public class OHRoomRepository implements RoomRepository{
     static List<Room> roomList = new ArrayList<>();
+    private static OHRoomRepository singleObject;
 
+    private OHRoomRepository(){
+
+    }
+    public static OHRoomRepository createObject(){
+        if(singleObject == null){
+            singleObject = new OHRoomRepository();
+        }
+        return singleObject;
+    }
     public Room saveRoom(Room room){
         room.setId(Utils.generateId());
         roomList.add(room);
@@ -141,6 +151,12 @@ public class OHRoomRepository implements RoomRepository{
     @Override
     public void removeRoomById(int id) {
         Room foundRoom = findRoomById(id);
+        if(foundRoom!=null) roomList.remove(foundRoom);
+    }
+
+    @Override
+    public void removeRoomByRoomNumber(int roomNumber) {
+        Room foundRoom = findRoomByRoomNumber(roomNumber);
         if(foundRoom!=null) roomList.remove(foundRoom);
     }
 }

@@ -1,11 +1,22 @@
 package odogwuHotels.data.repositories;
 
-import odogwuHotels.Utils;
+import odogwuHotels.myUtils.Utils;
 import odogwuHotels.data.models.Admin;
 import java.util.*;
 
 public class OHAdminRepository implements AdminRepository {
     static List<Admin> adminRepository = new ArrayList<>();
+    private static OHAdminRepository singleObject;
+
+    private OHAdminRepository(){
+
+    }
+    public static OHAdminRepository createObject(){
+        if(singleObject == null){
+            singleObject = new OHAdminRepository();
+        }
+        return singleObject;
+    }
 
     @Override
     public Admin saveAdmin(Admin newAdmin) {

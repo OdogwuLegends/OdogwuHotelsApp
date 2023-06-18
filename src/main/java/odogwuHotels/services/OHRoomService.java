@@ -1,6 +1,6 @@
 package odogwuHotels.services;
 
-import odogwuHotels.Map;
+import odogwuHotels.myUtils.Map;
 import odogwuHotels.data.models.Room;
 import odogwuHotels.data.repositories.OHRoomRepository;
 import odogwuHotels.data.repositories.RoomRepository;
@@ -11,6 +11,7 @@ import odogwuHotels.dto.responses.DeleteResponse;
 import odogwuHotels.dto.responses.RoomCreationResponse;
 import odogwuHotels.dto.responses.SearchResponse;
 import odogwuHotels.dto.responses.UpdateResponse;
+import odogwuHotels.exceptions.EntityNotFoundException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -18,9 +19,8 @@ import java.util.List;
 import static odogwuHotels.data.models.FindRoomByChoice.*;
 
 public class OHRoomService implements RoomService{
-    private final RoomRepository roomRepository = new OHRoomRepository();
+    private final RoomRepository roomRepository = OHRoomRepository.createObject();
     SearchResponse response;
-
     @Override
     public RoomCreationResponse createRoom(RequestToCreateRoom createRoom) {
         Room room = new Room();
@@ -33,6 +33,7 @@ public class OHRoomService implements RoomService{
 
         RoomCreationResponse response = Map.roomToCreationResponse(savedRoom);
         response.setMessage("Room "+room.getRoomNumber()+" created successfully!");
+
         return response;
     }
 
@@ -47,8 +48,8 @@ public class OHRoomService implements RoomService{
             if(request.getPrice()!= null && request.getPrice().compareTo(BigDecimal.ZERO) > 0) roomToUpdate.setPrice(request.getPrice());
             if(request.isAvailable() != roomToUpdate.isAvailable()) roomToUpdate.setAvailable(request.isAvailable());
         }
-        roomRepository.updateRoom(index,roomToUpdate);
-        UpdateResponse response = new UpdateResponse();
+        Room updatedRoom = roomRepository.updateRoom(index,roomToUpdate);
+        UpdateResponse response = Map.roomToUpdateResponse(updatedRoom);
         response.setMessage("Update Successful");
         return response;
     }
@@ -72,15 +73,21 @@ public class OHRoomService implements RoomService{
     }
 
     @Override
-    public SearchResponse findRoomByIdOrRoomNumber(RoomSearchRequest request) {
+    public SearchResponse findRoomByIdOrRoomNumber(RoomSearchRequest request) throws EntityNotFoundException {
         response = new SearchResponse();
         if(request.getRoomNumberChosen() > 0){
             Room foundRoom = roomRepository.findRoomByRoomNumber(request.getRoomNumberChosen());
+            if(foundRoom == null){
+                throw new EntityNotFoundException("Room not found");
+            }
             Map.roomToSearchResponse(foundRoom);
             mapRoomToResponse(foundRoom);
             response.setMessage("Room "+response.getRoomNumber()+" found.");
         } else if (request.getRoomId() > 0) {
             Room foundRoom = roomRepository.findRoomById(request.getRoomId());
+            if(foundRoom == null){
+                throw new EntityNotFoundException("Room not found");
+            }
             Map.roomToSearchResponse(foundRoom);
             mapRoomToResponse(foundRoom);
             response.setMessage("Room "+foundRoom.getId()+" found.");
@@ -92,13 +99,30 @@ public class OHRoomService implements RoomService{
         return roomRepository.findAllRooms();
     }
     @Override
-    public DeleteResponse deleteRoomByRoomById(RequestToUpdateRoom request) {
+    public DeleteResponse deleteRoomByRoomById(RequestToUpdateRoom request) throws EntityNotFoundException {
+        Room foundRoom = roomRepository.findRoomById(request.getRoomId());
+        if(foundRoom == null){
+            throw new EntityNotFoundException("Room not found");
+        }
+        roomRepository.removeRoomById(foundRoom.getId());
+        DeleteResponse response = Map.roomToDeleteResponse(foundRoom);
 
-        DeleteResponse response = new DeleteResponse();
-        roomRepository.removeRoomById(request.getRoomId());
-        response.setMessage("Room "+response.getRoomNumber()+" Deleted Successfully");
+        response.setMessage("Room "+foundRoom.getRoomNumber()+" Deleted Successfully");
         return response;
     }
+
+    @Override
+    public DeleteResponse deleteRoomByRoomByRoomNumber(RequestToUpdateRoom request) throws EntityNotFoundException {
+        Room foundRoom = roomRepository.findRoomByRoomNumber(request.getRoomNumber());
+        if(foundRoom == null){
+            throw new EntityNotFoundException("Room not found");
+        }
+        roomRepository.removeRoomByRoomNumber(foundRoom.getRoomNumber());
+        DeleteResponse response = Map.roomToDeleteResponse(foundRoom);
+        response.setMessage("Room "+foundRoom.getRoomNumber()+" Deleted Successfully");
+        return response;
+    }
+
     private void mapRoomToResponse(Room foundRoom) {
         response = new SearchResponse();
         response.setRoomNumber(foundRoom.getRoomNumber());

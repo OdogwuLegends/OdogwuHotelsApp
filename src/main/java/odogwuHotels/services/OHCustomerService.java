@@ -1,24 +1,29 @@
 package odogwuHotels.services;
 
-import odogwuHotels.Map;
+import odogwuHotels.myUtils.Map;
+import odogwuHotels.myUtils.Utils;
 import odogwuHotels.data.models.Customer;
 import odogwuHotels.data.repositories.CustomerRepository;
 import odogwuHotels.data.repositories.OHCustomerRepository;
 import odogwuHotels.dto.requests.*;
 import odogwuHotels.dto.responses.*;
-import odogwuHotels.exceptions.UserNotFoundException;
+import odogwuHotels.exceptions.EmailNotCorrectException;
+import odogwuHotels.exceptions.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Objects;
 
 public class OHCustomerService implements CustomerService {
-    private final CustomerRepository customerRepository = new OHCustomerRepository();
+    private final CustomerRepository customerRepository =  OHCustomerRepository.createObject();
     RoomService roomService;
     ReservationService reservationService;
     ReceiptService receiptService;
 
     @Override
-    public RegisterUserResponse registerCustomer(RegisterUserRequest request) {
+    public RegisterUserResponse registerCustomer(RegisterUserRequest request) throws EmailNotCorrectException {
+        if(!Utils.emailIsCorrect(request.getEmail())){
+            throw new EmailNotCorrectException("Email not correct");
+        }
         Customer savedCustomer = customerRepository.saveCustomer(Map.customerRequestToCustomer(request));
         RegisterUserResponse response = Map.customerToRegUserResponse(savedCustomer);
         response.setMessage("Registration Successful");
@@ -26,10 +31,10 @@ public class OHCustomerService implements CustomerService {
     }
 
     @Override
-    public LoginResponse login(LoginRequest request) throws UserNotFoundException {
+    public LoginResponse login(LoginRequest request) throws EntityNotFoundException {
         Customer foundCustomer =  customerRepository.findCustomerByEmail(request.getEmail());
         if(foundCustomer == null){
-            throw new UserNotFoundException("Customer Not Found");
+            throw new EntityNotFoundException("Customer Not Found");
         }
         LoginResponse response = new LoginResponse();
         if(Objects.equals(foundCustomer.getPassword(),request.getPassword())){
@@ -39,19 +44,19 @@ public class OHCustomerService implements CustomerService {
         }
         return response;
     }
-    public UserResponse findCustomerByEmail(String email) throws UserNotFoundException {
+    public UserResponse findCustomerByEmail(String email) throws EntityNotFoundException {
         Customer foundCustomer = customerRepository.findCustomerByEmail(email);
         if(foundCustomer == null){
-            throw new UserNotFoundException("Customer Not Found");
+            throw new EntityNotFoundException("Customer Not Found");
         }
         return Map.customerToCustomerResponse(foundCustomer);
     }
 
     @Override
-    public UserResponse findCustomerById(int id) throws UserNotFoundException {
+    public UserResponse findCustomerById(int id) throws EntityNotFoundException {
         Customer foundCustomer = customerRepository.findCustomerById(id);
         if(foundCustomer == null){
-            throw new UserNotFoundException("Customer Not Found");
+            throw new EntityNotFoundException("Customer Not Found");
         }
         return Map.customerToCustomerResponse(foundCustomer);
     }
@@ -75,9 +80,12 @@ public class OHCustomerService implements CustomerService {
         response.setMessage("Update Successful");
         return response;
     }
-    public DeleteResponse deleteCustomerByEmail(String email){
+    public DeleteResponse deleteCustomerByEmail(String email) throws EntityNotFoundException {
         DeleteResponse response = new DeleteResponse();
         Customer foundCustomer = customerRepository.findCustomerByEmail(email);
+        if(foundCustomer == null){
+            throw new EntityNotFoundException("Customer not found");
+        }
         response.setFirstName(foundCustomer.getFirstName());
         response.setLastName(foundCustomer.getLastName());
         response.setEmail(foundCustomer.getEmail());
@@ -89,9 +97,12 @@ public class OHCustomerService implements CustomerService {
     }
 
     @Override
-    public DeleteResponse deleteCustomerById(int id) {
+    public DeleteResponse deleteCustomerById(int id) throws EntityNotFoundException {
         DeleteResponse response = new DeleteResponse();
         Customer foundCustomer = customerRepository.findCustomerById(id);
+        if(foundCustomer == null){
+            throw new EntityNotFoundException("Customer not found");
+        }
         response.setFirstName(foundCustomer.getFirstName());
         response.setLastName(foundCustomer.getLastName());
         response.setEmail(foundCustomer.getEmail());
@@ -115,7 +126,7 @@ public class OHCustomerService implements CustomerService {
     }
 
     @Override
-    public ReservationResponse findReservationByRoomNumber(ReservationRequest request) {
+    public ReservationResponse findReservationByRoomNumber(ReservationRequest request) throws EntityNotFoundException {
         reservationService = new OHReservationService();
         return reservationService.findReservationByRoomNumber(request);
     }
@@ -125,12 +136,12 @@ public class OHCustomerService implements CustomerService {
         return reservationService.updateReservation(request);
     }
     @Override
-    public DeleteResponse deleteReservationByRoomNumber(ReservationRequest request) {
+    public DeleteResponse deleteReservationByRoomNumber(ReservationRequest request) throws EntityNotFoundException {
         reservationService = new OHReservationService();
         return reservationService.deleteReservationByRoomNumber(request);
     }
     @Override
-    public ReservationResponse checkIn(ReceiptRequest request){
+    public ReservationResponse checkIn(ReceiptRequest request) throws EntityNotFoundException {
         reservationService = new OHReservationService();
         return reservationService.checkIn(request);
     }
@@ -140,7 +151,7 @@ public class OHCustomerService implements CustomerService {
         return reservationService.checkOut(request);
     }
     @Override
-    public ReceiptResponse requestReceipt(ReceiptRequest request) {
+    public ReceiptResponse requestReceipt(ReceiptRequest request) throws EntityNotFoundException {
         receiptService = new OHReceiptService();
         return receiptService.generateReceiptByEmail(request.getEmail());
     }

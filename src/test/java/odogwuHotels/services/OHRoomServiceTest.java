@@ -8,6 +8,7 @@ import odogwuHotels.dto.responses.DeleteResponse;
 import odogwuHotels.dto.responses.RoomCreationResponse;
 import odogwuHotels.dto.responses.SearchResponse;
 import odogwuHotels.dto.responses.UpdateResponse;
+import odogwuHotels.exceptions.EntityNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,6 +49,9 @@ class OHRoomServiceTest {
         request.setRoomType(DOUBLE);
         UpdateResponse updateRoom = roomService.editRoomDetails(request);
         assertEquals("Update Successful",updateRoom.getMessage());
+        assertEquals(singleRoom.getRoomNumber(),updateRoom.getRoomNumberChosen());
+
+        //CHECK THE MAP IN ROOM UPDATE
     }
     @Test
     void editRoomNumber(){
@@ -135,7 +139,12 @@ class OHRoomServiceTest {
         RoomSearchRequest request = new RoomSearchRequest();
         request.setRoomNumberChosen(1);
 
-        SearchResponse foundRoom = roomService.findRoomByIdOrRoomNumber(request);
+        SearchResponse foundRoom = new SearchResponse();
+        try {
+            foundRoom = roomService.findRoomByIdOrRoomNumber(request);
+        } catch (EntityNotFoundException ex){
+            System.err.println(ex.getMessage());
+        }
         assertEquals("Room "+foundRoom.getRoomNumber()+" found.",foundRoom.getMessage());
     }
     @Test
@@ -145,7 +154,13 @@ class OHRoomServiceTest {
         System.out.println("Room ID "+doubleRoom.getRoomId());
         System.out.println("Room Number "+doubleRoom.getRoomNumber());
 
-        SearchResponse foundRoom = roomService.findRoomByIdOrRoomNumber(request);
+        SearchResponse foundRoom = new SearchResponse();
+        try {
+            foundRoom = roomService.findRoomByIdOrRoomNumber(request);
+        } catch (EntityNotFoundException ex){
+            System.err.println(ex.getMessage());
+        }
+
         System.out.println("ERROR LINE "+foundRoom.getRoomNumber());
         assertEquals("Room "+foundRoom.getRoomNumber()+" found.",foundRoom.getMessage());
     }
@@ -154,7 +169,13 @@ class OHRoomServiceTest {
         RequestToUpdateRoom request = new RequestToUpdateRoom();
         request.setRoomId(singleRoom.getRoomId());
 
-        DeleteResponse deletedRoom = roomService.deleteRoomByRoomById(request);
+        DeleteResponse deletedRoom = new DeleteResponse();
+        try {
+            deletedRoom = roomService.deleteRoomByRoomById(request);
+        } catch (EntityNotFoundException ex){
+            System.err.println(ex.getMessage());
+        }
+
         assertEquals("Room "+deletedRoom.getRoomNumber()+" Deleted Successfully",deletedRoom.getMessage());
     }
     @Test
@@ -190,11 +211,11 @@ class OHRoomServiceTest {
         RequestToUpdateRoom request = new RequestToUpdateRoom();
 //        request.setRoomNumber(1);
         request.setRoomId(singleRoom.getRoomId());
-        roomService.deleteRoomByRoomById(request);
+//        roomService.deleteRoomByRoomById(request);
 
 //        request.setRoomNumber(2);
         request.setRoomId(doubleRoom.getRoomId());
-        roomService.deleteRoomByRoomById(request);
+//        roomService.deleteRoomByRoomById(request);
     }
 
 }

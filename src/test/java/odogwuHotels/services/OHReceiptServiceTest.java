@@ -1,6 +1,6 @@
 package odogwuHotels.services;
 
-import odogwuHotels.Map;
+import odogwuHotels.myUtils.Map;
 import odogwuHotels.data.models.Admin;
 import odogwuHotels.data.models.Receipt;
 import odogwuHotels.dto.requests.RegisterAdminRequest;
@@ -9,7 +9,8 @@ import odogwuHotels.dto.requests.RequestToCreateRoom;
 import odogwuHotels.dto.requests.ReservationRequest;
 import odogwuHotels.dto.responses.*;
 import odogwuHotels.exceptions.AdminException;
-import org.junit.jupiter.api.AfterEach;
+import odogwuHotels.exceptions.EmailNotCorrectException;
+import odogwuHotels.exceptions.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,14 +32,32 @@ class OHReceiptServiceTest {
 
     @BeforeEach
     void setUp(){
+        try {
         customerService.registerCustomer(firstCustomer());
+        }catch (EmailNotCorrectException ex){
+            System.out.println(ex.getMessage());
+        }
+
+        try {
         customerService.registerCustomer(secondCustomer());
+        }catch (EmailNotCorrectException ex){
+            System.out.println(ex.getMessage());
+        }
 
         roomService.createRoom(firstRoomCreated());
         roomService.createRoom(secondRoomCreated());
 
+        try {
         superAdmin = adminService.registerSuperAdmin(superAdmin());
+        } catch (EmailNotCorrectException ex){
+            System.out.println(ex.getMessage());
+        }
+
+        try {
         auxAdmin = adminService.registerAuxiliaryAdmins(auxiliaryAdmin(), Map.adminResponseToAdmin(superAdmin));
+        }catch (EmailNotCorrectException ex){
+            System.out.println(ex.getMessage());
+        }
 
         reservationService.makeReservation(first());
         reservationService.makeReservation(second());
@@ -95,7 +114,12 @@ class OHReceiptServiceTest {
         assertEquals("Receipt Created",firstReceipt.getMessage());
 
 
-        ReceiptResponse foundReceipt = receiptService.findReceiptById(firstReceipt.getId());
+        ReceiptResponse foundReceipt = new ReceiptResponse();
+        try {
+            foundReceipt = receiptService.findReceiptById(firstReceipt.getId());
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Receipt Found",foundReceipt.getMessage());
     }
     @Test
@@ -114,7 +138,12 @@ class OHReceiptServiceTest {
         assertEquals("Receipt Created",secondReceipt.getMessage());
 
 
-        ReceiptResponse foundReceipt = receiptService.findReceiptByEmail(secondReceipt.getEmail());
+        ReceiptResponse foundReceipt = new ReceiptResponse();
+        try {
+            foundReceipt = receiptService.findReceiptByEmail(secondReceipt.getEmail());
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Receipt Found",foundReceipt.getMessage());
     }
     @Test
@@ -132,7 +161,12 @@ class OHReceiptServiceTest {
         }
         assertEquals("Receipt Created",firstReceipt.getMessage());
 
-        ReceiptResponse generateReceipt = receiptService.generateReceiptById(firstReceipt.getId());
+        ReceiptResponse generateReceipt = new ReceiptResponse();
+        try {
+            generateReceipt = receiptService.generateReceiptById(firstReceipt.getId());
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("""
                 \nNAME - Steph Curry
                 ROOM NUMBER - 1
@@ -160,7 +194,12 @@ class OHReceiptServiceTest {
         }
         assertEquals("Receipt Created",secondReceipt.getMessage());
 
-        ReceiptResponse generateReceipt = receiptService.generateReceiptByEmail(secondReceipt.getEmail());
+        ReceiptResponse generateReceipt = new ReceiptResponse();
+        try {
+            generateReceipt = receiptService.generateReceiptByEmail(secondReceipt.getEmail());
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
 
         assertEquals("""
                 \nNAME - Michael Jordan
@@ -206,7 +245,6 @@ class OHReceiptServiceTest {
     }
     @Test
     void deleteReceiptById(){
-
         Admin admin = Map.adminResponseToAdmin(superAdmin);
         ReservationRequest request = new ReservationRequest();
         request.setRoomNumberChosen(1);
@@ -231,7 +269,12 @@ class OHReceiptServiceTest {
         }
         assertEquals("Receipt Created",secondReceipt.getMessage());
 
-        DeleteResponse deletedReceipt = receiptService.deleteReceiptById(secondReceipt.getId());
+        DeleteResponse deletedReceipt = new DeleteResponse();
+        try {
+            deletedReceipt = receiptService.deleteReceiptById(secondReceipt.getId());
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Receipt Deleted Successfully",deletedReceipt.getMessage());
     }
 

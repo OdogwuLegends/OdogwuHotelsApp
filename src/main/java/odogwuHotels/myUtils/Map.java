@@ -1,4 +1,4 @@
-package odogwuHotels;
+package odogwuHotels.myUtils;
 
 import odogwuHotels.data.models.*;
 import odogwuHotels.dto.requests.*;
@@ -31,15 +31,36 @@ public class Map {
 
         return creationResponse;
     }
+    public static UpdateResponse roomToUpdateResponse(Room room){
+        UpdateResponse response = new UpdateResponse();
+
+        response.setAvailable(room.isAvailable());
+        response.setRoomPrice(room.getPrice());
+        response.setRoomNumberChosen(room.getRoomNumber());
+        response.setRoomType(room.getRoomType());
+        response.setId(room.getId());
+
+        return response;
+    }
+    public static DeleteResponse roomToDeleteResponse(Room room){
+        DeleteResponse response = new DeleteResponse();
+
+        response.setRoomNumber(room.getRoomNumber());
+        return response;
+    }
 
     public static StringBuilder listToBuilder(List<Integer> numbers){
         StringBuilder builder = new StringBuilder();
-
-        for (Integer number : numbers) {
-            builder.append(number).append(", ");
-        }
-        int lastIndex = builder.length()-1;
+        if(numbers.isEmpty()){
+            builder.append("=> [Sorry, no room found.]");
+        } else{
+            for (Integer number : numbers) {
+                builder.append(number).append(", ");
+            }
+            int lastIndex = builder.length()-1;
         builder.setCharAt(lastIndex-1,' ');
+        }
+
         return builder;
     }
 

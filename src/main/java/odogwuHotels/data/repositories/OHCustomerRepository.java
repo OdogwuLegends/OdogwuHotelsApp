@@ -1,14 +1,22 @@
 package odogwuHotels.data.repositories;
 
-import odogwuHotels.Utils;
+import odogwuHotels.myUtils.Utils;
 import odogwuHotels.data.models.Customer;
 
 import java.util.*;
 
 public class OHCustomerRepository implements CustomerRepository{
-
     static List<Customer> customerRepository = new ArrayList<>();
+    private static OHCustomerRepository singleObject;
 
+    private OHCustomerRepository(){
+    }
+    public static OHCustomerRepository createObject(){
+        if(singleObject == null){
+            singleObject = new OHCustomerRepository();
+        }
+        return singleObject;
+    }
     @Override
     public Customer saveCustomer(Customer newCustomer) {
         newCustomer.setId(Utils.generateId());
@@ -72,4 +80,5 @@ public class OHCustomerRepository implements CustomerRepository{
         Customer foundCustomer = findCustomerById(id);
         if(foundCustomer != null) customerRepository.remove(foundCustomer);
     }
+
 }

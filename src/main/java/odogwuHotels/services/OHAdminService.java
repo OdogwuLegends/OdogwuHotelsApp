@@ -1,25 +1,30 @@
 package odogwuHotels.services;
 
-import odogwuHotels.Map;
+import odogwuHotels.myUtils.Map;
+import odogwuHotels.myUtils.Utils;
 import odogwuHotels.data.models.*;
 import odogwuHotels.data.repositories.AdminRepository;
 import odogwuHotels.data.repositories.OHAdminRepository;
 import odogwuHotels.dto.requests.*;
 import odogwuHotels.dto.responses.*;
 import odogwuHotels.exceptions.AdminException;
-import odogwuHotels.exceptions.UserNotFoundException;
+import odogwuHotels.exceptions.EmailNotCorrectException;
+import odogwuHotels.exceptions.EntityNotFoundException;
 
 import java.util.List;
 
 public class OHAdminService implements AdminService {
-    private final AdminRepository adminRepository = new OHAdminRepository();
+    private final AdminRepository adminRepository = OHAdminRepository.createObject();
     ReservationService reservationService;
     CustomerService customerService;
     RoomService roomService;
     ReceiptService receiptService;
 
     @Override
-    public AdminResponse registerSuperAdmin(RegisterAdminRequest request) {
+    public AdminResponse registerSuperAdmin(RegisterAdminRequest request) throws EmailNotCorrectException {
+        if(!Utils.emailIsCorrect(request.getEmail())){
+            throw new EmailNotCorrectException("Email not correct");
+        }
         Admin superAdmin = Map.adminRequestToAdmin(request);
         superAdmin.setSuperAdmin(true);
         superAdmin.setApproveNewAdmin(true);
@@ -30,7 +35,10 @@ public class OHAdminService implements AdminService {
     }
 
     @Override
-    public AdminResponse registerAuxiliaryAdmins(RegisterAdminRequest request, Admin adminToApprove) {
+    public AdminResponse registerAuxiliaryAdmins(RegisterAdminRequest request, Admin adminToApprove) throws EmailNotCorrectException {
+        if(!Utils.emailIsCorrect(request.getEmail())){
+            throw new EmailNotCorrectException("Email not correct");
+        }
         Admin newAdmin = Map.adminRequestToAdmin(request);
         AdminResponse response = new AdminResponse();
         if (adminToApprove.isSuperAdmin()) {
@@ -98,13 +106,13 @@ public class OHAdminService implements AdminService {
     }
 
     @Override
-    public ReservationResponse findReservationById(int id) {
+    public ReservationResponse findReservationById(int id) throws EntityNotFoundException {
         reservationService = new OHReservationService();
         return reservationService.findReservationById(id);
     }
 
     @Override
-    public ReservationResponse findReservationByRoomNumber(ReservationRequest request) {
+    public ReservationResponse findReservationByRoomNumber(ReservationRequest request) throws EntityNotFoundException {
         reservationService = new OHReservationService();
         return reservationService.findReservationByRoomNumber(request);
     }
@@ -122,15 +130,26 @@ public class OHAdminService implements AdminService {
     }
 
     @Override
-    public DeleteResponse deleteReservationByRoomNumber(ReservationRequest request) {
+    public DeleteResponse deleteReservationByRoomNumber(ReservationRequest request) throws EntityNotFoundException {
         reservationService = new OHReservationService();
         return reservationService.deleteReservationByRoomNumber(request);
     }
 
     @Override
-    public UserResponse findCustomerByEmail(String email) throws UserNotFoundException {
+    public DeleteResponse deleteReservationById(int id) throws EntityNotFoundException {
+        reservationService = new OHReservationService();
+        return reservationService.deleteReservationById(id);
+    }
+
+    @Override
+    public UserResponse findCustomerByEmail(String email) throws EntityNotFoundException {
         customerService = new OHCustomerService();
         return customerService.findCustomerByEmail(email);
+    }
+    @Override
+    public UserResponse findCustomerById(int id) throws EntityNotFoundException {
+        customerService = new OHCustomerService();
+        return customerService.findCustomerById(id);
     }
 
     @Override
@@ -146,12 +165,12 @@ public class OHAdminService implements AdminService {
     }
 
     @Override
-    public DeleteResponse deleteCustomerById(int id) {
+    public DeleteResponse deleteCustomerById(int id) throws EntityNotFoundException {
         customerService = new OHCustomerService();
         return customerService.deleteCustomerById(id);
     }
 
-    public DeleteResponse deleteCustomerByEmail(String email) {
+    public DeleteResponse deleteCustomerByEmail(String email) throws EntityNotFoundException {
         customerService = new OHCustomerService();
         return customerService.deleteCustomerByEmail(email);
     }
@@ -163,13 +182,13 @@ public class OHAdminService implements AdminService {
     }
 
     @Override
-    public SearchResponse findRoomById(RoomSearchRequest request) {
+    public SearchResponse findRoomById(RoomSearchRequest request) throws EntityNotFoundException {
         roomService = new OHRoomService();
         return roomService.findRoomByIdOrRoomNumber(request);
     }
 
     @Override
-    public SearchResponse findRoomByRoomNumber(RoomSearchRequest request) {
+    public SearchResponse findRoomByRoomNumber(RoomSearchRequest request) throws EntityNotFoundException {
         roomService = new OHRoomService();
         return roomService.findRoomByIdOrRoomNumber(request);
     }
@@ -181,15 +200,33 @@ public class OHAdminService implements AdminService {
     }
 
     @Override
+    public SearchResponse seeAvailableRooms(RoomSearchRequest request) {
+        roomService = new OHRoomService();
+        return roomService.findAvailableRooms(request);
+    }
+
+    @Override
+    public SearchResponse seeBookedRooms(RoomSearchRequest request) {
+        roomService = new OHRoomService();
+        return roomService.findBookedRooms(request);
+    }
+
+    @Override
     public UpdateResponse editRoomDetails(RequestToUpdateRoom updateRoom) {
         roomService = new OHRoomService();
         return roomService.editRoomDetails(updateRoom);
     }
 
     @Override
-    public DeleteResponse deleteRoomByRoomById(RequestToUpdateRoom updateRoom) {
+    public DeleteResponse deleteRoomById(RequestToUpdateRoom request) throws EntityNotFoundException {
         roomService = new OHRoomService();
-        return roomService.deleteRoomByRoomById(updateRoom);
+        return roomService.deleteRoomByRoomById(request);
+    }
+
+    @Override
+    public DeleteResponse deleteRoomByRoomNumber(RequestToUpdateRoom updateRoom) throws EntityNotFoundException {
+        roomService = new OHRoomService();
+        return roomService.deleteRoomByRoomByRoomNumber(updateRoom);
     }
 
     @Override
@@ -200,7 +237,25 @@ public class OHAdminService implements AdminService {
     }
 
     @Override
-    public ReceiptResponse findReceiptById(int id) {
+    public ReceiptResponse createReceipt(ReservationRequest request, Admin admin) throws AdminException {
+        receiptService = new OHReceiptService();
+        return receiptService.createReceipt(request,admin);
+    }
+
+    @Override
+    public ReceiptResponse issueReceiptsById(int id) throws EntityNotFoundException {
+        receiptService = new OHReceiptService();
+        return receiptService.generateReceiptById(id);
+    }
+
+    @Override
+    public ReceiptResponse issueReceiptsByEmail(String email) throws EntityNotFoundException {
+        receiptService = new OHReceiptService();
+        return receiptService.generateReceiptByEmail(email);
+    }
+
+    @Override
+    public ReceiptResponse findReceiptById(int id) throws EntityNotFoundException {
         receiptService = new OHReceiptService();
         return receiptService.findReceiptById(id);
     }
@@ -212,16 +267,11 @@ public class OHAdminService implements AdminService {
     }
 
     @Override
-    public DeleteResponse deleteReceiptById(int id) {
+    public DeleteResponse deleteReceiptById(int id) throws EntityNotFoundException {
         receiptService = new OHReceiptService();
         return receiptService.deleteReceiptById(id);
     }
 
-    @Override
-    public ReceiptResponse issueReceiptsById(int id) {
-        receiptService = new OHReceiptService();
-        return receiptService.generateReceiptById(id);
-    }
 
     @Override
     public String respondToFeedBacks() {

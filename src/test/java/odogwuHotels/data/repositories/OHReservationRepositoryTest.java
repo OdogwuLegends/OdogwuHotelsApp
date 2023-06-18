@@ -1,26 +1,23 @@
 package odogwuHotels.data.repositories;
 
-import odogwuHotels.Utils;
+import odogwuHotels.myUtils.Utils;
 import odogwuHotels.data.models.Customer;
-import odogwuHotels.data.models.Receipt;
 import odogwuHotels.data.models.Reservation;
 import odogwuHotels.data.models.Room;
 import odogwuHotels.dto.requests.UpdateReservationRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 import static odogwuHotels.data.models.RoomType.DOUBLE;
 import static odogwuHotels.data.models.RoomType.SINGLE;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OHReservationRepositoryTest {
-    private final ReservationRepository reservationRepository = new OHReservationRepository();
+    private final ReservationRepository reservationRepository = OHReservationRepository.createObject();
     private Reservation firstReservationSaved;
     private Reservation secondReservationSaved;
 

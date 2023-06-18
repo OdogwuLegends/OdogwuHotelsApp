@@ -1,6 +1,6 @@
 package odogwuHotels.data.repositories;
 
-import odogwuHotels.Utils;
+import odogwuHotels.myUtils.Utils;
 import odogwuHotels.data.models.Customer;
 import odogwuHotels.dto.requests.RequestToUpdateUserDetails;
 import org.junit.jupiter.api.AfterEach;
@@ -12,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OHCustomerRepositoryTest {
-    private final CustomerRepository customerRepository = new OHCustomerRepository();
+    private final CustomerRepository customerRepository =  OHCustomerRepository.createObject();
     Customer firstCustomerSaved;
     Customer secondCustomerSaved;
     @BeforeEach

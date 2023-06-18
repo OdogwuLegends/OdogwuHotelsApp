@@ -1,7 +1,7 @@
 package odogwuHotels.services;
 
-import odogwuHotels.Map;
-import odogwuHotels.Utils;
+import odogwuHotels.myUtils.Map;
+import odogwuHotels.myUtils.Utils;
 import odogwuHotels.data.models.Admin;
 import odogwuHotels.data.models.Reservation;
 import odogwuHotels.dto.requests.*;
@@ -10,6 +10,8 @@ import odogwuHotels.dto.responses.DeleteResponse;
 import odogwuHotels.dto.responses.ReservationResponse;
 import odogwuHotels.dto.responses.UpdateResponse;
 import odogwuHotels.exceptions.AdminException;
+import odogwuHotels.exceptions.EmailNotCorrectException;
+import odogwuHotels.exceptions.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,8 +31,17 @@ class OHReservationServiceTest {
 
     @BeforeEach
     void setUp(){
+        try {
         customerService.registerCustomer(first());
-        customerService.registerCustomer(second());
+        } catch (EmailNotCorrectException ex){
+            System.err.println(ex.getMessage());
+        }
+        try {
+            customerService.registerCustomer(second());
+        } catch (EmailNotCorrectException ex){
+            System.err.println(ex.getMessage());
+        }
+
 
         roomService.createRoom(firstRoomCreated());
         roomService.createRoom(secondRoomCreated());
@@ -48,14 +59,23 @@ class OHReservationServiceTest {
     void findReservationByRoomNumber(){
         ReservationRequest request = new ReservationRequest();
         request.setRoomNumberChosen(1);
-        ReservationResponse foundReservation = reservationService.findReservationByRoomNumber(request);
+        ReservationResponse foundReservation = new ReservationResponse();
+        try {
+            foundReservation = reservationService.findReservationByRoomNumber(request);
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
 
         assertEquals(firstReservation.getRoomNumber(),foundReservation.getRoomNumber());
     }
     @Test
     void findReservationById(){
-        ReservationResponse foundReservation = reservationService.findReservationById(secondReservation.getId());
-
+        ReservationResponse foundReservation = new ReservationResponse();
+        try {
+            foundReservation = reservationService.findReservationById(secondReservation.getId());
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals(secondReservation.getId(),foundReservation.getId());
     }
     @Test
@@ -100,7 +120,12 @@ class OHReservationServiceTest {
         request.setRoomNumber(2);
         request.setEmail("ned@gmail.com");
 
-        ReservationResponse afterCheckIn = reservationService.checkIn(request);
+        ReservationResponse afterCheckIn = new ReservationResponse();
+        try {
+            afterCheckIn = reservationService.checkIn(request);
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Check In Successful",afterCheckIn.getMessage());
         reservation = Map.reservationResponseToReservation(afterCheckIn);
         assertFalse(reservation.getRoom().isAvailable());
@@ -126,7 +151,12 @@ class OHReservationServiceTest {
         request.setEmail("legend@gmail.com");
         request.setRoomNumber(1);
 
-        ReservationResponse afterCheckIn = reservationService.checkIn(request);
+        ReservationResponse afterCheckIn = new ReservationResponse();
+        try {
+            afterCheckIn = reservationService.checkIn(request);
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Check In Successful",afterCheckIn.getMessage());
 
         request.setRoomNumber(1);
@@ -144,12 +174,22 @@ class OHReservationServiceTest {
     void deleteReservationByRoomNumber(){
         ReservationRequest request = new ReservationRequest();
         request.setRoomNumberChosen(2);
-        DeleteResponse deletedRoom = reservationService.deleteReservationByRoomNumber(request);
+        DeleteResponse deletedRoom = new DeleteResponse();
+        try {
+            deletedRoom = reservationService.deleteReservationByRoomNumber(request);
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Reservation deleted successfully.",deletedRoom.getMessage());
     }
     @Test
     void deleteReservationById(){
-        DeleteResponse deletedRoom = reservationService.deleteReservationById(firstReservation.getId());
+        DeleteResponse deletedRoom = new DeleteResponse();
+        try {
+            deletedRoom = reservationService.deleteReservationById(firstReservation.getId());
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Reservation deleted successfully.",deletedRoom.getMessage());
     }
 
@@ -232,6 +272,12 @@ class OHReservationServiceTest {
         request.setPassword("1999");
         request.setEmail("jayjay@gmail.com");
 
-        return adminService.registerSuperAdmin(request);
+        AdminResponse registeredAdmin = new AdminResponse();
+        try {
+            registeredAdmin = adminService.registerSuperAdmin(request);
+        } catch (EmailNotCorrectException ex){
+            System.err.println(ex.getMessage());
+        }
+        return registeredAdmin;
     }
 }

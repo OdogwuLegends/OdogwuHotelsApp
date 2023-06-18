@@ -1,6 +1,6 @@
 package odogwuHotels.services;
 
-import odogwuHotels.Map;
+import odogwuHotels.myUtils.Map;
 import odogwuHotels.data.models.Admin;
 import odogwuHotels.data.models.Receipt;
 import odogwuHotels.data.models.Reservation;
@@ -10,14 +10,14 @@ import odogwuHotels.dto.requests.ReservationRequest;
 import odogwuHotels.dto.responses.DeleteResponse;
 import odogwuHotels.dto.responses.ReceiptResponse;
 import odogwuHotels.dto.responses.ReservationResponse;
-import odogwuHotels.dto.responses.UpdateResponse;
 import odogwuHotels.exceptions.AdminException;
+import odogwuHotels.exceptions.EntityNotFoundException;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public class OHReceiptService implements ReceiptService{
-    private final ReceiptRepository receiptRepository = new OHReceiptRepository();
+    private final ReceiptRepository receiptRepository = OHReceiptRepository.createObject();
     ReservationService reservationService;
     AdminService adminService;
 
@@ -29,7 +29,12 @@ public class OHReceiptService implements ReceiptService{
         if(!admin.isSuperAdmin()){
             throw new AdminException("Not authorized. Submit to Super Admin to complete task.");
         }
-        ReservationResponse response = reservationService.findReservationByRoomNumber(request);
+        ReservationResponse response = new ReservationResponse();
+        try {
+            response = reservationService.findReservationByRoomNumber(request);
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         Reservation reservation = Map.reservationResToReservation(response);
         Receipt receiptToCreate = Map.createReceipt(reservation,admin);
 
@@ -54,50 +59,41 @@ public class OHReceiptService implements ReceiptService{
     }
 
     @Override
-    public UpdateResponse editReceiptById(int id) {
+    public ReceiptResponse findReceiptById(int id) throws EntityNotFoundException {
         Receipt foundReceipt = receiptRepository.findById(id);
-                //DO WE EDIT RECEIPTS OR GENERATE NEW RECEIPTS?
-
-//        if(foundReceipt != null){
-//            if(receipt.getFirstName() != null) foundReceipt.setFirstName(receipt.getFirstName());
-//            if(receipt.getLastName() != null) foundReceipt.setLastName(receipt.getLastName());
-//            if(receipt.getBalance() != null) foundReceipt.setBalance(receipt.getBalance());
-//            if(receipt.getApprovedBy() != null) foundReceipt.setApprovedBy(receipt.getApprovedBy());
-//            if(receipt.getAmountPaid() != null) foundReceipt.setAmountPaid(receipt.getAmountPaid());
-//            if(receipt.getRoomType() != null) foundReceipt.setRoomType(receipt.getRoomType());
-//            if(receipt.getRoomPrice() != null) foundReceipt.setRoomPrice(receipt.getRoomPrice());
-//            if(receipt.getDurationOfStay() > 0) foundReceipt.setDurationOfStay(receipt.getDurationOfStay());
-//            if(receipt.getCheckInDate() != null) foundReceipt.setCheckInDate(receipt.getCheckInDate());
-//            if(receipt.getCheckOutDate() != null) foundReceipt.setCheckOutDate(receipt.getCheckOutDate());
-//            if(receipt.isFullyPaidFor() != foundReceipt.isFullyPaidFor()) foundReceipt.setFullyPaidFor(receipt.isFullyPaidFor());
-//        }
-        return null;
-    }
-
-    @Override
-    public ReceiptResponse findReceiptById(int id) {
-        Receipt foundReceipt = receiptRepository.findById(id);
+        if(foundReceipt == null){
+            throw new EntityNotFoundException("Receipt not found");
+        }
         ReceiptResponse response = Map.receiptToResponse(foundReceipt);
         response.setMessage("Receipt Found");
         return response;
     }
 
     @Override
-    public ReceiptResponse findReceiptByEmail(String email) {
+    public ReceiptResponse findReceiptByEmail(String email) throws EntityNotFoundException {
         Receipt foundReceipt = receiptRepository.findByEmail(email);
+        if(foundReceipt == null){
+            throw new EntityNotFoundException("Receipt not found");
+        }
         ReceiptResponse response = Map.receiptToResponse(foundReceipt);
         response.setMessage("Receipt Found");
         return response;
     }
 
     @Override
-    public ReceiptResponse generateReceiptById(int id){
+    public ReceiptResponse generateReceiptById(int id) throws EntityNotFoundException {
         Receipt foundReceipt = receiptRepository.findById(id);
+        if(foundReceipt == null){
+            throw new EntityNotFoundException("Receipt not found");
+        }
         return Map.receiptToResponse(foundReceipt);
     }
     @Override
-    public ReceiptResponse generateReceiptByEmail(String email){
+    public ReceiptResponse generateReceiptByEmail(String email) throws EntityNotFoundException {
         Receipt foundReceipt = receiptRepository.findByEmail(email);
+        if(foundReceipt == null){
+            throw new EntityNotFoundException("Receipt not found");
+        }
         return Map.receiptToResponse(foundReceipt);
     }
 
@@ -107,8 +103,12 @@ public class OHReceiptService implements ReceiptService{
     }
 
     @Override
-    public DeleteResponse deleteReceiptById(int id) {
-        receiptRepository.deleteReceiptById(id);
+    public DeleteResponse deleteReceiptById(int id) throws EntityNotFoundException {
+        Receipt foundReceipt = receiptRepository.findById(id);
+        if(foundReceipt == null){
+            throw new EntityNotFoundException("Receipt not found");
+        }
+        receiptRepository.deleteReceiptById(foundReceipt.getId());
         DeleteResponse response = new DeleteResponse();
         response.setMessage("Receipt Deleted Successfully");
         return response;

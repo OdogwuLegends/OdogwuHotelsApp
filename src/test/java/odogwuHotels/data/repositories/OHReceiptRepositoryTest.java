@@ -1,6 +1,6 @@
 package odogwuHotels.data.repositories;
 
-import odogwuHotels.Utils;
+import odogwuHotels.myUtils.Utils;
 import odogwuHotels.data.models.Admin;
 import odogwuHotels.data.models.Receipt;
 import org.junit.jupiter.api.AfterEach;
@@ -17,7 +17,7 @@ import static odogwuHotels.data.models.RoomType.SINGLE;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OHReceiptRepositoryTest {
-    private final ReceiptRepository receiptRepository = new OHReceiptRepository();
+    private final ReceiptRepository receiptRepository = OHReceiptRepository.createObject();
     private Receipt firstReceiptSaved;
     private Receipt secondReceiptSaved;
 
@@ -38,26 +38,6 @@ class OHReceiptRepositoryTest {
         assertEquals(2,allReceipts.size());
         assertTrue(receiptRepository.findAllReceipts().contains(firstReceiptSaved));
         assertTrue(allReceipts.contains(firstReceiptSaved));
-    }
-    @Test
-    void editReceipt(){
-        Receipt foundReceipt = receiptRepository.findById(firstReceiptSaved.getId());
-        LocalDate checkIn = Utils.stringToLocalDate("11/06/2023");
-        assertEquals(checkIn,foundReceipt.getCheckInDate());
-        LocalDate checkOut = Utils.stringToLocalDate("16/06/2023");
-        assertEquals(checkOut,foundReceipt.getCheckOutDate());
-
-        LocalDate newCheckIn = Utils.stringToLocalDate("20/06/2023");
-        LocalDate newCheckOut = Utils.stringToLocalDate("22/06/2023");
-        foundReceipt.setCheckInDate(newCheckIn);
-        foundReceipt.setCheckOutDate(newCheckOut);
-        long duration = ChronoUnit.DAYS.between(checkOut,newCheckIn);
-        foundReceipt.setDurationOfStay(Utils.durationOfStay(duration));
-
-        receiptRepository.updateReceipt(foundReceipt);
-
-        assertSame(firstReceiptSaved,foundReceipt);
-        assertEquals(firstReceiptSaved.getDurationOfStay(),foundReceipt.getDurationOfStay());
     }
 
     @Test

@@ -8,6 +8,7 @@ import odogwuHotels.dto.responses.DeleteResponse;
 import odogwuHotels.dto.responses.RoomCreationResponse;
 import odogwuHotels.dto.responses.SearchResponse;
 import odogwuHotels.dto.responses.UpdateResponse;
+import odogwuHotels.exceptions.EntityNotFoundException;
 
 import java.util.List;
 
@@ -16,9 +17,10 @@ public interface RoomService {
     UpdateResponse editRoomDetails(RequestToUpdateRoom updateRoom);
     SearchResponse findAvailableRooms(RoomSearchRequest request);
     SearchResponse findBookedRooms(RoomSearchRequest request);
-    SearchResponse findRoomByIdOrRoomNumber(RoomSearchRequest request);
+    SearchResponse findRoomByIdOrRoomNumber(RoomSearchRequest request) throws EntityNotFoundException;
     List<Room> findAllRooms();
-    DeleteResponse deleteRoomByRoomById(RequestToUpdateRoom updateRoom);
+    DeleteResponse deleteRoomByRoomById(RequestToUpdateRoom updateRoom) throws EntityNotFoundException;
+    DeleteResponse deleteRoomByRoomByRoomNumber(RequestToUpdateRoom request) throws EntityNotFoundException;
 
 
 }

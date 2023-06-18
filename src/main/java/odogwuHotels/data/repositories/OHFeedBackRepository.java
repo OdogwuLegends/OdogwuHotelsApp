@@ -1,12 +1,23 @@
 package odogwuHotels.data.repositories;
 
-import odogwuHotels.Utils;
+import odogwuHotels.myUtils.Utils;
 import odogwuHotels.data.models.FeedBack;
 
 import java.util.*;
 
 public class OHFeedBackRepository implements FeedBackRepository{
     static List<FeedBack> feedBacks = new ArrayList<>();
+    private static OHFeedBackRepository singleObject;
+
+    private OHFeedBackRepository() {
+
+    }
+    public static OHFeedBackRepository createObject(){
+        if(singleObject == null){
+            singleObject = new OHFeedBackRepository();
+        }
+        return singleObject;
+    }
 
     @Override
     public FeedBack saveFeedBack(FeedBack feedBack) {
