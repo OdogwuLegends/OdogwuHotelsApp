@@ -45,45 +45,6 @@ public class AdminController {
     public DeleteResponse deleteAdminById(int id) throws AdminException{
         return adminService.deleteAdminById(id);
     }
-    public ReservationResponse makeReservation(ReservationRequest request){
-        return adminService.makeReservation(request);
-    }
-    public ReservationResponse findReservationById(int id) throws EntityNotFoundException {
-        return adminService.findReservationById(id);
-    }
-    public ReservationResponse findReservationByRoomNumber(ReservationRequest request) throws EntityNotFoundException {
-        return adminService.findReservationByRoomNumber(request);
-    }
-    public List<Reservation> viewAllReservations(){
-        return adminService.viewAllReservations();
-    }
-    public UpdateResponse editReservation(UpdateReservationRequest request){
-        return adminService.editReservation(request);
-    }
-    public DeleteResponse deleteReservationByRoomNumber(ReservationRequest request) throws EntityNotFoundException {
-        return adminService.deleteReservationByRoomNumber(request);
-    }
-    public DeleteResponse deleteReservationById(int id) throws EntityNotFoundException {
-        return adminService.deleteReservationById(id);
-    }
-    public UserResponse findCustomerByEmail(String email) throws EntityNotFoundException{
-        return adminService.findCustomerByEmail(email);
-    }
-    public UserResponse findCustomerById(int id) throws EntityNotFoundException{
-        return adminService.findCustomerById(id);
-    }
-    public List<Customer> findAllCustomers(){
-        return adminService.findAllCustomers();
-    }
-    public UpdateResponse editCustomerDetails(RequestToUpdateUserDetails request){
-        return adminService.editCustomerDetails(request);
-    }
-    public DeleteResponse deleteCustomerById(int id) throws EntityNotFoundException{
-        return adminService.deleteCustomerById(id);
-    }
-    public DeleteResponse deleteCustomerByEmail(String email) throws EntityNotFoundException{
-        return adminService.deleteCustomerByEmail(email);
-    }
     public RoomCreationResponse createRoom(RequestToCreateRoom request){
         return adminService.createRoom(request);
     }
@@ -110,6 +71,45 @@ public class AdminController {
     }
     public DeleteResponse deleteRoomByRoomNumber(RequestToUpdateRoom request) throws EntityNotFoundException{
         return adminService.deleteRoomByRoomNumber(request);
+    }
+    public UserResponse findCustomerByEmail(String email) throws EntityNotFoundException{
+        return adminService.findCustomerByEmail(email);
+    }
+    public UserResponse findCustomerById(int id) throws EntityNotFoundException{
+        return adminService.findCustomerById(id);
+    }
+    public List<Customer> findAllCustomers(){
+        return adminService.findAllCustomers();
+    }
+    public UpdateResponse editCustomerDetails(RequestToUpdateUserDetails request){
+        return adminService.editCustomerDetails(request);
+    }
+    public DeleteResponse deleteCustomerById(int id) throws EntityNotFoundException{
+        return adminService.deleteCustomerById(id);
+    }
+    public DeleteResponse deleteCustomerByEmail(String email) throws EntityNotFoundException{
+        return adminService.deleteCustomerByEmail(email);
+    }
+    public ReservationResponse makeReservation(ReservationRequest request){
+        return adminService.makeReservation(request);
+    }
+    public ReservationResponse findReservationById(int id) throws EntityNotFoundException {
+        return adminService.findReservationById(id);
+    }
+    public ReservationResponse findReservationByRoomNumber(ReservationRequest request) throws EntityNotFoundException {
+        return adminService.findReservationByRoomNumber(request);
+    }
+    public List<Reservation> viewAllReservations(){
+        return adminService.viewAllReservations();
+    }
+    public UpdateResponse editReservation(UpdateReservationRequest request){
+        return adminService.editReservation(request);
+    }
+    public DeleteResponse deleteReservationByRoomNumber(ReservationRequest request) throws EntityNotFoundException {
+        return adminService.deleteReservationByRoomNumber(request);
+    }
+    public DeleteResponse deleteReservationById(int id) throws EntityNotFoundException {
+        return adminService.deleteReservationById(id);
     }
     public ReceiptResponse createReceipt(ReservationRequest request, Admin admin) throws AdminException{
         return adminService.createReceipt(request, admin);
