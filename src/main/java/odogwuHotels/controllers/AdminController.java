@@ -33,7 +33,7 @@ public class AdminController {
         }
         return newAdmin;
     }
-    public UpdateResponse editAdminDetails(RequestToUpdateUserDetails request){
+    public UpdateResponse editAdminDetails(RequestToUpdateUserDetails request) throws EmailNotCorrectException {
         return adminService.editAdminDetails(request);
     }
     public AdminResponse findAdminById(int id) throws AdminException{
@@ -63,7 +63,7 @@ public class AdminController {
     public SearchResponse seeBookedRooms(RoomSearchRequest request){
         return adminService.seeBookedRooms(request);
     }
-    public UpdateResponse editRoomDetails(RequestToUpdateRoom request){
+    public UpdateResponse editRoomDetails(RequestToUpdateRoom request) throws EntityNotFoundException {
         return adminService.editRoomDetails(request);
     }
     public DeleteResponse deleteRoomById(RequestToUpdateRoom request) throws EntityNotFoundException{
@@ -81,7 +81,7 @@ public class AdminController {
     public List<Customer> findAllCustomers(){
         return adminService.findAllCustomers();
     }
-    public UpdateResponse editCustomerDetails(RequestToUpdateUserDetails request){
+    public UpdateResponse editCustomerDetails(RequestToUpdateUserDetails request) throws EmailNotCorrectException {
         return adminService.editCustomerDetails(request);
     }
     public DeleteResponse deleteCustomerById(int id) throws EntityNotFoundException{

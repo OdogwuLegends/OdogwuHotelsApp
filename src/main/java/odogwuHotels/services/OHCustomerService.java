@@ -15,9 +15,10 @@ import java.util.Objects;
 
 public class OHCustomerService implements CustomerService {
     private final CustomerRepository customerRepository =  OHCustomerRepository.createObject();
-    RoomService roomService;
-    ReservationService reservationService;
-    ReceiptService receiptService;
+    private RoomService roomService;
+    private ReservationService reservationService;
+    private ReceiptService receiptService;
+    private FeedBackService feedBackService;
 
     @Override
     public RegisterUserResponse registerCustomer(RegisterUserRequest request) throws EmailNotCorrectException {
@@ -64,14 +65,18 @@ public class OHCustomerService implements CustomerService {
     public List<Customer> findAllCustomers(){
         return customerRepository.findAllCustomers();
     }
-    public UpdateResponse updateCustomerDetails(RequestToUpdateUserDetails request){
+    public UpdateResponse updateCustomerDetails(RequestToUpdateUserDetails request) throws EmailNotCorrectException {
         Customer customerToUpdate = customerRepository.findCustomerByEmail(request.getEmail());
         int index = customerRepository.getIndex(customerToUpdate);
 
         if(customerToUpdate != null){
             if(request.getFirstName() != null) customerToUpdate.setFirstName(request.getFirstName());
             if(request.getLastName() != null) customerToUpdate.setLastName(request.getLastName());
-            if(request.getNewEmail() != null) customerToUpdate.setEmail(request.getNewEmail());
+            if(request.getNewEmail() != null)
+                if(!Utils.emailIsCorrect(request.getNewEmail())){
+                    throw new EmailNotCorrectException("Email not correct");
+                }
+                customerToUpdate.setEmail(request.getNewEmail());
             if(request.getPassword() != null) customerToUpdate.setPassword(request.getPassword());
         }
 
@@ -154,5 +159,11 @@ public class OHCustomerService implements CustomerService {
     public ReceiptResponse requestReceipt(ReceiptRequest request) throws EntityNotFoundException {
         receiptService = new OHReceiptService();
         return receiptService.generateReceiptByEmail(request.getEmail());
+    }
+
+    @Override
+    public FeedBackResponse giveFeedBack(String feedBack) {
+        feedBackService = new OHFeedBackService();
+        return feedBackService.giveAFeedBack(feedBack);
     }
 }

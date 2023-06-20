@@ -23,7 +23,7 @@ public class CustomerController {
     public LoginResponse login(LoginRequest request) throws EntityNotFoundException{
         return customerService.login(request);
     }
-    public UpdateResponse updateCustomerDetails(RequestToUpdateUserDetails request){
+    public UpdateResponse updateCustomerDetails(RequestToUpdateUserDetails request) throws EmailNotCorrectException {
         return customerService.updateCustomerDetails(request);
     }
     public SearchResponse findAvailableRooms(RoomSearchRequest request){
@@ -49,5 +49,8 @@ public class CustomerController {
     }
     public ReceiptResponse requestReceipt(ReceiptRequest request) throws EntityNotFoundException{
         return customerService.requestReceipt(request);
+    }
+    public FeedBackResponse giveFeedBack(String feedBack){
+        return customerService.giveFeedBack(feedBack);
     }
 }

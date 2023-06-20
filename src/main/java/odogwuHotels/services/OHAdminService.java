@@ -54,14 +54,18 @@ public class OHAdminService implements AdminService {
     }
 
     @Override
-    public UpdateResponse editAdminDetails(RequestToUpdateUserDetails request) {
+    public UpdateResponse editAdminDetails(RequestToUpdateUserDetails request) throws EmailNotCorrectException {
         Admin adminToUpdate = adminRepository.findAdminByEmail(request.getEmail());
         int index = adminRepository.getIndex(adminToUpdate);
 
         if (adminToUpdate != null) {
             if (request.getFirstName() != null) adminToUpdate.setFirstName(request.getFirstName());
             if (request.getLastName() != null) adminToUpdate.setLastName(request.getLastName());
-            if (request.getNewEmail() != null) adminToUpdate.setEmail(request.getNewEmail());
+            if (request.getNewEmail() != null)
+                if(!Utils.emailIsCorrect(request.getNewEmail())){
+                    throw new EmailNotCorrectException("Email not correct");
+                }
+                adminToUpdate.setEmail(request.getNewEmail());
             if (request.getPassword() != null) adminToUpdate.setPassword(request.getPassword());
             if (request.isSuperAdmin() != adminToUpdate.isSuperAdmin())
                 adminToUpdate.setSuperAdmin(request.isSuperAdmin());
@@ -159,7 +163,7 @@ public class OHAdminService implements AdminService {
     }
 
     @Override
-    public UpdateResponse editCustomerDetails(RequestToUpdateUserDetails request) {
+    public UpdateResponse editCustomerDetails(RequestToUpdateUserDetails request) throws EmailNotCorrectException {
         customerService = new OHCustomerService();
         return customerService.updateCustomerDetails(request);
     }
@@ -212,7 +216,7 @@ public class OHAdminService implements AdminService {
     }
 
     @Override
-    public UpdateResponse editRoomDetails(RequestToUpdateRoom updateRoom) {
+    public UpdateResponse editRoomDetails(RequestToUpdateRoom updateRoom) throws EntityNotFoundException {
         roomService = new OHRoomService();
         return roomService.editRoomDetails(updateRoom);
     }

@@ -4,6 +4,7 @@ import odogwuHotels.data.models.*;
 import odogwuHotels.dto.requests.*;
 import odogwuHotels.dto.responses.*;
 import odogwuHotels.exceptions.AdminException;
+import odogwuHotels.exceptions.EmailNotCorrectException;
 import odogwuHotels.exceptions.EntityNotFoundException;
 import odogwuHotels.myUtils.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -70,7 +71,12 @@ class AdminControllerTest {
         request.setPassword("6677");
         request.setNewEmail("batista@gmail.com");
 
-        UpdateResponse updatedAdmin = adminController.editAdminDetails(request);
+        UpdateResponse updatedAdmin = new UpdateResponse();
+        try {
+            updatedAdmin = adminController.editAdminDetails(request);
+        } catch (EmailNotCorrectException ex){
+            System.err.println(ex.getMessage());
+        }
         assertEquals(subAdmin.getId(),updatedAdmin.getId());
         assertEquals(subAdmin.getAdminCode(),updatedAdmin.getAdminCode());
         assertEquals("batista@gmail.com",updatedAdmin.getEmail());
@@ -202,7 +208,12 @@ class AdminControllerTest {
         request.setPrice(BigDecimal.valueOf(50));
         request.setAvailable(false);
 
-        UpdateResponse editedRoom = adminController.editRoomDetails(request);
+        UpdateResponse editedRoom = new UpdateResponse();
+        try {
+            editedRoom = adminController.editRoomDetails(request);
+        } catch (EntityNotFoundException ex){
+            System.err.println(ex.getMessage());
+        }
         assertEquals("Update Successful",editedRoom.getMessage());
     }
     @Test
@@ -266,7 +277,12 @@ class AdminControllerTest {
         request.setFirstName("Shane");
         request.setPassword("0045");
 
-        UpdateResponse editedCustomer = adminController.editCustomerDetails(request);
+        UpdateResponse editedCustomer = new UpdateResponse();
+        try {
+            editedCustomer = adminController.editCustomerDetails(request);
+        }catch (EmailNotCorrectException ex){
+            System.err.println(ex.getMessage());
+        }
         assertEquals(firstCustomer.getId(),editedCustomer.getId());
         assertEquals(firstCustomer.getLastName(),editedCustomer.getLastName());
         assertEquals("Shane",editedCustomer.getFirstName());

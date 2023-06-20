@@ -14,7 +14,7 @@ public interface CustomerService {
     UserResponse findCustomerByEmail(String email) throws EntityNotFoundException;
     UserResponse findCustomerById(int id) throws EntityNotFoundException;
     List<Customer> findAllCustomers();
-    UpdateResponse updateCustomerDetails(RequestToUpdateUserDetails request);
+    UpdateResponse updateCustomerDetails(RequestToUpdateUserDetails request) throws EmailNotCorrectException;
     DeleteResponse deleteCustomerByEmail(String email) throws EntityNotFoundException;
     DeleteResponse deleteCustomerById(int id) throws EntityNotFoundException;
     SearchResponse findAvailableRooms(RoomSearchRequest request);
@@ -25,4 +25,5 @@ public interface CustomerService {
     ReservationResponse checkIn(ReceiptRequest request) throws EntityNotFoundException;
     ReservationResponse checkOut(ReceiptRequest request);
     ReceiptResponse requestReceipt(ReceiptRequest request) throws EntityNotFoundException;
+    FeedBackResponse giveFeedBack(String feedBack);
 }

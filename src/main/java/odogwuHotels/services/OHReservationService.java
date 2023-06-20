@@ -111,6 +111,9 @@ public class OHReservationService implements ReservationService{
         receiptService = new OHReceiptService();
 
         ReceiptResponse receipt = receiptService.findReceiptByEmail(request.getEmail());
+        if(receipt == null){
+            throw new EntityNotFoundException("Receipt not found");
+        }
         Receipt foundReceipt = Map.responseToReceipt(receipt);
 
         ReservationResponse response = new ReservationResponse();

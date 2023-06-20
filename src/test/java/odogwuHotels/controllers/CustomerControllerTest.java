@@ -1,5 +1,6 @@
 package odogwuHotels.controllers;
 
+import odogwuHotels.exceptions.EmailNotCorrectException;
 import odogwuHotels.myUtils.Map;
 import odogwuHotels.myUtils.Utils;
 import odogwuHotels.dto.requests.*;
@@ -61,7 +62,12 @@ class CustomerControllerTest {
         request.setFirstName("Jean-Claude");
         request.setLastName("Van-Damme");
 
-        UpdateResponse updatedCustomer = customerController.updateCustomerDetails(request);
+        UpdateResponse updatedCustomer = new UpdateResponse();
+        try {
+            updatedCustomer = customerController.updateCustomerDetails(request);
+        }catch (EmailNotCorrectException ex){
+            System.err.println(ex.getMessage());
+        }
         assertEquals(firstCustomer.getId(),updatedCustomer.getId());
         assertEquals(firstCustomer.getEmail(),updatedCustomer.getEmail());
         assertEquals("Van-Damme",updatedCustomer.getLastName());
@@ -181,6 +187,12 @@ class CustomerControllerTest {
                 CHECK OUT DATE - 2023-06-26
                 DURATION OF STAY - 4 days
                 AUTHORIZED BY - Daniel Bryan""",foundReceipt.toString());
+    }
+    @Test
+    void customerCanGiveFeedBack(){
+        String feedBack = "Quality customer service. Well done.";
+        FeedBackResponse receivedFeedBack = customerController.giveFeedBack(feedBack);
+        assertEquals("Your feed back has been received. Thank You",receivedFeedBack.getResponse());
     }
 
 

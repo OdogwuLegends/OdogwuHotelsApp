@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface RoomService {
     RoomCreationResponse createRoom(RequestToCreateRoom createRoom);
-    UpdateResponse editRoomDetails(RequestToUpdateRoom updateRoom);
+    UpdateResponse editRoomDetails(RequestToUpdateRoom updateRoom) throws EntityNotFoundException;
     SearchResponse findAvailableRooms(RoomSearchRequest request);
     SearchResponse findBookedRooms(RoomSearchRequest request);
     SearchResponse findRoomByIdOrRoomNumber(RoomSearchRequest request) throws EntityNotFoundException;

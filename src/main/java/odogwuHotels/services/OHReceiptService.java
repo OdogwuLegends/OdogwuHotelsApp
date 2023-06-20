@@ -64,9 +64,7 @@ public class OHReceiptService implements ReceiptService{
         if(foundReceipt == null){
             throw new EntityNotFoundException("Receipt not found");
         }
-        ReceiptResponse response = Map.receiptToResponse(foundReceipt);
-        response.setMessage("Receipt Found");
-        return response;
+        return Map.receiptToResponse(foundReceipt);
     }
 
     @Override
@@ -75,9 +73,7 @@ public class OHReceiptService implements ReceiptService{
         if(foundReceipt == null){
             throw new EntityNotFoundException("Receipt not found");
         }
-        ReceiptResponse response = Map.receiptToResponse(foundReceipt);
-        response.setMessage("Receipt Found");
-        return response;
+        return Map.receiptToResponse(foundReceipt);
     }
 
     @Override

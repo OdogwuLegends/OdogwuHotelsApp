@@ -12,7 +12,7 @@ import java.util.List;
 public interface AdminService {
     AdminResponse registerSuperAdmin(RegisterAdminRequest request) throws EmailNotCorrectException;
     AdminResponse registerAuxiliaryAdmins(RegisterAdminRequest request, Admin adminToApprove) throws EmailNotCorrectException;
-    UpdateResponse editAdminDetails(RequestToUpdateUserDetails request);
+    UpdateResponse editAdminDetails(RequestToUpdateUserDetails request) throws EmailNotCorrectException;
     AdminResponse findAdminById(int id) throws AdminException;
     List<Admin> findAllAdmins();
     DeleteResponse deleteAdminById(int id) throws AdminException;
@@ -26,7 +26,7 @@ public interface AdminService {
     UserResponse findCustomerByEmail(String email) throws EntityNotFoundException;
     UserResponse findCustomerById(int id) throws EntityNotFoundException;
     List<Customer> findAllCustomers();
-    UpdateResponse editCustomerDetails(RequestToUpdateUserDetails request);
+    UpdateResponse editCustomerDetails(RequestToUpdateUserDetails request) throws EmailNotCorrectException;
     DeleteResponse deleteCustomerById(int id) throws EntityNotFoundException;
     DeleteResponse deleteCustomerByEmail(String email) throws EntityNotFoundException;
     RoomCreationResponse createRoom(RequestToCreateRoom createRoom);
@@ -35,7 +35,7 @@ public interface AdminService {
     List<Room> findAllRooms();
     SearchResponse seeAvailableRooms(RoomSearchRequest request);
     SearchResponse seeBookedRooms(RoomSearchRequest request);
-    UpdateResponse editRoomDetails(RequestToUpdateRoom updateRoom);
+    UpdateResponse editRoomDetails(RequestToUpdateRoom updateRoom) throws EntityNotFoundException;
     DeleteResponse deleteRoomById(RequestToUpdateRoom updateRoom) throws EntityNotFoundException;
     DeleteResponse deleteRoomByRoomNumber(RequestToUpdateRoom updateRoom) throws EntityNotFoundException;
     void approvePayment(Receipt receipt);

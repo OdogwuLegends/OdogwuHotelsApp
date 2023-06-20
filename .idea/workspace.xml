@@ -7,6 +7,21 @@
     <list default="true" id="6f61d9d9-1b27-4b52-b90a-ce5578c80f95" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/controllers/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/controllers/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/controllers/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/AdminService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/CustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHAdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHAdminService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHCustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHCustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHReceiptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHReceiptService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHReservationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHRoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHRoomService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/RoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/RoomService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/controllers/AdminControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/controllers/AdminControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/controllers/CustomerControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/controllers/CustomerControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHAdminServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHAdminServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHCustomerServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHCustomerServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHReceiptServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHReceiptServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHRoomServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHRoomServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,8 +86,8 @@
       <recent name="odogwuHotels.data.repositories" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.AdminControllerTest.deleteReceiptById">
-    <configuration name="AdminControllerTest.deleteReceiptById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.CustomerControllerTest.customerCanGiveFeedBack">
+    <configuration name="CustomerControllerTest.customerCanGiveFeedBack" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="OdogwuHotels" />
       <extension name="coverage">
         <pattern>
@@ -81,72 +96,72 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="odogwuHotels.controllers" />
-      <option name="MAIN_CLASS_NAME" value="odogwuHotels.controllers.AdminControllerTest" />
-      <option name="METHOD_NAME" value="deleteReceiptById" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.controllers.CustomerControllerTest" />
+      <option name="METHOD_NAME" value="customerCanGiveFeedBack" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AdminControllerTest.findAllReceipts" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="OHAdminServiceTest.findReceiptById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="OdogwuHotels" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="odogwuHotels.controllers.*" />
+          <option name="PATTERN" value="odogwuHotels.services.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="odogwuHotels.controllers" />
-      <option name="MAIN_CLASS_NAME" value="odogwuHotels.controllers.AdminControllerTest" />
-      <option name="METHOD_NAME" value="findAllReceipts" />
+      <option name="PACKAGE_NAME" value="odogwuHotels.services" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHAdminServiceTest" />
+      <option name="METHOD_NAME" value="findReceiptById" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AdminControllerTest.findReceiptsById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="OHCustomerServiceTest.customerCanGiveFeedBack" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="OdogwuHotels" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="odogwuHotels.controllers.*" />
+          <option name="PATTERN" value="odogwuHotels.services.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="odogwuHotels.controllers" />
-      <option name="MAIN_CLASS_NAME" value="odogwuHotels.controllers.AdminControllerTest" />
-      <option name="METHOD_NAME" value="findReceiptsById" />
+      <option name="PACKAGE_NAME" value="odogwuHotels.services" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHCustomerServiceTest" />
+      <option name="METHOD_NAME" value="customerCanGiveFeedBack" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AdminControllerTest.issueReceiptsByEmail" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="OHReceiptServiceTest.findReceiptByEmail" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="OdogwuHotels" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="odogwuHotels.controllers.*" />
+          <option name="PATTERN" value="odogwuHotels.services.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="odogwuHotels.controllers" />
-      <option name="MAIN_CLASS_NAME" value="odogwuHotels.controllers.AdminControllerTest" />
-      <option name="METHOD_NAME" value="issueReceiptsByEmail" />
+      <option name="PACKAGE_NAME" value="odogwuHotels.services" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHReceiptServiceTest" />
+      <option name="METHOD_NAME" value="findReceiptByEmail" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AdminControllerTest.issueReceiptsById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="OHReceiptServiceTest.findReceiptById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="OdogwuHotels" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="odogwuHotels.controllers.*" />
+          <option name="PATTERN" value="odogwuHotels.services.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="odogwuHotels.controllers" />
-      <option name="MAIN_CLASS_NAME" value="odogwuHotels.controllers.AdminControllerTest" />
-      <option name="METHOD_NAME" value="issueReceiptsById" />
+      <option name="PACKAGE_NAME" value="odogwuHotels.services" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHReceiptServiceTest" />
+      <option name="METHOD_NAME" value="findReceiptById" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -154,11 +169,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.AdminControllerTest.deleteReceiptById" />
-        <item itemvalue="JUnit.AdminControllerTest.findAllReceipts" />
-        <item itemvalue="JUnit.AdminControllerTest.findReceiptsById" />
-        <item itemvalue="JUnit.AdminControllerTest.issueReceiptsByEmail" />
-        <item itemvalue="JUnit.AdminControllerTest.issueReceiptsById" />
+        <item itemvalue="JUnit.CustomerControllerTest.customerCanGiveFeedBack" />
+        <item itemvalue="JUnit.OHCustomerServiceTest.customerCanGiveFeedBack" />
+        <item itemvalue="JUnit.OHAdminServiceTest.findReceiptById" />
+        <item itemvalue="JUnit.OHReceiptServiceTest.findReceiptByEmail" />
+        <item itemvalue="JUnit.OHReceiptServiceTest.findReceiptById" />
       </list>
     </recent_temporary>
   </component>
@@ -172,7 +187,7 @@
       <updated>1685647199605</updated>
       <workItem from="1685647202898" duration="31554000" />
       <workItem from="1685773031686" duration="235850000" />
-      <workItem from="1686948557205" duration="64977000" />
+      <workItem from="1686948557205" duration="67915000" />
     </task>
     <servers />
   </component>

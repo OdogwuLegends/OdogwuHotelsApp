@@ -38,16 +38,17 @@ public class OHRoomService implements RoomService{
     }
 
     @Override
-    public UpdateResponse editRoomDetails(RequestToUpdateRoom request) {
+    public UpdateResponse editRoomDetails(RequestToUpdateRoom request) throws EntityNotFoundException {
         Room roomToUpdate = roomRepository.findRoomByRoomNumber(request.getRoomNumber());
         int index = roomRepository.getIndex(roomToUpdate);
-
-        if(roomToUpdate != null){
-            if(request.getRoomType() != null) roomToUpdate.setRoomType(request.getRoomType());
-            if(request.getNewRoomNumber() > 0) roomToUpdate.setRoomNumber(request.getNewRoomNumber());
-            if(request.getPrice()!= null && request.getPrice().compareTo(BigDecimal.ZERO) > 0) roomToUpdate.setPrice(request.getPrice());
-            if(request.isAvailable() != roomToUpdate.isAvailable()) roomToUpdate.setAvailable(request.isAvailable());
+        if(roomToUpdate == null){
+            throw new EntityNotFoundException("Room not found");
         }
+        if(request.getRoomType() != null) roomToUpdate.setRoomType(request.getRoomType());
+        if(request.getNewRoomNumber() > 0) roomToUpdate.setRoomNumber(request.getNewRoomNumber());
+        if(request.getPrice()!= null && request.getPrice().compareTo(BigDecimal.ZERO) > 0) roomToUpdate.setPrice(request.getPrice());
+        if(request.isAvailable() != roomToUpdate.isAvailable()) roomToUpdate.setAvailable(request.isAvailable());
+
         Room updatedRoom = roomRepository.updateRoom(index,roomToUpdate);
         UpdateResponse response = Map.roomToUpdateResponse(updatedRoom);
         response.setMessage("Update Successful");

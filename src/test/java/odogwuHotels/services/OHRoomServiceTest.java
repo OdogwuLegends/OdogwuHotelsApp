@@ -47,7 +47,12 @@ class OHRoomServiceTest {
         RequestToUpdateRoom request = new RequestToUpdateRoom();
         request.setRoomNumber(1);
         request.setRoomType(DOUBLE);
-        UpdateResponse updateRoom = roomService.editRoomDetails(request);
+        UpdateResponse updateRoom = new UpdateResponse();
+        try {
+            updateRoom = roomService.editRoomDetails(request);
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Update Successful",updateRoom.getMessage());
         assertEquals(singleRoom.getRoomNumber(),updateRoom.getRoomNumberChosen());
 
@@ -58,7 +63,12 @@ class OHRoomServiceTest {
         RequestToUpdateRoom request = new RequestToUpdateRoom();
         request.setRoomNumber(1);
         request.setNewRoomNumber(5);
-        UpdateResponse updateRoom = roomService.editRoomDetails(request);
+        UpdateResponse updateRoom = new UpdateResponse();
+        try {
+            updateRoom = roomService.editRoomDetails(request);
+        }catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Update Successful",updateRoom.getMessage());
     }
     @Test
@@ -66,7 +76,12 @@ class OHRoomServiceTest {
         RequestToUpdateRoom updateRoom = new RequestToUpdateRoom();
         updateRoom.setRoomNumber(1);
         updateRoom.setAvailable(true);
-        UpdateResponse availableRoom = roomService.editRoomDetails(updateRoom);
+        UpdateResponse availableRoom = new UpdateResponse();
+        try {
+            availableRoom = roomService.editRoomDetails(updateRoom);
+        }catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Update Successful",availableRoom.getMessage());
 
         RoomSearchRequest request = new RoomSearchRequest();
@@ -80,7 +95,12 @@ class OHRoomServiceTest {
         RequestToUpdateRoom updateRoom = new RequestToUpdateRoom();
         updateRoom.setRoomNumber(2);
         updateRoom.setAvailable(true);
-        UpdateResponse availableRoom = roomService.editRoomDetails(updateRoom);
+        UpdateResponse availableRoom = new UpdateResponse();
+        try {
+            availableRoom = roomService.editRoomDetails(updateRoom);
+        }catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Update Successful",availableRoom.getMessage());
 
         RoomSearchRequest request = new RoomSearchRequest();
@@ -94,13 +114,23 @@ class OHRoomServiceTest {
         RequestToUpdateRoom updateRoom = new RequestToUpdateRoom();
         updateRoom.setRoomNumber(1);
         updateRoom.setAvailable(true);
-        UpdateResponse availableRoom = roomService.editRoomDetails(updateRoom);
+        UpdateResponse availableRoom = new UpdateResponse();
+        try {
+            availableRoom = roomService.editRoomDetails(updateRoom);
+        }catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Update Successful",availableRoom.getMessage());
 
 
         updateRoom.setRoomNumber(2);
         updateRoom.setAvailable(true);
-        availableRoom = roomService.editRoomDetails(updateRoom);
+
+        try {
+            availableRoom = roomService.editRoomDetails(updateRoom);
+        }catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Update Successful",availableRoom.getMessage());
 
         RoomSearchRequest request = new RoomSearchRequest();

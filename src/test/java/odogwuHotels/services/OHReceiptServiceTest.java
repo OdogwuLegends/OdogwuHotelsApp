@@ -120,7 +120,8 @@ class OHReceiptServiceTest {
         } catch (EntityNotFoundException ex){
             System.out.println(ex.getMessage());
         }
-        assertEquals("Receipt Found",foundReceipt.getMessage());
+        assertEquals(firstReceipt.getCheckInDate(),foundReceipt.getCheckInDate());
+        assertEquals(firstReceipt.getApprovedBy(),foundReceipt.getApprovedBy());
     }
     @Test
     void findReceiptByEmail(){
@@ -144,7 +145,8 @@ class OHReceiptServiceTest {
         } catch (EntityNotFoundException ex){
             System.out.println(ex.getMessage());
         }
-        assertEquals("Receipt Found",foundReceipt.getMessage());
+        assertEquals(secondReceipt.getId(),foundReceipt.getId());
+        assertEquals(secondReceipt.getEmail(),foundReceipt.getEmail());
     }
     @Test
     void generateReceiptById(){

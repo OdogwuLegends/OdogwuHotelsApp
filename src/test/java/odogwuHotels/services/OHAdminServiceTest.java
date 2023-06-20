@@ -109,7 +109,12 @@ class OHAdminServiceTest {
         request.setFirstName("Inyang");
         request.setNewEmail("hello@gmail.com");
 
-        UpdateResponse updatedDetails = adminService.editAdminDetails(request);
+        UpdateResponse updatedDetails = new UpdateResponse();
+        try {
+            updatedDetails = adminService.editAdminDetails(request);
+        } catch (EmailNotCorrectException ex){
+            System.err.println(ex.getMessage());
+        }
         assertEquals(auxAdmin.getId(),updatedDetails.getId());
         assertEquals(auxAdmin.getAdminCode(),updatedDetails.getAdminCode());
         assertEquals("hello@gmail.com",updatedDetails.getEmail());
@@ -286,7 +291,12 @@ class OHAdminServiceTest {
         request.setEmail("ned@gmail.com");
         request.setPassword("9876");
 
-        UpdateResponse updatedDetails = adminService.editCustomerDetails(request);
+        UpdateResponse updatedDetails = new UpdateResponse();
+        try {
+            updatedDetails = adminService.editCustomerDetails(request);
+        }catch (EmailNotCorrectException ex){
+            System.err.println(ex.getMessage());
+        }
         assertEquals("9876",updatedDetails.getPassword());
         assertEquals(secondCustomer.getId(),updatedDetails.getId());
         assertEquals(secondCustomer.getFirstName(),updatedDetails.getFirstName());
@@ -377,7 +387,12 @@ class OHAdminServiceTest {
         request.setPrice(BigDecimal.valueOf(100));
         request.setAvailable(false);
 
-        UpdateResponse editedRoom = adminService.editRoomDetails(request);
+        UpdateResponse editedRoom = new UpdateResponse();
+        try {
+            editedRoom = adminService.editRoomDetails(request);
+        } catch (EntityNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
         assertEquals("Update Successful",editedRoom.getMessage());
         assertEquals(BigDecimal.valueOf(100),editedRoom.getRoomPrice());
         assertFalse(editedRoom.isAvailable());
@@ -471,7 +486,8 @@ class OHAdminServiceTest {
             System.err.println(ex.getMessage());
         }
 
-        assertEquals("Receipt Found",foundReceipt.getMessage());
+        assertEquals(secondReceipt.getLastName(),foundReceipt.getLastName());
+        assertEquals(secondReceipt.getBalance(),foundReceipt.getBalance());
     }
     @Test
     void findAllReceipts(){

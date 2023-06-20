@@ -146,7 +146,13 @@ class OHCustomerServiceTest {
         secondCustomer.setFirstName(request.getFirstName());
         secondCustomer.setLastName(request.getLastName());
 
-        UpdateResponse updatedCustomer = customerService.updateCustomerDetails(request);
+        UpdateResponse updatedCustomer = new UpdateResponse();
+        try {
+            updatedCustomer = customerService.updateCustomerDetails(request);
+        }catch (EmailNotCorrectException ex){
+            System.err.println(ex.getMessage());
+        }
+
         assertEquals(secondCustomer.getFirstName(),updatedCustomer.getFirstName());
         assertEquals("David",secondCustomer.getFirstName());
         assertEquals("Munroe",secondCustomer.getLastName());
@@ -352,7 +358,12 @@ class OHCustomerServiceTest {
         assertEquals("Check Out Successful",afterCheckOut.getMessage());
         reservation = Map.reservationResponseToReservation(afterCheckOut);
         assertTrue(reservation.getRoom().isAvailable());
-
+    }
+    @Test
+    void customerCanGiveFeedBack(){
+        String feedBack = "I enjoyed your services. Thank you";
+        FeedBackResponse receivedFeedBack = customerService.giveFeedBack(feedBack);
+        assertEquals("Your feed back has been received. Thank You",receivedFeedBack.getResponse());
     }
 
 
