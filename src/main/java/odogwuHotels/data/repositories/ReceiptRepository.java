@@ -13,4 +13,5 @@ public interface ReceiptRepository {
     Receipt findByEmail(String email);
     List<Receipt> findAllReceipts();
     void deleteReceiptById(int id);
+    void deleteAll();
 }

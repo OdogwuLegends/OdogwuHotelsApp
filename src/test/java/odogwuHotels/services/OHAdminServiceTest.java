@@ -7,13 +7,14 @@ import odogwuHotels.dto.responses.*;
 import odogwuHotels.exceptions.AdminException;
 import odogwuHotels.exceptions.EmailNotCorrectException;
 import odogwuHotels.exceptions.EntityNotFoundException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import static odogwuHotels.data.models.FindRoomByChoice.ALL_ROOMS;
+import static odogwuHotels.data.models.FindRoomByType.ALL_ROOMS;
 import static odogwuHotels.data.models.RoomType.DOUBLE;
 import static odogwuHotels.data.models.RoomType.SINGLE;
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,6 +29,8 @@ class OHAdminServiceTest {
     private AdminResponse auxAdmin;
     private RegisterUserResponse firstCustomer;
     private RegisterUserResponse secondCustomer;
+    private ReservationResponse firstReservation;
+    private ReservationResponse secondReservation;
     private RoomCreationResponse firstRoom;
     private RoomCreationResponse secondRoom;
     private ReceiptResponse firstReceipt;
@@ -62,8 +65,8 @@ class OHAdminServiceTest {
             System.out.println(ex.getMessage());
         }
 
-        reservationService.makeReservation(firstReservation());
-        reservationService.makeReservation(secondReservation());
+        firstReservation = reservationService.makeReservation(firstReservation());
+        secondReservation = reservationService.makeReservation(secondReservation());
 
         try {
             firstReceipt = receiptService.createReceipt(firstReservation(),Map.adminResponseToAdmin(superAdmin));
@@ -209,13 +212,11 @@ class OHAdminServiceTest {
         reservationService.makeReservation(firstReservation());
 
         List<Reservation> allReservations = adminService.viewAllReservations();
-        assertEquals(1,allReservations.size());
+        assertEquals(3,allReservations.size());
     }
     @Test
     void editReservation(){
-        ReservationService reservationService = new OHReservationService();
-        ReservationResponse savedReservation = reservationService.makeReservation(firstReservation());
-        assertEquals("Odogwu",savedReservation.getLastName());
+        assertEquals("Odogwu",firstReservation.getLastName());
 
         UpdateReservationRequest request = new UpdateReservationRequest();
         request.setRoomNumberChosen(1);
@@ -223,7 +224,7 @@ class OHAdminServiceTest {
 
         UpdateResponse updatedReservation = adminService.editReservation(request);
         assertEquals("Batista",updatedReservation.getLastName());
-        assertEquals(savedReservation.getId(),updatedReservation.getId());
+        assertEquals(firstReservation.getId(),updatedReservation.getId());
     }
     @Test
     void deleteReservationByRoomNumber(){
@@ -276,7 +277,7 @@ class OHAdminServiceTest {
             System.out.println(ex.getMessage());
         }
         assertEquals("5678",foundCustomer.getPassword());
-        assertEquals(2,foundCustomer.getId());
+        assertEquals(secondCustomer.getId(),foundCustomer.getId());
     }
     @Test
     void findAllCustomers(){
@@ -342,8 +343,8 @@ class OHAdminServiceTest {
         } catch (EntityNotFoundException ex){
             System.out.println(ex.getMessage());
         }
-        assertEquals("Room "+foundRoom.getRoomId()+" found.",foundRoom.getMessage());
-        assertEquals(firstRoom.getRoomNumber(),foundRoom.getRoomNumber());
+        assertEquals("Room "+foundRoom.getRoomNumber()+" found.",foundRoom.getMessage());
+        assertEquals(firstRoom.getRoomType(),foundRoom.getRoomType());
     }
     @Test
     void findRoomByRoomNumber(){
@@ -368,14 +369,14 @@ class OHAdminServiceTest {
     @Test
     void seeAllAvailableRooms(){
         RoomSearchRequest request = new RoomSearchRequest();
-        request.setFindRoomByChoice(ALL_ROOMS);
+        request.setFindRoomByType(ALL_ROOMS);
         SearchResponse availableRooms = adminService.seeAvailableRooms(request);
         assertEquals("All Available Rooms are Room(s) 1, 2  ",availableRooms.getMessage());
     }
     @Test
     void seeAllBookedRooms(){
         RoomSearchRequest request = new RoomSearchRequest();
-        request.setFindRoomByChoice(ALL_ROOMS);
+        request.setFindRoomByType(ALL_ROOMS);
         SearchResponse bookedRooms = adminService.seeBookedRooms(request);
         assertEquals("All Booked Rooms are Room(s) => [Sorry, no room found.]",bookedRooms.getMessage());
     }
@@ -605,6 +606,15 @@ class OHAdminServiceTest {
         request.setAvailable(true);
 
         return request;
+    }
+
+    @AfterEach
+    void cleanUp(){
+        receiptService.deleteAll();
+        reservationService.deleteAll();
+        customerService.deleteAll();
+        adminService.deleteAllAdmins();
+        roomService.deleteAll();
     }
 
 }

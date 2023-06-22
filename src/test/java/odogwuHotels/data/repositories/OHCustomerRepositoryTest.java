@@ -65,14 +65,15 @@ class OHCustomerRepositoryTest {
     }
     @Test
     void deleteCustomerByEmail(){
-        customerRepository.deleteCustomerByEmail("doe@gmail.com");
-//        assertTrue(customerRepository.findAllCustomers().contains(firstCustomerSaved));
+        Customer foundCustomer = customerRepository.findCustomerById(firstCustomerSaved.getId());
+        assertNotNull(foundCustomer);
 
+        customerRepository.deleteCustomerByEmail("doe@gmail.com");
+
+        Customer foundCustomer2 = customerRepository.findCustomerById(firstCustomerSaved.getId());
+        assertNull(foundCustomer2);
 
         List<Customer> allCustomers = customerRepository.findAllCustomers();
-//        assertFalse(customerRepository.findAllCustomers().contains(firstCustomerSaved));
-        //assertFalse(!allCustomers.contains(firstCustomerSaved));
-
         assertEquals(1,allCustomers.size());
     }
     @Test
@@ -107,8 +108,7 @@ class OHCustomerRepositoryTest {
 
     @AfterEach
     void cleanUp(){
-        customerRepository.deleteCustomerById(firstCustomerSaved.getId());
-        customerRepository.deleteCustomerById(secondCustomerSaved.getId());
+        customerRepository.deleteAll();
     }
 
 }

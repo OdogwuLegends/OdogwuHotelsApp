@@ -7,20 +7,58 @@
     <list default="true" id="6f61d9d9-1b27-4b52-b90a-ce5578c80f95" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/controllers/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/controllers/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/controllers/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/models/FindRoomByChoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/models/FindRoomByType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/AdminRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/AdminRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/Collect.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/CustomerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/FeedBackRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/FeedBackRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/OHAdminRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/OHAdminRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/OHCustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/OHCustomerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/OHFeedBackRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/OHFeedBackRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/OHReceiptRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/OHReceiptRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/OHReservationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/OHReservationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/OHRoomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/OHRoomRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/ReceiptRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/ReceiptRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/ReservationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/ReservationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/RoomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/data/repositories/RoomRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/requests/RegisterUserRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/requests/RegisterUserRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/requests/ReservationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/requests/ReservationRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/requests/RoomSearchRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/requests/RoomSearchRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/requests/UpdateReservationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/requests/UpdateReservationRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/DeleteResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/DeleteResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/FeedBackResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/FeedBackResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/LoginResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/LoginResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/RegisterUserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/RegisterUserResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/SearchResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/SearchResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/UpdateResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/UpdateResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/dto/responses/UserResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/myUtils/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/myUtils/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/myUtils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/myUtils/Utils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/AdminService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/CustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/FeedBackService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/FeedBackService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHAdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHAdminService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHCustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHCustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHFeedBackService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHFeedBackService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHReceiptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHReceiptService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHReservationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHRoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/OHRoomService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/ReceiptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/ReceiptService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/ReservationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/RoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/odogwuHotels/services/RoomService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/controllers/AdminControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/controllers/AdminControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/controllers/CustomerControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/controllers/CustomerControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/data/repositories/OHAdminRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/data/repositories/OHAdminRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/data/repositories/OHCustomerRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/data/repositories/OHCustomerRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/data/repositories/OHFeedBackRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/data/repositories/OHFeedBackRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/data/repositories/OHReceiptRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/data/repositories/OHReceiptRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/data/repositories/OHReservationRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/data/repositories/OHReservationRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/data/repositories/OHRoomRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/data/repositories/OHRoomRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHAdminServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHAdminServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHCustomerServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHCustomerServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHFeedBackServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHFeedBackServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHReceiptServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHReceiptServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHReservationServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHReservationServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHRoomServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/odogwuHotels/services/OHRoomServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,8 +71,8 @@
       <list>
         <option value="Enum" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -86,8 +124,23 @@
       <recent name="odogwuHotels.data.repositories" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CustomerControllerTest.customerCanGiveFeedBack">
-    <configuration name="CustomerControllerTest.customerCanGiveFeedBack" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.AdminControllerTest">
+    <configuration name="AdminControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="OdogwuHotels" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="odogwuHotels.controllers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="odogwuHotels.controllers" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.controllers.AdminControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CustomerControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="OdogwuHotels" />
       <extension name="coverage">
         <pattern>
@@ -97,83 +150,63 @@
       </extension>
       <option name="PACKAGE_NAME" value="odogwuHotels.controllers" />
       <option name="MAIN_CLASS_NAME" value="odogwuHotels.controllers.CustomerControllerTest" />
-      <option name="METHOD_NAME" value="customerCanGiveFeedBack" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OHAdminServiceTest.findReceiptById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="OHAdminRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="OdogwuHotels" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="odogwuHotels.services.*" />
+          <option name="PATTERN" value="odogwuHotels.data.repositories.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="odogwuHotels.services" />
-      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHAdminServiceTest" />
-      <option name="METHOD_NAME" value="findReceiptById" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="odogwuHotels.data.repositories" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.data.repositories.OHAdminRepositoryTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OHCustomerServiceTest.customerCanGiveFeedBack" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="OHReceiptRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="OdogwuHotels" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="odogwuHotels.services.*" />
+          <option name="PATTERN" value="odogwuHotels.data.repositories.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="odogwuHotels.services" />
-      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHCustomerServiceTest" />
-      <option name="METHOD_NAME" value="customerCanGiveFeedBack" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="odogwuHotels.data.repositories" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.data.repositories.OHReceiptRepositoryTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OHReceiptServiceTest.findReceiptByEmail" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="OHReservationRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="OdogwuHotels" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="odogwuHotels.services.*" />
+          <option name="PATTERN" value="odogwuHotels.data.repositories.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="odogwuHotels.services" />
-      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHReceiptServiceTest" />
-      <option name="METHOD_NAME" value="findReceiptByEmail" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="OHReceiptServiceTest.findReceiptById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="OdogwuHotels" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="odogwuHotels.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="odogwuHotels.services" />
-      <option name="MAIN_CLASS_NAME" value="odogwuHotels.services.OHReceiptServiceTest" />
-      <option name="METHOD_NAME" value="findReceiptById" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="odogwuHotels.data.repositories" />
+      <option name="MAIN_CLASS_NAME" value="odogwuHotels.data.repositories.OHReservationRepositoryTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CustomerControllerTest.customerCanGiveFeedBack" />
-        <item itemvalue="JUnit.OHCustomerServiceTest.customerCanGiveFeedBack" />
-        <item itemvalue="JUnit.OHAdminServiceTest.findReceiptById" />
-        <item itemvalue="JUnit.OHReceiptServiceTest.findReceiptByEmail" />
-        <item itemvalue="JUnit.OHReceiptServiceTest.findReceiptById" />
+        <item itemvalue="JUnit.AdminControllerTest" />
+        <item itemvalue="JUnit.CustomerControllerTest" />
+        <item itemvalue="JUnit.OHAdminRepositoryTest" />
+        <item itemvalue="JUnit.OHReceiptRepositoryTest" />
+        <item itemvalue="JUnit.OHReservationRepositoryTest" />
       </list>
     </recent_temporary>
   </component>
@@ -187,7 +220,7 @@
       <updated>1685647199605</updated>
       <workItem from="1685647202898" duration="31554000" />
       <workItem from="1685773031686" duration="235850000" />
-      <workItem from="1686948557205" duration="67915000" />
+      <workItem from="1686948557205" duration="114574000" />
     </task>
     <servers />
   </component>

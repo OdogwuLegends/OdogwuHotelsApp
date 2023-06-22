@@ -21,5 +21,7 @@ public interface ReservationService {
     List<Reservation> findAllReservations();
     DeleteResponse deleteReservationByRoomNumber(ReservationRequest request) throws EntityNotFoundException;
     DeleteResponse deleteReservationById(int id) throws EntityNotFoundException;
+    DeleteResponse deleteAll();
+
 
 }

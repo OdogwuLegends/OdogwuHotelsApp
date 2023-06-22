@@ -19,4 +19,5 @@ public interface ReceiptService {
     ReceiptResponse generateReceiptByEmail(String email) throws EntityNotFoundException;
     List<Receipt> findAllReceipts();
     DeleteResponse deleteReceiptById(int id) throws EntityNotFoundException;
+    DeleteResponse deleteAll();
 }

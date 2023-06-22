@@ -7,12 +7,13 @@ import odogwuHotels.dto.requests.*;
 import odogwuHotels.dto.responses.*;
 import odogwuHotels.exceptions.AdminException;
 import odogwuHotels.exceptions.EntityNotFoundException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static odogwuHotels.data.models.FindRoomByChoice.ALL_ROOMS;
+import static odogwuHotels.data.models.FindRoomByType.ALL_ROOMS;
 import static odogwuHotels.data.models.RoomType.DOUBLE;
 import static odogwuHotels.data.models.RoomType.SINGLE;
 import static org.junit.jupiter.api.Assertions.*;
@@ -75,7 +76,7 @@ class CustomerControllerTest {
     @Test
     void customerCanFindAvailableRooms(){
         RoomSearchRequest request = new RoomSearchRequest();
-        request.setFindRoomByChoice(ALL_ROOMS);
+        request.setFindRoomByType(ALL_ROOMS);
         SearchResponse availableRooms = customerController.findAvailableRooms(request);
         assertEquals("All Available Rooms are Room(s) 1, 2  ",availableRooms.getMessage());
     }
@@ -253,6 +254,16 @@ class CustomerControllerTest {
         request.setPassword("2345");
 
         return adminController.registerSuperAdmin(request);
+    }
+
+
+    @AfterEach
+    void cleanUp(){
+        adminController.deleteAllReceipts();
+        adminController.deleteAllAdmins();
+        adminController.deleteAllCustomers();
+        adminController.deleteAllRooms();
+        adminController.deleteAllReservations();
     }
 
 }

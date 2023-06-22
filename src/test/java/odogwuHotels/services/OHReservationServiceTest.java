@@ -1,5 +1,6 @@
 package odogwuHotels.services;
 
+import odogwuHotels.data.repositories.*;
 import odogwuHotels.myUtils.Map;
 import odogwuHotels.myUtils.Utils;
 import odogwuHotels.data.models.Admin;
@@ -12,6 +13,7 @@ import odogwuHotels.dto.responses.UpdateResponse;
 import odogwuHotels.exceptions.AdminException;
 import odogwuHotels.exceptions.EmailNotCorrectException;
 import odogwuHotels.exceptions.EntityNotFoundException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,10 +26,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OHReservationServiceTest {
     private final ReservationService reservationService = new OHReservationService();
-    ReservationResponse firstReservation;
-    ReservationResponse secondReservation;
     private final RoomService roomService = new OHRoomService();
     private final CustomerService customerService = new OHCustomerService();
+    ReservationResponse firstReservation;
+    ReservationResponse secondReservation;
 
     @BeforeEach
     void setUp(){
@@ -41,7 +43,6 @@ class OHReservationServiceTest {
         } catch (EmailNotCorrectException ex){
             System.err.println(ex.getMessage());
         }
-
 
         roomService.createRoom(firstRoomCreated());
         roomService.createRoom(secondRoomCreated());
@@ -100,6 +101,7 @@ class OHReservationServiceTest {
         UpdateResponse updatedReservation = reservationService.updateReservation(request);
         assertEquals(BigDecimal.valueOf(100),updatedReservation.getRoomPrice());
         assertEquals(firstReservation.getEmail(),updatedReservation.getEmail());
+        assertEquals(firstReservation.getId(),updatedReservation.getId());
     }
     @Test
     void checkIn(){
@@ -279,5 +281,12 @@ class OHReservationServiceTest {
             System.err.println(ex.getMessage());
         }
         return registeredAdmin;
+    }
+
+    @AfterEach
+    void cleanUp(){
+        reservationService.deleteAll();
+        roomService.deleteAll();
+        customerService.deleteAll();
     }
 }

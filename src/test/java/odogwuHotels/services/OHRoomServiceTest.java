@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static odogwuHotels.data.models.FindRoomByChoice.*;
+import static odogwuHotels.data.models.FindRoomByType.*;
 import static odogwuHotels.data.models.RoomType.DOUBLE;
 import static odogwuHotels.data.models.RoomType.SINGLE;
 import static org.junit.jupiter.api.Assertions.*;
@@ -85,7 +85,7 @@ class OHRoomServiceTest {
         assertEquals("Update Successful",availableRoom.getMessage());
 
         RoomSearchRequest request = new RoomSearchRequest();
-        request.setFindRoomByChoice(SINGLE_ROOMS);
+        request.setFindRoomByType(SINGLE_ROOMS);
 
         SearchResponse foundRoom = roomService.findAvailableRooms(request);
         assertEquals("Available Single Rooms are Room(s) 1  ",foundRoom.getMessage());
@@ -104,7 +104,7 @@ class OHRoomServiceTest {
         assertEquals("Update Successful",availableRoom.getMessage());
 
         RoomSearchRequest request = new RoomSearchRequest();
-        request.setFindRoomByChoice(DOUBLE_ROOMS);
+        request.setFindRoomByType(DOUBLE_ROOMS);
 
         SearchResponse foundRoom = roomService.findAvailableRooms(request);
         assertEquals("Available Double Rooms are Room(s) 2  ",foundRoom.getMessage());
@@ -134,7 +134,7 @@ class OHRoomServiceTest {
         assertEquals("Update Successful",availableRoom.getMessage());
 
         RoomSearchRequest request = new RoomSearchRequest();
-        request.setFindRoomByChoice(ALL_ROOMS);
+        request.setFindRoomByType(ALL_ROOMS);
 
         SearchResponse foundRoom = roomService.findAvailableRooms(request);
         assertEquals("All Available Rooms are Room(s) 1, 2  ",foundRoom.getMessage());
@@ -142,7 +142,7 @@ class OHRoomServiceTest {
     @Test
     void findBookedSingleRooms(){
         RoomSearchRequest request = new RoomSearchRequest();
-        request.setFindRoomByChoice(SINGLE_ROOMS);
+        request.setFindRoomByType(SINGLE_ROOMS);
 
         SearchResponse foundRoom = roomService.findBookedRooms(request);
         assertEquals("Booked Single Rooms are Room(s) 1  ",foundRoom.getMessage());
@@ -150,7 +150,7 @@ class OHRoomServiceTest {
     @Test
     void findBookedDoubleRooms(){
         RoomSearchRequest request = new RoomSearchRequest();
-        request.setFindRoomByChoice(DOUBLE_ROOMS);
+        request.setFindRoomByType(DOUBLE_ROOMS);
 
         SearchResponse foundRoom = roomService.findBookedRooms(request);
         assertEquals("Booked Double Rooms are Room(s) 2  ",foundRoom.getMessage());
@@ -158,7 +158,7 @@ class OHRoomServiceTest {
     @Test
     void findAllBookedRooms(){
         RoomSearchRequest request = new RoomSearchRequest();
-        request.setFindRoomByChoice(ALL_ROOMS);
+        request.setFindRoomByType(ALL_ROOMS);
 
         SearchResponse foundRoom = roomService.findBookedRooms(request);
         assertEquals("All Booked Rooms are Room(s) 1, 2  ",foundRoom.getMessage());
@@ -181,8 +181,6 @@ class OHRoomServiceTest {
     void findRoomById(){
         RoomSearchRequest request = new RoomSearchRequest();
         request.setRoomId(doubleRoom.getRoomId());
-        System.out.println("Room ID "+doubleRoom.getRoomId());
-        System.out.println("Room Number "+doubleRoom.getRoomNumber());
 
         SearchResponse foundRoom = new SearchResponse();
         try {
@@ -191,7 +189,6 @@ class OHRoomServiceTest {
             System.err.println(ex.getMessage());
         }
 
-        System.out.println("ERROR LINE "+foundRoom.getRoomNumber());
         assertEquals("Room "+foundRoom.getRoomNumber()+" found.",foundRoom.getMessage());
     }
     @Test
@@ -238,14 +235,7 @@ class OHRoomServiceTest {
 
     @AfterEach
     void cleanUp(){
-        RequestToUpdateRoom request = new RequestToUpdateRoom();
-//        request.setRoomNumber(1);
-        request.setRoomId(singleRoom.getRoomId());
-//        roomService.deleteRoomByRoomById(request);
-
-//        request.setRoomNumber(2);
-        request.setRoomId(doubleRoom.getRoomId());
-//        roomService.deleteRoomByRoomById(request);
+        roomService.deleteAll();
     }
 
 }

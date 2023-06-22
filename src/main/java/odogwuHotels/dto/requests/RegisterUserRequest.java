@@ -1,11 +1,9 @@
 package odogwuHotels.dto.requests;
 
 import lombok.Data;
+import odogwuHotels.data.models.User;
 
 @Data
-public class RegisterUserRequest {
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String password;
+public class RegisterUserRequest extends User {
+
 }

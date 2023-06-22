@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static odogwuHotels.data.models.FindRoomByChoice.*;
+import static odogwuHotels.data.models.FindRoomByType.*;
 import static odogwuHotels.data.models.RoomType.DOUBLE;
 import static odogwuHotels.data.models.RoomType.SINGLE;
 import static org.junit.jupiter.api.Assertions.*;
@@ -265,8 +265,7 @@ class OHRoomRepositoryTest {
 
     @AfterEach
     void cleanUp(){
-        roomRepository.removeRoomById(firstRoomSaved.getId());
-        roomRepository.removeRoomById(secondRoomSaved.getId());
+        roomRepository.removeAll();
     }
 
 }

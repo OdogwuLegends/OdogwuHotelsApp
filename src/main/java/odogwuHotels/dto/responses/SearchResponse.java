@@ -13,4 +13,8 @@ public class SearchResponse {
     private BigDecimal price;
     private boolean isAvailable;
     private String message;
+
+    public String toString(){
+        return "\n"+message+"\n";
+    }
 }

@@ -17,6 +17,7 @@ public interface CustomerService {
     UpdateResponse updateCustomerDetails(RequestToUpdateUserDetails request) throws EmailNotCorrectException;
     DeleteResponse deleteCustomerByEmail(String email) throws EntityNotFoundException;
     DeleteResponse deleteCustomerById(int id) throws EntityNotFoundException;
+    DeleteResponse deleteAll();
     SearchResponse findAvailableRooms(RoomSearchRequest request);
     ReservationResponse makeReservation(ReservationRequest request);
     ReservationResponse findReservationByRoomNumber(ReservationRequest request) throws EntityNotFoundException;

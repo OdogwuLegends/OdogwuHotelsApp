@@ -47,4 +47,12 @@ public class OHFeedBackService implements FeedBackService{
         response.setMessage("Feedback Deleted");
         return response;
     }
+
+    @Override
+    public DeleteResponse deleteAll() {
+        DeleteResponse response = new DeleteResponse();
+        feedBackRepository.deleteAll();
+        response.setMessage("Delete Successful");
+        return response;
+    }
 }

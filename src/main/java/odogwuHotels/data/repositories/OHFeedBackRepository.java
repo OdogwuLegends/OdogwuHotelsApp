@@ -50,4 +50,9 @@ public class OHFeedBackRepository implements FeedBackRepository{
         FeedBack foundFeedBack = findFeedBackById(id);
         if(foundFeedBack != null) feedBacks.remove(foundFeedBack);
     }
+
+    @Override
+    public void deleteAll() {
+        feedBacks.clear();
+    }
 }

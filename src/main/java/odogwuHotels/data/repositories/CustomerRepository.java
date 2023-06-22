@@ -16,4 +16,5 @@ public interface CustomerRepository {
     List<Customer> findAllCustomers();
     void deleteCustomerByEmail(String email);
     void deleteCustomerById(int id);
+    void deleteAll();
 }

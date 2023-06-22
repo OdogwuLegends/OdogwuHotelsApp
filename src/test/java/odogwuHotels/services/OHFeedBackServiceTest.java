@@ -68,10 +68,10 @@ class OHFeedBackServiceTest {
         return "I would prefer a home delivery next time.";
     }
 
+
     @AfterEach
     void cleanUp(){
-        feedBackService.deleteFeedBackById(firstFeedBack.getId());
-        feedBackService.deleteFeedBackById(secondFeedBack.getId());
+        feedBackService.deleteAll();
     }
 
 }

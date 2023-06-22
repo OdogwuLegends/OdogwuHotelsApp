@@ -11,4 +11,8 @@ public class DeleteResponse {
     private String password;
     private String message;
     private int roomNumber;
+
+    public String toString(){
+        return "\n"+message+"\n";
+    }
 }

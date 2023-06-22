@@ -16,4 +16,5 @@ public interface ReservationRepository {
     List<Reservation> findAllReservations();
     void deleteReservationByRoomNumber(int roomNumber);
     void deleteReservationById(int id);
+    void deleteAll();
 }

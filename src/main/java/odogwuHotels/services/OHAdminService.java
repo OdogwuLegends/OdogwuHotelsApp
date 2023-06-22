@@ -102,6 +102,13 @@ public class OHAdminService implements AdminService {
         response.setMessage("Admin Deleted Successfully");
         return response;
     }
+    @Override
+    public DeleteResponse deleteAllAdmins() {
+        DeleteResponse response = new DeleteResponse();
+        adminRepository.deleteAll();
+        response.setMessage("Delete Successful");
+        return response;
+    }
 
     @Override
     public ReservationResponse makeReservation(ReservationRequest request) {
@@ -146,6 +153,12 @@ public class OHAdminService implements AdminService {
     }
 
     @Override
+    public DeleteResponse deleteAllReservations() {
+        reservationService = new OHReservationService();
+        return reservationService.deleteAll();
+    }
+
+    @Override
     public UserResponse findCustomerByEmail(String email) throws EntityNotFoundException {
         customerService = new OHCustomerService();
         return customerService.findCustomerByEmail(email);
@@ -177,6 +190,12 @@ public class OHAdminService implements AdminService {
     public DeleteResponse deleteCustomerByEmail(String email) throws EntityNotFoundException {
         customerService = new OHCustomerService();
         return customerService.deleteCustomerByEmail(email);
+    }
+
+    @Override
+    public DeleteResponse deleteAllCustomers() {
+        customerService = new OHCustomerService();
+        return customerService.deleteAll();
     }
 
     @Override
@@ -234,6 +253,12 @@ public class OHAdminService implements AdminService {
     }
 
     @Override
+    public DeleteResponse deleteAllRooms() {
+        roomService = new OHRoomService();
+        return roomService.deleteAll();
+    }
+
+    @Override
     public void approvePayment(Receipt receipt) {
         //TAKE A RECEIPT ARGUMENT, FIND A SUPER ADMIN AND APPROVE THE PAYMENT PART OF THE RECEIPT
         //PASS THE SUPER ADMIN AS AN ARGUMENT TO...
@@ -274,6 +299,12 @@ public class OHAdminService implements AdminService {
     public DeleteResponse deleteReceiptById(int id) throws EntityNotFoundException {
         receiptService = new OHReceiptService();
         return receiptService.deleteReceiptById(id);
+    }
+
+    @Override
+    public DeleteResponse deleteAllReceipts() {
+        receiptService = new OHReceiptService();
+        return receiptService.deleteAll();
     }
 
 

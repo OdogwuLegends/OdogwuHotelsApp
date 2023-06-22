@@ -33,7 +33,7 @@ public class OHReceiptService implements ReceiptService{
         try {
             response = reservationService.findReservationByRoomNumber(request);
         } catch (EntityNotFoundException ex){
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
         Reservation reservation = Map.reservationResToReservation(response);
         Receipt receiptToCreate = Map.createReceipt(reservation,admin);
@@ -107,6 +107,14 @@ public class OHReceiptService implements ReceiptService{
         receiptRepository.deleteReceiptById(foundReceipt.getId());
         DeleteResponse response = new DeleteResponse();
         response.setMessage("Receipt Deleted Successfully");
+        return response;
+    }
+
+    @Override
+    public DeleteResponse deleteAll() {
+        DeleteResponse response = new DeleteResponse();
+        receiptRepository.deleteAll();
+        response.setMessage("Delete Successful");
         return response;
     }
 }

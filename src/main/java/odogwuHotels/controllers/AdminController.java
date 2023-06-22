@@ -14,7 +14,6 @@ import java.util.List;
 public class AdminController {
     private final AdminService adminService = new OHAdminService();
 
-
     public AdminResponse registerSuperAdmin(RegisterAdminRequest request){
         AdminResponse newAdmin = new AdminResponse();
         try {
@@ -45,6 +44,9 @@ public class AdminController {
     public DeleteResponse deleteAdminById(int id) throws AdminException{
         return adminService.deleteAdminById(id);
     }
+    public DeleteResponse deleteAllAdmins(){
+        return adminService.deleteAllAdmins();
+    }
     public RoomCreationResponse createRoom(RequestToCreateRoom request){
         return adminService.createRoom(request);
     }
@@ -72,6 +74,9 @@ public class AdminController {
     public DeleteResponse deleteRoomByRoomNumber(RequestToUpdateRoom request) throws EntityNotFoundException{
         return adminService.deleteRoomByRoomNumber(request);
     }
+    public DeleteResponse deleteAllRooms(){
+        return adminService.deleteAllRooms();
+    }
     public UserResponse findCustomerByEmail(String email) throws EntityNotFoundException{
         return adminService.findCustomerByEmail(email);
     }
@@ -89,6 +94,9 @@ public class AdminController {
     }
     public DeleteResponse deleteCustomerByEmail(String email) throws EntityNotFoundException{
         return adminService.deleteCustomerByEmail(email);
+    }
+    public DeleteResponse deleteAllCustomers(){
+        return adminService.deleteAllCustomers();
     }
     public ReservationResponse makeReservation(ReservationRequest request){
         return adminService.makeReservation(request);
@@ -111,6 +119,9 @@ public class AdminController {
     public DeleteResponse deleteReservationById(int id) throws EntityNotFoundException {
         return adminService.deleteReservationById(id);
     }
+    public DeleteResponse deleteAllReservations(){
+        return adminService.deleteAllReservations();
+    }
     public ReceiptResponse createReceipt(ReservationRequest request, Admin admin) throws AdminException{
         return adminService.createReceipt(request, admin);
     }
@@ -128,6 +139,9 @@ public class AdminController {
     }
     public DeleteResponse deleteReceiptById(int id) throws EntityNotFoundException{
         return adminService.deleteReceiptById(id);
+    }
+    public DeleteResponse deleteAllReceipts(){
+        return adminService.deleteAllReceipts();
     }
 
 }

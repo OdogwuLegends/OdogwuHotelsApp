@@ -7,13 +7,14 @@ import odogwuHotels.exceptions.AdminException;
 import odogwuHotels.exceptions.EmailNotCorrectException;
 import odogwuHotels.exceptions.EntityNotFoundException;
 import odogwuHotels.myUtils.Map;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import static odogwuHotels.data.models.FindRoomByChoice.*;
+import static odogwuHotels.data.models.FindRoomByType.*;
 import static odogwuHotels.data.models.RoomType.DOUBLE;
 import static odogwuHotels.data.models.RoomType.SINGLE;
 import static org.junit.jupiter.api.Assertions.*;
@@ -163,16 +164,16 @@ class AdminControllerTest {
         adminController.createRoom(request);
 
         RoomSearchRequest searchRequest = new RoomSearchRequest();
-        searchRequest.setFindRoomByChoice(ALL_ROOMS);
+        searchRequest.setFindRoomByType(ALL_ROOMS);
 
         SearchResponse availableRooms = adminController.seeAvailableRooms(searchRequest);
         assertEquals("All Available Rooms are Room(s) 1, 2, 3  ",availableRooms.getMessage());
 
-        searchRequest.setFindRoomByChoice(SINGLE_ROOMS);
+        searchRequest.setFindRoomByType(SINGLE_ROOMS);
         availableRooms = adminController.seeAvailableRooms(searchRequest);
         assertEquals("Available Single Rooms are Room(s) 1, 3  ",availableRooms.getMessage());
 
-        searchRequest.setFindRoomByChoice(DOUBLE_ROOMS);
+        searchRequest.setFindRoomByType(DOUBLE_ROOMS);
         availableRooms = adminController.seeAvailableRooms(searchRequest);
         assertEquals("Available Double Rooms are Room(s) 2  ",availableRooms.getMessage());
 
@@ -187,16 +188,16 @@ class AdminControllerTest {
         adminController.createRoom(request);
 
         RoomSearchRequest searchRequest = new RoomSearchRequest();
-        searchRequest.setFindRoomByChoice(ALL_ROOMS);
+        searchRequest.setFindRoomByType(ALL_ROOMS);
 
         SearchResponse bookedRooms = adminController.seeBookedRooms(searchRequest);
         assertEquals("All Booked Rooms are Room(s) 3  ",bookedRooms.getMessage());
 
-        searchRequest.setFindRoomByChoice(SINGLE_ROOMS);
+        searchRequest.setFindRoomByType(SINGLE_ROOMS);
         bookedRooms = adminController.seeBookedRooms(searchRequest);
         assertEquals("Booked Single Rooms are Room(s) 3  ",bookedRooms.getMessage());
 
-        searchRequest.setFindRoomByChoice(DOUBLE_ROOMS);
+        searchRequest.setFindRoomByType(DOUBLE_ROOMS);
         bookedRooms = adminController.seeBookedRooms(searchRequest);
         assertEquals("Booked Double Rooms are Room(s) => [Sorry, no room found.]",bookedRooms.getMessage());
     }
@@ -544,6 +545,15 @@ class AdminControllerTest {
         request.setMakePayment(BigDecimal.valueOf(150));
 
         return request;
+    }
+
+    @AfterEach
+    void cleanUp(){
+        adminController.deleteAllReceipts();
+        adminController.deleteAllAdmins();
+        adminController.deleteAllCustomers();
+        adminController.deleteAllRooms();
+        adminController.deleteAllReservations();
     }
 
 }

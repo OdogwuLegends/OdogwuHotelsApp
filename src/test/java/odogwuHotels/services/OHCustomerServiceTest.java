@@ -103,7 +103,7 @@ class OHCustomerServiceTest {
         } catch (Exception ex){
             System.err.println(ex.getMessage());
         }
-        assertEquals("Password Incorrect",loginIsCorrect.getMessage());
+        assertEquals("Password Incorrect.",loginIsCorrect.getMessage());
     }
     @Test
     void findCustomerByEmail(){
@@ -143,8 +143,28 @@ class OHCustomerServiceTest {
         request.setFirstName("David");
         request.setLastName("Munroe");
 
-        secondCustomer.setFirstName(request.getFirstName());
-        secondCustomer.setLastName(request.getLastName());
+        UpdateResponse updatedCustomer = new UpdateResponse();
+        try {
+            updatedCustomer = customerService.updateCustomerDetails(request);
+        }catch (EmailNotCorrectException ex){
+            System.err.println(ex.getMessage());
+        }
+
+        assertEquals(secondCustomer.getId(),updatedCustomer.getId());
+        assertEquals(secondCustomer.getEmail(),updatedCustomer.getEmail());
+        assertEquals(secondCustomer.getPassword(),updatedCustomer.getPassword());
+        assertEquals("David",updatedCustomer.getFirstName());
+        assertEquals("Munroe",updatedCustomer.getLastName());
+        assertEquals("Update Successful",updatedCustomer.getMessage());
+    }
+    @Test
+    void updateCustomerDetailsWithNewEmail(){
+        assertEquals("Legend",firstCustomer.getFirstName());
+        assertEquals("Odogwu",firstCustomer.getLastName());
+
+        RequestToUpdateUserDetails request = new RequestToUpdateUserDetails();
+        request.setEmail("legend@gmail.com");
+        request.setNewEmail("odogwu@gmail.com");
 
         UpdateResponse updatedCustomer = new UpdateResponse();
         try {
@@ -153,9 +173,11 @@ class OHCustomerServiceTest {
             System.err.println(ex.getMessage());
         }
 
-        assertEquals(secondCustomer.getFirstName(),updatedCustomer.getFirstName());
-        assertEquals("David",secondCustomer.getFirstName());
-        assertEquals("Munroe",secondCustomer.getLastName());
+        assertEquals(firstCustomer.getId(),updatedCustomer.getId());
+        assertEquals(firstCustomer.getPassword(),updatedCustomer.getPassword());
+        assertEquals("odogwu@gmail.com",updatedCustomer.getEmail());
+        assertEquals(firstCustomer.getFirstName(),updatedCustomer.getFirstName());
+        assertEquals(firstCustomer.getLastName(),updatedCustomer.getLastName());
         assertEquals("Update Successful",updatedCustomer.getMessage());
     }
     @Test
@@ -183,7 +205,7 @@ class OHCustomerServiceTest {
     @Test
     void customerCanFindAvailableRooms(){
         RoomSearchRequest request = new RoomSearchRequest();
-        request.setFindRoomByChoice(FindRoomByChoice.ALL_ROOMS);
+        request.setFindRoomByType(FindRoomByType.ALL_ROOMS);
         SearchResponse rooms = customerService.findAvailableRooms(request);
 
         assertEquals("All Available Rooms are Room(s) 1, 2  ",rooms.getMessage());
@@ -452,36 +474,6 @@ class OHCustomerServiceTest {
 
     @AfterEach
         void cleanUp(){
-        try {
-        customerService.deleteCustomerById(firstCustomer.getId());
-        }catch (EntityNotFoundException ex){
-            System.err.println(ex.getMessage());
-        }
-        try {
-            customerService.deleteCustomerById(secondCustomer.getId());
-        }catch (EntityNotFoundException ex){
-            System.err.println(ex.getMessage());
-        }
-
-//        ReservationService reservationService = new OHReservationService();
-//        reservationService.deleteReservationByRoomNumber(makeReservation());
-//
-//        RequestToUpdateRoom request = new RequestToUpdateRoom();
-//        request.setRoomNumber(1);
-//
-//        try {
-//            roomService.deleteRoomByRoomByRoomNumber(request);
-//        } catch (EntityNotFoundException ex){
-//            System.err.println(ex.getMessage());
-//        }
-//        request.setRoomNumber(2);
-//        try {
-//            roomService.deleteRoomByRoomByRoomNumber(request);
-//        } catch (EntityNotFoundException ex){
-//            System.err.println(ex.getMessage());
-//        }
-
-        //customerService.deleteCustomerByEmail(firstCustomer.getEmail());
-        //customerService.deleteCustomerByEmail(secondCustomer.getEmail());
+        customerService.deleteAll();
     }
 }

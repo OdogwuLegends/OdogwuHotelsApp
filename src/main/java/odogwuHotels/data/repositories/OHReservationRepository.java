@@ -84,4 +84,9 @@ public class OHReservationRepository implements ReservationRepository{
         if(foundReservation != null) reservationList.remove(foundReservation);
     }
 
+    @Override
+    public void deleteAll() {
+        reservationList.clear();
+    }
+
 }

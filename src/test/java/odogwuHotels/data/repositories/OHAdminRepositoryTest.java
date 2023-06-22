@@ -22,6 +22,11 @@ class OHAdminRepositoryTest {
         regularAdmin = adminRepository.saveAdmin(buildSecondAdmin());
     }
 
+    @AfterEach
+    public void tearDown(){
+        adminRepository.deleteAll();
+    }
+
     @Test
     void saveAdmin(){
         assertNotNull(superAdmin);
@@ -120,8 +125,7 @@ class OHAdminRepositoryTest {
 
     @AfterEach
     void cleanUp(){
-        adminRepository.deleteAdminById(superAdmin.getId());
-        adminRepository.deleteAdminById(regularAdmin.getId());
+        adminRepository.deleteAll();
     }
 
 }

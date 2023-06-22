@@ -1,7 +1,7 @@
 package odogwuHotels.dto.requests;
 
 import lombok.Data;
-import odogwuHotels.data.models.FindRoomByChoice;
+import odogwuHotels.data.models.FindRoomByType;
 import odogwuHotels.data.models.RoomType;
 
 import java.math.BigDecimal;
@@ -16,5 +16,5 @@ public class ReservationRequest {
     private String checkInDate;
     private String checkOutDate;
     private BigDecimal makePayment;
-    private FindRoomByChoice findRoomByChoice;
+    private FindRoomByType findRoomByType;
 }

@@ -21,4 +21,12 @@ public class UpdateResponse {
     private String message;
     private boolean isSuperAdmin;
     private int adminCode;
+
+    public String toString(){
+        final StringBuffer sb = new StringBuffer();
+
+        sb.append("\nYour details have been updated successfully.\n");
+
+        return sb.toString();
+    }
 }

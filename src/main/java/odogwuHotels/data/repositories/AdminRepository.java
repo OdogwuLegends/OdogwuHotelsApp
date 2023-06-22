@@ -16,4 +16,5 @@ public interface AdminRepository {
     List<Admin> findAllAdmins();
     void deleteAdminByEmail(String email);
     void deleteAdminById(int id);
+    void deleteAll();
 }

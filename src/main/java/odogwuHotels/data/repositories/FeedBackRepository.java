@@ -11,4 +11,5 @@ public interface FeedBackRepository {
     Map<Integer,FeedBack> getIdsOfAllFeedBacks();
     List<FeedBack> findAllFeedBacks();
     void deleteFeedBackById(int id);
+    void deleteAll();
 }

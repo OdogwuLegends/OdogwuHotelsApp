@@ -11,4 +11,5 @@ public interface FeedBackService {
     FeedBackResponse findFeedBackById(int id);
     List<FeedBack> findAllFeedBacks();
     DeleteResponse deleteFeedBackById(int id);
+    DeleteResponse deleteAll();
 }

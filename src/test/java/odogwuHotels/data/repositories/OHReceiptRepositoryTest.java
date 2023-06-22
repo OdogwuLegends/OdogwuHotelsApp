@@ -136,7 +136,6 @@ class OHReceiptRepositoryTest {
 
     @AfterEach
     void cleanUp(){
-        receiptRepository.deleteReceiptById(firstReceiptSaved.getId());
-        receiptRepository.deleteReceiptById(secondReceiptSaved.getId());
+        receiptRepository.deleteAll();
     }
 }

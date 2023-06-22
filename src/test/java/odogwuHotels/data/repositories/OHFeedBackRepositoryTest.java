@@ -66,8 +66,7 @@ class OHFeedBackRepositoryTest {
 
     @AfterEach
     void cleanUp(){
-        feedBackRepository.deleteFeedBackById(firstFeedBackSaved.getId());
-        feedBackRepository.deleteFeedBackById(secondFeedBackSaved.getId());
+        feedBackRepository.deleteAll();
     }
 
 }

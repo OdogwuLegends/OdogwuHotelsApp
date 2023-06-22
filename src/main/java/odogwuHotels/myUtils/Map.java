@@ -276,6 +276,7 @@ public class Map {
         reservation.setCheckOutDate(Utils.stringToLocalDate(request.getCheckOutDate()));
         reservation.setRoom(room);
         reservation.setCustomer(customer);
+        reservation.setId(request.getId());
 
         return reservation;
     }

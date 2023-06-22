@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,69 +39,44 @@ public class Utils {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-//    public List<Integer> findAvailableRooms(FindRoomByChoice choice) {
-//        List<Integer> roomNumber = new ArrayList<>();
-//
-//        if(choice == SINGLE_ROOMS){
-//            //List<Integer> availableSingleRooms = new ArrayList<>();
-//            for (Room room : roomList) {
-//                if (room.isAvailable() && room.getRoomType() == SINGLE) {
-//                    //availableSingleRooms.add(room.getRoomNumber());
-//                    roomNumber.add(room.getRoomNumber());
-//                }
-//                //return availableSingleRooms;
-//            }
-//        } else if (choice == DOUBLE_ROOMS) {
-//            //List<Integer> availableDoubleRooms = new ArrayList<>();
-//            for (Room room : roomList) {
-//                if (room.isAvailable() && room.getRoomType() == DOUBLE) {
-//                    //availableDoubleRooms.add(room.getRoomNumber());
-//                    roomNumber.add(room.getRoomNumber());
-//                }
-//                //return availableDoubleRooms;
-//            }
-//        }
-//        else if(choice == ALL_ROOMS){
-//            //List<Integer> availableRooms = new ArrayList<>();
-//            for (Room room : roomList) {
-//                if (room.isAvailable()) {
-//                    //availableRooms.add(room.getRoomNumber());
-//                    roomNumber.add(room.getRoomNumber());
-//                }
-//                //return availableRooms;
-//            }
-//        }
-//        return roomNumber;
-//    }
-//
-//    @Override
-//    public List<Integer> findBookedRooms(FindRoomByChoice choice) {
-//        if(choice == SINGLE_ROOMS){
-//            List<Integer> bookedSingleRooms = new ArrayList<>();
-//            for (Room room : roomList) {
-//                if (!room.isAvailable() && room.getRoomType() == SINGLE) {
-//                    bookedSingleRooms.add(room.getRoomNumber());
-//                }
-//                return bookedSingleRooms;
-//            }
-//        } else if (choice == DOUBLE_ROOMS) {
-//            List<Integer> bookedDoubleRooms = new ArrayList<>();
-//            for (Room room : roomList) {
-//                if (!room.isAvailable() && room.getRoomType() == DOUBLE) {
-//                    bookedDoubleRooms.add(room.getRoomNumber());
-//                }
-//                return bookedDoubleRooms;
-//            }
-//        }
-//        else if(choice == ALL_ROOMS){
-//            List<Integer> bookedRooms = new ArrayList<>();
-//            for (Room room : roomList) {
-//                if (!room.isAvailable()) {
-//                    bookedRooms.add(room.getRoomNumber());
-//                }
-//                return bookedRooms;
-//            }
-//        }
-//        return null;
-//    }
+    public static String validEmail() {
+        String email = Display.StringInput("Enter email address: ");
+        int trial = 2;
+        while(!emailIsCorrect(email)){
+            if(trial == 0){
+                Display.message("\nLimited exceeded. Try again later.");
+                System.exit(3);
+            }if(trial == 1){
+                Display.errorMessage("Incorrect email format. You have "+trial+" trial left.");
+                email = Display.StringInput("\nEnter email: ");
+            } else {
+                Display.errorMessage("Incorrect email format. You have "+trial+" trials left.");
+                email = Display.StringInput("\nEnter email: ");
+            }
+
+            trial--;
+        }
+        return email;
+    }
+    public static String reconfirmPassword(String password){
+        String reconfirmPassword = Display.StringInput("Reconfirm your password: ");
+
+        int trial = 2;
+        while (!Objects.equals(password,reconfirmPassword)){
+            if(trial == 0){
+                Display.message("\nLimited exceeded. Try again later.");
+                System.exit(4);
+            }
+
+            if(trial == 1){
+                Display.errorMessage("Password does not match. You have "+trial+" trial left.");
+            } else {
+                Display.errorMessage("Password does not match. You have "+trial+" trials left.");
+            }
+            reconfirmPassword = Display.StringInput("\nReconfirm your password: ");
+            trial--;
+        }
+
+        return reconfirmPassword;
+    }
 }

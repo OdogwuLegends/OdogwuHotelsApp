@@ -82,6 +82,11 @@ public class OHAdminRepository implements AdminRepository {
         if(foundAdmin != null) adminRepository.remove(foundAdmin);
     }
 
+    @Override
+    public void deleteAll() {
+        adminRepository.clear();
+    }
+
     private int generateAdminCode(){
         Random random = new Random();
         int code = 0;

@@ -11,6 +11,7 @@ import odogwuHotels.dto.responses.*;
 import odogwuHotels.exceptions.AdminException;
 import odogwuHotels.exceptions.EmailNotCorrectException;
 import odogwuHotels.exceptions.EntityNotFoundException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -371,6 +372,15 @@ class OHReceiptServiceTest {
         request.setPassword("5678");
 
         return request;
+    }
+
+    @AfterEach
+    void cleanUp(){
+        receiptService.deleteAll();
+        reservationService.deleteAll();
+        customerService.deleteAll();
+        adminService.deleteAllAdmins();
+        roomService.deleteAll();
     }
 
 }

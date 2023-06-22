@@ -71,4 +71,9 @@ public class OHReceiptRepository implements ReceiptRepository{
         Receipt foundReceipt = findById(id);
         if(foundReceipt != null) receiptList.remove(foundReceipt);
     }
+
+    @Override
+    public void deleteAll() {
+        receiptList.clear();
+    }
 }

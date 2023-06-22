@@ -1,10 +1,10 @@
 package odogwuHotels.data.repositories;
 
 import odogwuHotels.myUtils.Utils;
-import odogwuHotels.data.models.FindRoomByChoice;
+import odogwuHotels.data.models.FindRoomByType;
 import odogwuHotels.data.models.Room;
 import java.util.*;
-import static odogwuHotels.data.models.FindRoomByChoice.*;
+import static odogwuHotels.data.models.FindRoomByType.*;
 import static odogwuHotels.data.models.RoomType.DOUBLE;
 import static odogwuHotels.data.models.RoomType.SINGLE;
 
@@ -66,21 +66,21 @@ public class OHRoomRepository implements RoomRepository{
         return null;
     }
     @Override
-    public List<Integer> findAvailableRooms(FindRoomByChoice findRoomByChoice){
+    public List<Integer> findAvailableRooms(FindRoomByType findRoomByType){
         List<Integer> rooms = null;
 
-        if(findRoomByChoice != null) {
-            if (findRoomByChoice == SINGLE_ROOMS) rooms = new ArrayList<>(findAvailableSingleRooms());
-            if (findRoomByChoice == DOUBLE_ROOMS) rooms = new ArrayList<>(findAvailableDoubleRooms());
-            if (findRoomByChoice == ALL_ROOMS) rooms = new ArrayList<>(findAllAvailableRooms());
+        if(findRoomByType != null) {
+            if (findRoomByType == SINGLE_ROOMS) rooms = new ArrayList<>(findAvailableSingleRooms());
+            if (findRoomByType == DOUBLE_ROOMS) rooms = new ArrayList<>(findAvailableDoubleRooms());
+            if (findRoomByType == ALL_ROOMS) rooms = new ArrayList<>(findAllAvailableRooms());
         }
         return rooms;
     }
     @Override
-    public List<Integer> findBookedRooms(FindRoomByChoice findRoomByChoice){
-        if(findRoomByChoice == SINGLE_ROOMS) return findBookedSingleRooms();
-        if(findRoomByChoice == DOUBLE_ROOMS) return findBookedDoubleRooms();
-        if(findRoomByChoice == ALL_ROOMS) return findAllBookedRooms();
+    public List<Integer> findBookedRooms(FindRoomByType findRoomByType){
+        if(findRoomByType == SINGLE_ROOMS) return findBookedSingleRooms();
+        if(findRoomByType == DOUBLE_ROOMS) return findBookedDoubleRooms();
+        if(findRoomByType == ALL_ROOMS) return findAllBookedRooms();
 
         return null;
     }
@@ -158,5 +158,10 @@ public class OHRoomRepository implements RoomRepository{
     public void removeRoomByRoomNumber(int roomNumber) {
         Room foundRoom = findRoomByRoomNumber(roomNumber);
         if(foundRoom!=null) roomList.remove(foundRoom);
+    }
+
+    @Override
+    public void removeAll() {
+        roomList.clear();
     }
 }

@@ -21,6 +21,7 @@ public interface RoomService {
     List<Room> findAllRooms();
     DeleteResponse deleteRoomByRoomById(RequestToUpdateRoom updateRoom) throws EntityNotFoundException;
     DeleteResponse deleteRoomByRoomByRoomNumber(RequestToUpdateRoom request) throws EntityNotFoundException;
+    DeleteResponse deleteAll();
 
 
 }

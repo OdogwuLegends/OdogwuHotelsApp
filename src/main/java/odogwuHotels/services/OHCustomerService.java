@@ -35,13 +35,16 @@ public class OHCustomerService implements CustomerService {
     public LoginResponse login(LoginRequest request) throws EntityNotFoundException {
         Customer foundCustomer =  customerRepository.findCustomerByEmail(request.getEmail());
         if(foundCustomer == null){
-            throw new EntityNotFoundException("Customer Not Found");
+            throw new EntityNotFoundException("Customer Not Found.");
         }
         LoginResponse response = new LoginResponse();
-        if(Objects.equals(foundCustomer.getPassword(),request.getPassword())){
+        if(foundCustomer.getPassword().equals(request.getPassword())){
+            response.setEmail(request.getEmail());
+            response.setPassword(request.getPassword());
             response.setLoggedIn(true);
+            response.setMessage("Log in successful.");
         } else {
-            response.setMessage("Password Incorrect");
+            response.setMessage("Password Incorrect.");
         }
         return response;
     }
@@ -72,11 +75,14 @@ public class OHCustomerService implements CustomerService {
         if(customerToUpdate != null){
             if(request.getFirstName() != null) customerToUpdate.setFirstName(request.getFirstName());
             if(request.getLastName() != null) customerToUpdate.setLastName(request.getLastName());
-            if(request.getNewEmail() != null)
+            if(request.getNewEmail() != null){
                 if(!Utils.emailIsCorrect(request.getNewEmail())){
                     throw new EmailNotCorrectException("Email not correct");
                 }
                 customerToUpdate.setEmail(request.getNewEmail());
+            } else {
+                customerToUpdate.setEmail(request.getEmail());
+            }
             if(request.getPassword() != null) customerToUpdate.setPassword(request.getPassword());
         }
 
@@ -115,6 +121,14 @@ public class OHCustomerService implements CustomerService {
         response.setPassword(foundCustomer.getPassword());
         response.setMessage("Customer Deleted Successfully");
         customerRepository.deleteCustomerById(foundCustomer.getId());
+        return response;
+    }
+
+    @Override
+    public DeleteResponse deleteAll() {
+        DeleteResponse response = new DeleteResponse();
+        customerRepository.deleteAll();
+        response.setMessage("Delete Successful");
         return response;
     }
 

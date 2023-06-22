@@ -95,7 +95,6 @@ public class OHReservationService implements ReservationService{
             }
             if(request.getCheckInDate() != null) reservationToUpdate.setCheckInDate(Utils.stringToLocalDate(request.getCheckInDate()));
             if(request.getCheckOutDate() != null) reservationToUpdate.setCheckOutDate(Utils.stringToLocalDate(request.getCheckOutDate()));
-
             Reservation updatedReservation = reservationRepository.updateReservation(index,reservationToUpdate);
 
             response = Map.updateReservationToResponse(updatedReservation);
@@ -163,6 +162,14 @@ public class OHReservationService implements ReservationService{
         reservationRepository.deleteReservationByRoomNumber(foundReservation.getId());
         DeleteResponse response = new DeleteResponse();
         response.setMessage("Reservation deleted successfully.");
+        return response;
+    }
+
+    @Override
+    public DeleteResponse deleteAll() {
+        DeleteResponse response = new DeleteResponse();
+        reservationRepository.deleteAll();
+        response.setMessage("Delete Successful");
         return response;
     }
 }

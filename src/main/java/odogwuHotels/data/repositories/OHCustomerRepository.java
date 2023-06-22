@@ -81,4 +81,9 @@ public class OHCustomerRepository implements CustomerRepository{
         if(foundCustomer != null) customerRepository.remove(foundCustomer);
     }
 
+    @Override
+    public void deleteAll() {
+        customerRepository.clear();
+    }
+
 }

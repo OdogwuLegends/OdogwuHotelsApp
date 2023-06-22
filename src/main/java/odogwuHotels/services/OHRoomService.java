@@ -16,7 +16,7 @@ import odogwuHotels.exceptions.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static odogwuHotels.data.models.FindRoomByChoice.*;
+import static odogwuHotels.data.models.FindRoomByType.*;
 
 public class OHRoomService implements RoomService{
     private final RoomRepository roomRepository = OHRoomRepository.createObject();
@@ -58,18 +58,18 @@ public class OHRoomService implements RoomService{
     @Override
     public SearchResponse findAvailableRooms(RoomSearchRequest request) {
         response = new SearchResponse();
-        if(request.getFindRoomByChoice() ==  SINGLE_ROOMS) response.setMessage("Available Single Rooms are Room(s) "+Map.listToBuilder(roomRepository.findAvailableRooms(request.getFindRoomByChoice())));
-        if(request.getFindRoomByChoice() ==  DOUBLE_ROOMS) response.setMessage("Available Double Rooms are Room(s) "+Map.listToBuilder(roomRepository.findAvailableRooms(request.getFindRoomByChoice())));
-        if(request.getFindRoomByChoice() ==  ALL_ROOMS) response.setMessage("All Available Rooms are Room(s) "+Map.listToBuilder(roomRepository.findAvailableRooms(request.getFindRoomByChoice())));
+        if(request.getFindRoomByType() ==  SINGLE_ROOMS) response.setMessage("Available Single Rooms are Room(s) "+Map.listToBuilder(roomRepository.findAvailableRooms(request.getFindRoomByType())));
+        if(request.getFindRoomByType() ==  DOUBLE_ROOMS) response.setMessage("Available Double Rooms are Room(s) "+Map.listToBuilder(roomRepository.findAvailableRooms(request.getFindRoomByType())));
+        if(request.getFindRoomByType() ==  ALL_ROOMS) response.setMessage("All Available Rooms are Room(s) "+Map.listToBuilder(roomRepository.findAvailableRooms(request.getFindRoomByType())));
         return response;
     }
 
     @Override
     public SearchResponse findBookedRooms(RoomSearchRequest request) {
         response = new SearchResponse();
-        if(request.getFindRoomByChoice() ==  SINGLE_ROOMS) response.setMessage("Booked Single Rooms are Room(s) "+Map.listToBuilder(roomRepository.findBookedRooms(request.getFindRoomByChoice())));
-        if(request.getFindRoomByChoice() ==  DOUBLE_ROOMS) response.setMessage("Booked Double Rooms are Room(s) "+Map.listToBuilder(roomRepository.findBookedRooms(request.getFindRoomByChoice())));
-        if(request.getFindRoomByChoice() ==  ALL_ROOMS) response.setMessage("All Booked Rooms are Room(s) "+Map.listToBuilder(roomRepository.findBookedRooms(request.getFindRoomByChoice())));
+        if(request.getFindRoomByType() ==  SINGLE_ROOMS) response.setMessage("Booked Single Rooms are Room(s) "+Map.listToBuilder(roomRepository.findBookedRooms(request.getFindRoomByType())));
+        if(request.getFindRoomByType() ==  DOUBLE_ROOMS) response.setMessage("Booked Double Rooms are Room(s) "+Map.listToBuilder(roomRepository.findBookedRooms(request.getFindRoomByType())));
+        if(request.getFindRoomByType() ==  ALL_ROOMS) response.setMessage("All Booked Rooms are Room(s) "+Map.listToBuilder(roomRepository.findBookedRooms(request.getFindRoomByType())));
         return response;
     }
 
@@ -83,7 +83,7 @@ public class OHRoomService implements RoomService{
             }
             Map.roomToSearchResponse(foundRoom);
             mapRoomToResponse(foundRoom);
-            response.setMessage("Room "+response.getRoomNumber()+" found.");
+            response.setMessage("Room "+foundRoom.getRoomNumber()+" found.");
         } else if (request.getRoomId() > 0) {
             Room foundRoom = roomRepository.findRoomById(request.getRoomId());
             if(foundRoom == null){
@@ -91,7 +91,7 @@ public class OHRoomService implements RoomService{
             }
             Map.roomToSearchResponse(foundRoom);
             mapRoomToResponse(foundRoom);
-            response.setMessage("Room "+foundRoom.getId()+" found.");
+            response.setMessage("Room "+foundRoom.getRoomNumber()+" found.");
         }
         return response;
     }
@@ -121,6 +121,14 @@ public class OHRoomService implements RoomService{
         roomRepository.removeRoomByRoomNumber(foundRoom.getRoomNumber());
         DeleteResponse response = Map.roomToDeleteResponse(foundRoom);
         response.setMessage("Room "+foundRoom.getRoomNumber()+" Deleted Successfully");
+        return response;
+    }
+
+    @Override
+    public DeleteResponse deleteAll() {
+        DeleteResponse response = new DeleteResponse();
+        roomRepository.removeAll();
+        response.setMessage("Delete Successful");
         return response;
     }
 
