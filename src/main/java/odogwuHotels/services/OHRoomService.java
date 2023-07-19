@@ -17,6 +17,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static odogwuHotels.data.models.FindRoomByType.*;
+import static odogwuHotels.data.models.RoomType.DOUBLE;
+import static odogwuHotels.data.models.RoomType.SINGLE;
 
 public class OHRoomService implements RoomService{
     private final RoomRepository roomRepository = OHRoomRepository.createObject();
@@ -34,6 +36,29 @@ public class OHRoomService implements RoomService{
         RoomCreationResponse response = Map.roomToCreationResponse(savedRoom);
         response.setMessage("Room "+room.getRoomNumber()+" created successfully!");
 
+        return response;
+    }
+
+    @Override
+    public RoomCreationResponse createRoomAuto() {
+        RoomCreationResponse response = new RoomCreationResponse();
+        for (int i = 1; i <= 10; i++) {
+            Room room = new Room();
+            if(i < 6){
+                room.setRoomNumber(i);
+                room.setAvailable(true);
+                room.setRoomType(SINGLE);
+                room.setPrice(BigDecimal.valueOf(50));
+            } else {
+                room.setRoomNumber(i);
+                room.setAvailable(true);
+                room.setRoomType(DOUBLE);
+                room.setPrice(BigDecimal.valueOf(100));
+            }
+        Room savedRoom = roomRepository.saveRoom(room);
+        response = Map.roomToCreationResponse(savedRoom);
+        response.setMessage("Room "+room.getRoomNumber()+" created successfully!");
+        }
         return response;
     }
 

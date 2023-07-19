@@ -75,7 +75,6 @@ class OHCustomerServiceTest {
         } catch (Exception ex){
             System.err.println(ex.getMessage());
         }
-
         assertTrue(loginIsCorrect.isLoggedIn());
     }
     @Test

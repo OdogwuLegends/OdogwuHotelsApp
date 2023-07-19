@@ -35,7 +35,7 @@ public class OHCustomerService implements CustomerService {
     public LoginResponse login(LoginRequest request) throws EntityNotFoundException {
         Customer foundCustomer =  customerRepository.findCustomerByEmail(request.getEmail());
         if(foundCustomer == null){
-            throw new EntityNotFoundException("Customer Not Found.");
+            throw new EntityNotFoundException("Email not correct");
         }
         LoginResponse response = new LoginResponse();
         if(foundCustomer.getPassword().equals(request.getPassword())){

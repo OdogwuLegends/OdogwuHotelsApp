@@ -43,6 +43,13 @@ class OHRoomServiceTest {
         assertEquals("Room 2 created successfully!",doubleRoom.getMessage());
     }
     @Test
+    void createRoomAutomatically(){
+        RoomCreationResponse multipleRooms = roomService.createRoomAuto();
+        List<Room> allRooms = roomService.findAllRooms();
+        assertEquals(12,allRooms.size());
+        System.out.println(allRooms);
+    }
+    @Test
     void changeRoomFromSingleToDouble(){
         RequestToUpdateRoom request = new RequestToUpdateRoom();
         request.setRoomNumber(1);
